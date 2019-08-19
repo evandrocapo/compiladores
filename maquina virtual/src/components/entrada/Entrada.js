@@ -34,7 +34,7 @@ export default function SimpleTable() {
 
   return (
     <Paper className={classes.root}>
-      <center>Break Point's</center>
+     <center>Conteúdo de entrada</center> 
       <Table className={classes.table}>
         <TableHead>
           <TableRow>

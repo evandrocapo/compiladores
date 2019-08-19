@@ -1,63 +1,76 @@
-import React from 'react'
-import MaterialTable from 'material-table'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-export default function MaterialTableDemo() {
-    const [state, setState] = React.useState({
-      columns: [
-        { title: 'Name', field: 'name' },
-        { title: 'Surname', field: 'surname' },
-        { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-        {
-          title: 'Birth Place',
-          field: 'birthCity',
-          lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-        },
-      ],
-      data: [
-        { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-        {
-          name: 'Zerya Betül',
-          surname: 'Baran',
-          birthYear: 2017,
-          birthCity: 34,
-        },
-      ],
-    });
-  
-    return (
-      <MaterialTable
-        title="Editable Example"
-        columns={state.columns}
-        data={state.data}
-        editable={{
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data.push(newData);
-                setState({ ...state, data });
-              }, 600);
-            }),
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data[data.indexOf(oldData)] = newData;
-                setState({ ...state, data });
-              }, 600);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data.splice(data.indexOf(oldData), 1);
-                setState({ ...state, data });
-              }, 600);
-            }),
-        }}
-      />
-    );
-  }
+const useStyles = makeStyles(theme => ({
+  root: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    maxWidth: 'auto',
+    marginTop: theme.spacing(3),
+    maxHeight: '300px',
+    overflowX: 'auto',
+  },
+  table: {
+    maxWidth: 'auto',
+  },
+  // tableCell: {
+  //   paddingRight: 4,
+  //   paddingLeft: 5
+  // }
+}));
+
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData(0, 'NULL', '', '', 'Não faz nada'),
+  createData(1, 'JMP', 0, '', 'Loop infinito'),
+  createData(0, 'NULL', '', '', 'Não faz nada'),
+  createData(1, 'JMP', 0, '', 'Loop infinito'),
+  createData(0, 'NULL', '', '', 'Não faz nada'),
+  createData(1, 'JMP', 0, '', 'Loop infinito'),
+  createData(0, 'NULL', '', '', 'Não faz nada'),
+  createData(1, 'JMP', 0, '', 'Loop infinito'),
+  createData(0, 'NULL', '', '', 'Não faz nada'),
+  createData(1, 'JMP', 0, '', 'Loop infinito'),
+];
+
+export default function SimpleTable() {
+  const classes = useStyles();
+
+  return (
+    <Paper className={classes.root}>
+      <center>Instruções a serem executadas pela MV</center>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>I</TableCell>
+            <TableCell align="right">Instrução</TableCell>
+            <TableCell align="right">Atributo&nbsp;#1</TableCell>
+            <TableCell align="right">Atributo&nbsp;#2</TableCell>
+            <TableCell align="right">Comentario</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map(row => (
+            <TableRow key={row.name}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="center">{row.calories}</TableCell>
+              <TableCell align="center">{row.fat}</TableCell>
+              <TableCell align="center">{row.carbs}</TableCell>
+              <TableCell align="right">{row.protein}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+  );
+}

@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider'
 import { makeStyles } from '@material-ui/core/styles';
+import { blue, blueGrey, red, common, lightBlue, indigo, green } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles(theme => ({
       gridGap: theme.spacing(3),
     },
     paper: {
+      backgroundColor: 'primary.main',
       padding: theme.spacing(1),
       textAlign: 'center',
       color: theme.palette.text.secondary,
@@ -29,19 +31,19 @@ export default function CSSGrid() {
     return (
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
-                        <Paper className={classes.paper}>
+                        <Box className={classes.paper} borderRadius="20px" bgcolor={blue[400]}>
                             Arquivo
-                        </Paper>
+                        </Box>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.paper}>
+                    <Box className={classes.paper} borderRadius="20px" bgcolor={green[400]}>
                             Executar
-                        </Paper>
+                        </Box>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper className={classes.paper}>
+                    <Box className={classes.paper} borderRadius="20px" bgcolor={red[400]}>
                             Sobre
-                        </Paper>
+                        </Box>
                     </Grid>
                     <Divider />
                 </Grid>
