@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles';
 import { blue, blueGrey, red, common, lightBlue, indigo, green } from '@material-ui/core/colors'
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -30,13 +31,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 var fileSelectedHandler = event => {
   var fileReader = new FileReader();
   fileReader.readAsText(event.target.files[0])
   
   fileReader.onload = e => {
-    console.log(e.target.result)
+    salvarDados(e.target.result)
   }
+}
+
+var salvarDados = async dados => {
+  var dados_array
+  dados_array = dados.split('\r\n');
+  dados_array = JSON.stringify(dados_array);
+  console.log(dados_array)
+
+  axios.post('/maquina', {
+    "i":"0",
+    "instrucoes": dados_array,
+    "pilha": "",
+    "s": "0"
+  })
+  .then(function(response){
+    console.log('salvo com sucesso');
+    var url = response.data;
+    window.location.replace(url);
+  });  
 }
 
 export default function CSSGrid() {
