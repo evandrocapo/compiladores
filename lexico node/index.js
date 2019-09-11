@@ -1,6 +1,16 @@
-const server = require('./config/server')
-const port = process.env.PORT || 3000
+const { app, BrowserWindow } = require('electron');
+const index = '/app/tela/index.html'
 
-server.listen(port, () =>{
-    console.log(`Server listening on port ${port}`)
+let mainWindow = null;
+app.on('ready', () =>{
+    let mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600
+    })
+
+    mainWindow.loadURL(`file://${index}`)
+})
+
+app.on('window-all-closed', () =>{
+    app.quit();
 })
