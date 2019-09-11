@@ -1,22 +1,31 @@
+import treatsDigit from './treats/treatsDigit'
+import treatsIdentificator from './treats/treatsIdentificator'
+import treatsAssignment from './treats/treatsAssignment'
+import treatsPunctuation from './treats/treatsPunctuation'
+
 export const catchToken = (caracter) =>
 {
-    var token;
-    
+    var token = 
+    {
+        símbolo:'',
+        lexema:''
+    }
+
     if(Number.isInteger(caracter))
     {
-        //Trata Digito
+        token = treatsDigit(caracter);
     }
     else if(caracter.value.match("/^[A-Za-z]+$/"))
     {
-        //Trata Identificador e Palavra Reservada
+        token = treatsIdentificator(caracter);
     }
     else if(caracter === ':')
     {
-        //Trata Atribuição
+        token = treatsAssignment(caracter);
     }
     else if(caracter === '+' || caracter === '-' || caracter ==='*')
     {
-        //Trata Operador Aritmético
+        token = treatsArithmetic(caracter);
     }
     else if(caracter === '<' || caracter === '>' || caracter ==='=')
     {
@@ -24,7 +33,7 @@ export const catchToken = (caracter) =>
     }
     else if(caracter === ';' || caracter === ',' || caracter ==='(' || caracter === ')' || caracter ==='.')
     {
-        //Trata Pontuação
+        token = treatsPunctuation(caracter);
     }
     else
     {
