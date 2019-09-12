@@ -27,14 +27,13 @@ export const main = (arquivo) =>
                     read(caracter);
                 }
             }
-            read(caracter);
             while(caracter === ' ' && !isFileEnd)
             {
                 read(caracter);
             }
 
         }
-        if(!isFileEnd)//Dar uma olhada nessa condição
+        if(!isFileEnd)
         {
             token = catchToken(caracter);
             insertList(token,list);
