@@ -9,7 +9,7 @@ export const treatsDigit = (caracter) =>
     }
     read(caracter);
 
-    while((Number.isInteger(caracter))
+    while((Number.isInteger(caracter)))
     {
         num = num + caracter;
         read(caracter);
