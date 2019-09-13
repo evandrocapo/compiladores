@@ -26,7 +26,10 @@ ipcMain.on('abrir-janela-about', () => {
             width: 300,
             height: 200,
             alwaysOnTop: true,
-            frame: false
+            frame: false,
+            webPreferences: {
+                nodeIntegration: true
+            }
         })
         aboutWindow.on('closed', () => {
             aboutWindow = null
