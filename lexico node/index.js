@@ -19,11 +19,22 @@ app.on('window-all-closed', () =>{
     app.quit();
 })
 
+let aboutWindow = null;
 ipcMain.on('abrir-janela-about', () => {
-    let aboutWindow = new BrowserWindow({
-        width: 300,
-        height: 200
-    })
-
+    if(aboutWindow == null){
+        aboutWindow = new BrowserWindow({
+            width: 300,
+            height: 200,
+            alwaysOnTop: true,
+            frame: false
+        })
+        aboutWindow.on('closed', () => {
+            aboutWindow = null
+        })
+    }
     aboutWindow.loadURL(`file://${about}`)
 })
+
+ipcMain.on('fechar-janela-sobre', () => {
+    aboutWindow.close()
+});
