@@ -1,3 +1,4 @@
+const electron = require('electron');
 const { dialog } = require('electron').remote;
 const fs         = require('fs');
 
@@ -47,10 +48,12 @@ btn.onclick = function () {
 
 
             fs.readFile(fileName, 'utf-8', function (err, data) {
-                document.getElementById('file-content').innerText = data;
+                
+                electron.ipcRenderer.send('salvar-arquivo', data);
+                // document.getElementById('file-content').innerText = data;
 
-                // style for file content
-                document.getElementById('file-content').style.color = "#f5f5f5";
+                // // style for file content
+                // document.getElementById('file-content').style.color = "#f5f5f5";
             });
         })
 };

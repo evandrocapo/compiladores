@@ -41,3 +41,14 @@ ipcMain.on('abrir-janela-about', () => {
 ipcMain.on('fechar-janela-sobre', () => {
     aboutWindow.close()
 });
+
+let content = null;
+ipcMain.on('salvar-arquivo', async (event,data) =>{
+    content = data;
+})
+
+ipcMain.on('exec', () => {
+    if(content != null){
+        
+    }
+})
