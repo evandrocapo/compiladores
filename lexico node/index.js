@@ -5,7 +5,7 @@ const about = '/app/about.html'
 
 let file = new fileModel.File()
 let tokens = new Array();
-let program = ""
+let program = null;
 
 let mainWindow = null;
 app.on('ready', () =>{
@@ -47,9 +47,16 @@ ipcMain.on('fechar-janela-sobre', () => {
     aboutWindow.close()
 });
 
-ipcMain.on('salvar-arquivo', async (event,data) =>{
-    file.content = data;
-    file.read(data);
+ipcMain.on('abrir-arquivo', async (event,data) =>{
+    try{
+        await file.open(data, 'utf-8');
+        this.program = null;
+        this.program = await file.read(data);
+    }
+    catch(error){
+        console.error("Erro na index.js na função 'abrir-arquivo':")
+        console.error(error)
+    }
 })
 
 ipcMain.on('salvar-file', async (event,data) =>{
@@ -57,12 +64,18 @@ ipcMain.on('salvar-file', async (event,data) =>{
         file.save(data);
         console.log("Salvo com sucesso");
     } catch(error){
+        console.error("Erro na index.js na função 'salvar-file':")
         console.error(error);
     }
 })
 
-ipcMain.on('exec', () => {
-    if(content != null){
-        
+ipcMain.on('exec', async () => {
+    try{
+        if(this.program){
+
+        }
+    }catch(error){
+        console.error("Ocorreu na index.js na função 'exec': ")
+        console.error(error);
     }
 })

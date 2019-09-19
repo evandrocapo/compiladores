@@ -13,17 +13,28 @@ class File {
             })
         })
 
-        return result;
+        this.file = fileName;
+        this.content = result;
+
+        return 0;
     }
 
-    read(data) {
-        console.log(data);
+    async read() {
+        if(this.file){
+            return this.content;
+        }
+        
+        throw "Não foi selecionado nenhum arquivo";
     }
 
     save(data){
-        file.writeFile("./save", data, function(err){
-            throw "Erro ao salvar arquivo";
-        })
+        try{
+            file.writeFile("./save", data, function(err){
+                throw "Erro ao salvar arquivo";
+            })
+        } catch(error){
+            throw error;
+        }
     }
 }
 

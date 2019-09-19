@@ -46,10 +46,7 @@ btn.onclick = function () {
             label.style.borderColor = "green";
             label.style.cursor = "default";
 
-            var fs = new fileModel.File()
-            result = await fs.open(fileName,'utf-8')
-
-            electron.ipcRenderer.send('salvar-arquivo', result);
+            electron.ipcRenderer.send('abrir-arquivo', fileName);
         })
 };
 
