@@ -1,40 +1,33 @@
-import treatsDigit from './treats/treatsDigit'
-import treatsIdentificator from './treats/treatsIdentificator'
-import treatsAssignment from './treats/treatsAssignment'
-import treatsPunctuation from './treats/treatsPunctuation'
-import treatsRelational from './treats/treatsRelational'
+import Treats from './treats/Treats'
+import Token from './token/Token';
 
 export const catchToken = (caracter) =>
 {
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
 
     if(Number.isInteger(caracter))
     {
-        token = treatsDigit(caracter);
+        token.getToken() = Treats.treatsDigit(caracter);
     }
     else if(caracter.value.match("/^[A-Za-z]+$/"))
     {
-        token = treatsIdentificator(caracter);
+        token.getToken() = Treats.treatsIdentificator(caracter);
     }
     else if(caracter === ':')
     {
-        token = treatsAssignment(caracter);
+        token.getToken() = Treats.treatsAssignment(caracter);
     }
     else if(caracter === '+' || caracter === '-' || caracter ==='*')
     {
-        token = treatsArithmetic(caracter);
+        token.getToken() = Treats.treatsArithmetic(caracter);
     }
     else if(caracter === '<' || caracter === '>' || caracter ==='=')
     {
-        token = treatsRelational(caracter);
+        token.getToken() = Treats.treatsRelational(caracter);
     }
     else if(caracter === ';' || caracter === ',' || caracter ==='(' || caracter === ')' || caracter ==='.')
     {
-        token = treatsPunctuation(caracter);
+        token.getToken() = Treats.treatsPunctuation(caracter);
     }
     else
     {

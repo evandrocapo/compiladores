@@ -1,29 +1,28 @@
+import Token from "../token/Token";
+
 //Imports
 export const treatsArithmetic = (caracter) =>
 {
     var arithmetic = caracter;
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
+
     switch(arithmetic)
     {
         case '+':
-        token.símbolo = 'smais';
+        token.setSymbol('smais');
         break;
         case '-':
-        token.símbolo = 'smenos';
+            token.setSymbol('smenos');
         break;
         case '*':
-        token.símbolo = 'smult';
+            token.setSymbol('smult');
         break;
         default:
         //Erro
         break;
     }
     read(caracter);
-    token.lexema = arithmetic;
+    token.setLexem(arithmetic);
 
     return token;
 }

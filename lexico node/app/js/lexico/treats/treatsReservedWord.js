@@ -1,70 +1,70 @@
-export const export reservedWord = (id, token) =>
+export const reservedWord = (id, token) =>
 {
     switch(id)
     {
         case 'programa':
-        token.símbolo = 'sprograma';
+            token.setSymbol('sprograma');
         break;
         case 'se':
-        token.símbolo = 'sse';
+            token.setSymbol('sse');
         break;
         case 'entao':
-        token.símbolo = 'sentao';
+            token.setSymbol('sentao');
         break;
         case 'enquanto':
-        token.símbolo = 'senquanto';
+            token.setSymbol('senquanto');
         break;
         case 'faca':
-        token.símbolo = 'sfaca';
+            token.setSymbol('sfaca');
         break;
         case 'início':
-        token.símbolo = 'sinício';
+            token.setSymbol('sinício');
         break;
         case 'fim':
-        token.símbolo = 'sfim';
+            token.setSymbol('sfim');
         break;
         case 'escreva':
-        token.símbolo = 'sescreva';
+            token.setSymbol('sescreva');
         break;
         case 'leia':
-        token.símbolo = 'sleia';
+            token.setSymbol('sleia');
         break;
         case 'var':
-        token.símbolo = 'svar';
+            token.setSymbol('svar');
         break;
         case 'inteiro':
-        token.símbolo = 'sinteiro';
+            token.setSymbol('sinteiro');
         break;
         case 'booleano':
-        token.símbolo = 'sbooleano';
+            token.setSymbol('sbooleano');
         break;
         case 'verdadeiro':
-        token.símbolo = 'sverdadeiro';
+            token.setSymbol('sverdadeiro');
         break;
         case 'falso':
-        token.símbolo = 'sfalso';
+            token.setSymbol('sfalso');
         break;
         case 'procedimento':
-        token.símbolo = 'sprocedimento';
+            token.setSymbol('sprocedimento');
         break;
         case 'funcao':
-        token.símbolo = 'sfuncao';
+            token.setSymbol('sfuncao');
         break;
         case 'div':
-        token.símbolo = 'sdiv';
+            token.setSymbol('sdiv');
         break;
         case 'e':
-        token.símbolo = 'se';
+            token.setSymbol('se');
         break;
         case 'ou':
-        token.símbolo = 'sou';
+            token.setSymbol('sou');
         break;
         case 'nao':
-        token.símbolo = 'snao';
+            token.setSymbol('snao');
         break;
         default:
-        token.símbolo = 'sidentificador';
+            token.setSymbol('sidentificador');
         break;
     }
-    return token.símbolo;
+    return token.getSymbol();
 }

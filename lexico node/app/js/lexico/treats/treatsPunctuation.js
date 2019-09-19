@@ -1,35 +1,34 @@
+import Token from "../token/Token";
+
 //Imports
 export const treatsPunctuation = (caracter) =>
 {
     var punctuation = caracter;
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
+    
     switch(punctuation)
     {
         case ';':
-        token.símbolo = 'sponto_vírgula';
+            token.setSymbol('sponto_vírgula');
         break;
         case ',':
-        token.símbolo = 'svírgula';
+            token.setSymbol('svírgula');
         break;
         case '(':
-        token.símbolo = 'sabre_parênteses';
+            token.setSymbol('sabre_parênteses');
         break;
         case ')':
-        token.símbolo = 'sfecha_parênteses';
+            token.setSymbol('sfecha_parênteses');
         break;
         case '.':
-        token.símbolo = 'sponto';
+            token.setSymbol('sponto');
         break;
         default:
         //Erro
         break;
     }
     read(caracter);
-    token.lexema = punctuation;
+    token.setLexem(punctuation);
 
     return token;
 }

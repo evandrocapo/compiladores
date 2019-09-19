@@ -1,12 +1,11 @@
+import Token from "../token/Token";
+
 //Imports
 export const treatsDigit = (caracter) =>
 {
     var num = caracter;
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
+    
     read(caracter);
 
     while((Number.isInteger(caracter)))
@@ -14,8 +13,8 @@ export const treatsDigit = (caracter) =>
         num = num + caracter;
         read(caracter);
     }
-    token.símbolo = 'snúmero';
-    token.lexema = num;
+    token.setSymbol('snúmero');
+    token.setLexem(num);
 
     return token;
 }

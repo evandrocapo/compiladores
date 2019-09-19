@@ -1,24 +1,22 @@
+import Token from "../token/Token";
+
 export const treatsAssignment = (caracter) =>
 {
     var assignment = caracter;
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
     read(caracter);
 
     if(caracter === '=')
     {
         assignment = assignment + caracter;
         read(caracter);
-        token.símbolo = 'satribuiçao';
+        token.setSymbol('satribuiçao');
     }
     else
     {
-        token.símbolo = 'sdoispontos';
+        token.setSymbol('sdoispontos');
     }
-    token.lexema = assignment;
+    token.setSymbol(assignment);
 
     return token;
 }

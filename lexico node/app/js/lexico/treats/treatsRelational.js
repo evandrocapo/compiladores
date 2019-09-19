@@ -1,12 +1,10 @@
+import Token from "../token/Token";
+
 //Imports
 export const treatsRelational = (caracter) =>
 {
     var relational = caracter;
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
     //read(caracter);
 
     if(caracter === '>' || caracter === '<')
@@ -16,11 +14,11 @@ export const treatsRelational = (caracter) =>
         {
             if(relational ==='>')
             {
-                token.símbolo = 'smaiorig';
+                token.setSymbol('smaiorig');
             }
             else if (relational ==='<')
             {
-                token.símbolo = 'smenorig';
+                token.setSymbol('smenorig');
             }
             relational = relational + caracter;  
             read(caracter);
@@ -29,17 +27,17 @@ export const treatsRelational = (caracter) =>
         {
             if(relational === '>')
             {
-                token.símbolo = 'smenor';
+                token.setSymbol('smenor');
             }
             else if (relational === '<')
             {
-                token.símbolo = 'smenor';
+                token.setSymbol('smenor');
             }
         }
     }
     else if(caracter === '=')
     {
-        token.símbolo = 'sig';
+        token.setSymbol('sig');
         read(caracter);
     }
     else if(caracter === '!')
@@ -47,7 +45,7 @@ export const treatsRelational = (caracter) =>
         read(caracter);
         if(caracter === '=')
         {
-            token.símbolo = 'sdif';
+            token.setSymbol('sdif');
             relational = relational + caracter; 
             read(caracter);
         }
@@ -57,7 +55,7 @@ export const treatsRelational = (caracter) =>
         }
     }
     
-    token.lexema = relational;
+    token.setLexem(relational);
 
     return token;
 }

@@ -1,13 +1,11 @@
 import treatsReservedWord from './treatsReservedWord'
+import Token from '../token/Token';
 
 export const treatsIdentificator = (caracter) =>
 {
     var id = caracter;
-    var token = 
-    {
-        símbolo:'',
-        lexema:''
-    }
+    var token = new Token();
+
     read(caracter);
 
     while(caracter.value.match("/^[A-Za-z]+$/") || caracter === '_')
@@ -15,7 +13,7 @@ export const treatsIdentificator = (caracter) =>
        id = id + caracter;
        read(caracter); 
     }
-    token.lexema = id;
+    token.setLexem(id);
     treatsReservedWord(id,token);
 
     return token;
