@@ -1,6 +1,6 @@
 const electron = require('electron');
 const { dialog } = require('electron').remote;
-const fs         = require('fs');
+const fileModel = require('../models/File');
 
 // Open Dialog function
 var btn = document.getElementById('link-open');
@@ -11,7 +11,7 @@ btn.onclick = function () {
         filters: [{name: 'Files', extensions: ['txt', 'css', 'html', 'js', 'vue', 'json', 'py', 'c']}]
         },
 
-        function (fileNames) {
+        async function (fileNames) {
 
             // check if invalid filename
             if (fileNames === undefined) {
@@ -46,15 +46,10 @@ btn.onclick = function () {
             label.style.borderColor = "green";
             label.style.cursor = "default";
 
+            var fs = new fileModel.File()
+            result = await fs.open(fileName,'utf-8')
 
-            fs.readFile(fileName, 'utf-8', function (err, data) {
-                
-                electron.ipcRenderer.send('salvar-arquivo', data);
-                // document.getElementById('file-content').innerText = data;
-
-                // // style for file content
-                // document.getElementById('file-content').style.color = "#f5f5f5";
-            });
+            electron.ipcRenderer.send('salvar-arquivo', result);
         })
 };
 

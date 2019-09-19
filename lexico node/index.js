@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const fileModel = require('./models/File');
 const index = '/app/index.html'
 const about = '/app/about.html'
+
+let file = new fileModel.File()
 
 let mainWindow = null;
 app.on('ready', () =>{
@@ -42,9 +45,18 @@ ipcMain.on('fechar-janela-sobre', () => {
     aboutWindow.close()
 });
 
-let content = null;
 ipcMain.on('salvar-arquivo', async (event,data) =>{
-    content = data;
+    file.content = data;
+    file.read(data);
+})
+
+ipcMain.on('salvar-file', async (event,data) =>{
+    try{
+        file.save(data);
+        console.log("Salvo com sucesso");
+    } catch(error){
+        console.error(error);
+    }
 })
 
 ipcMain.on('exec', () => {
