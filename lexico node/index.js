@@ -4,6 +4,7 @@ const index = '/app/index.html'
 const about = '/app/about.html'
 
 let file = new fileModel.File()
+let tokens = new Array();
 
 let mainWindow = null;
 app.on('ready', () =>{
