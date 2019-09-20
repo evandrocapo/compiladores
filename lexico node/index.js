@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fileModel = require('./models/File');
+const lexicModel = require('./models/Lexic')
 const index = '/app/index.html'
 const about = '/app/about.html'
 
@@ -72,7 +73,7 @@ ipcMain.on('salvar-file', async (event,data) =>{
 ipcMain.on('exec', async () => {
     try{
         if(this.program){
-
+            var lexico = new lexicModel(this.program)
         }
     }catch(error){
         console.error("Ocorreu na index.js na função 'exec': ")

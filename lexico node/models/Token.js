@@ -1,7 +1,8 @@
 class Token {
-    constructor (lexem, symbol){
+    constructor (lexem, symbol, line){
         this.lexem = lexem
         this.symbol = symbol
+        this.line = line
     }
 
     getLexem() {
@@ -18,6 +19,11 @@ class Token {
 
     setSymbol(params){
         this.symbol = params;
+    }
+
+    setToken = (lexem,symbol) => {
+        this.symbol;
+        this.lexem;
     }
 }
 

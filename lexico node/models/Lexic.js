@@ -1,13 +1,11 @@
-import catchToken from './catchToken'
-import Token from './token/Token';
+import catchToken from '../app/js/lexico/catchToken'
+import Token from '../app/js/lexico/token/Token';
 
 export default class Lexic {
 
-    constructor() {
-        super();
-
+    constructor(program) {
         this.tokens = null;
-        this.program = null;
+        this.program = program;
         this.character = null;
     }
 
@@ -19,8 +17,7 @@ export default class Lexic {
         var isFileEnd = false;
         var list;
 
-        open(arquivo);
-        read(caracter);
+        read(caracter, i);
 
         while (!isFileEnd) {
             while (caracter === '{' || caracter === ' ' && !isFileEnd) {
