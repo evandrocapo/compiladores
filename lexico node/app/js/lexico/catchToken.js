@@ -1,5 +1,5 @@
 import Treats from './treats/Treats'
-import Token from './token/Token';
+import Token from '../../../models/Token';
 
 export const catchToken = (caracter) =>
 {
