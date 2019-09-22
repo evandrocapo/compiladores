@@ -1,4 +1,4 @@
-export const reservedWord = (id, token) =>
+module.exports = (id, token) =>
 {
     switch(id)
     {

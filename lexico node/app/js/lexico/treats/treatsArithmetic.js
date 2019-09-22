@@ -1,7 +1,7 @@
-import Token from "../token/Token";
+const tokenModel = require('../../../../models/Token');
 
 //Imports
-export const treatsArithmetic = (caracter) =>
+module.exports = (caracter) =>
 {
     var arithmetic = caracter;
     var token = new Token();

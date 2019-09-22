@@ -72,8 +72,12 @@ ipcMain.on('salvar-file', async (event,data) =>{
 
 ipcMain.on('exec', async () => {
     try{
-        if(this.program){
-            var lexico = new lexicModel(this.program)
+        if(await this.program){
+            console.log("")
+            console.log(this.program);
+            console.log("")
+            let lexico = new lexicModel.Lexic(this.program)
+            lexico.main()
         }
     }catch(error){
         console.error("Ocorreu na index.js na função 'exec': ")

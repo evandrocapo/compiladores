@@ -1,20 +1,20 @@
-import Token from "../token/Token";
+const tokenModel = require("../../../../models/Token");
 
 //Imports
-export const treatsDigit = (caracter) =>
+module.exports = (caracter) =>
 {
     var num = caracter;
     var token = new Token();
     
-    read(caracter);
+    // read(caracter);
 
     while((Number.isInteger(caracter)))
     {
         num = num + caracter;
-        read(caracter);
+        // read(caracter);
     }
-    token.setSymbol('snúmero');
-    token.setLexem(num);
+    // token.setSymbol('snúmero');
+    // token.setLexem(num);
 
-    return token;
+    // return token;
 }

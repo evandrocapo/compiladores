@@ -1,7 +1,7 @@
-import Token from "../token/Token";
+const tokenModel = require('../../../../models/Token');
 
 //Imports
-export const treatsPunctuation = (caracter) =>
+module.exports = (caracter) =>
 {
     var punctuation = caracter;
     var token = new Token();

@@ -1,15 +1,13 @@
-import treatsDigit from './treats/treatsDigit'
-import treatsIdentificator from './treats/treatsIdentificator'
-import treatsAssignment from './treats/treatsAssignment'
-import treatsPunctuation from './treats/treatsPunctuation'
-import treatsRelational from './treats/treatsRelational'
+const treatsDigit = require('../treats/treatsDigit')
+const treatsIdentificator = require('../treats/treatsIdentificator')
+const treatsAssignment = require('../treats/treatsAssignment')
+const treatsPunctuation = require('../treats/treatsPunctuation')
+const treatsRelational = require('../treats/treatsRelational')
 
-export default class Treats{
+class Treats{
 
     constructor(){
-        super();
-
-        this.token = new Token();
+        // this.token = new Token();
         this.character = null;
     }
 
@@ -28,3 +26,5 @@ export default class Treats{
     }
     
 }
+
+module.exports = {Treats}

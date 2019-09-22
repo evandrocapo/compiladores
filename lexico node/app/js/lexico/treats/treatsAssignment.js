@@ -1,6 +1,6 @@
-import Token from "../token/Token";
+const tokenModel = require('../../../../models/Token');
 
-export const treatsAssignment = (caracter) =>
+module.exports = (caracter) =>
 {
     var assignment = caracter;
     var token = new Token();

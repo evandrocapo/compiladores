@@ -1,7 +1,7 @@
-import Token from "../token/Token";
+const tokenModel = require('../../../../models/Token');
 
 //Imports
-export const treatsRelational = (caracter) =>
+module.exports = (caracter) =>
 {
     var relational = caracter;
     var token = new Token();

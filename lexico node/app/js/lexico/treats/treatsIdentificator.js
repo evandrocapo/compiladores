@@ -1,20 +1,20 @@
-import treatsReservedWord from './treatsReservedWord'
-import Token from '../token/Token';
+const treatsReservedWord = require('./treatsReservedWord')
+const tokenModel = require('../../../../models/Token');
 
-export const treatsIdentificator = (caracter) =>
+module.exports = (caracter) =>
 {
     var id = caracter;
     var token = new Token();
 
-    read(caracter);
+    // read(caracter);
 
     while(caracter.value.match("/^[A-Za-z]+$/") || caracter === '_')
     {
        id = id + caracter;
-       read(caracter); 
+    //    read(caracter); 
     }
-    token.setLexem(id);
-    treatsReservedWord(id,token);
+    // token.setLexem(id);
+    // treatsReservedWord(id,token);
 
-    return token;
+    // return token;
 }
