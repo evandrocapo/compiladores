@@ -18,5 +18,5 @@ module.exports = (caracter) =>
     }
     token.setSymbol(assignment);
 
-    return token;
+    return {'token': token, 'program': program};
 }

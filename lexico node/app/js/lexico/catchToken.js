@@ -1,38 +1,38 @@
-const Treats = require('./treats/Treats')
+const treatsModel = require('./treats/Treats')
 const tokenModel = require('../../../models/Token');
 
-module.exports = (caracter) => {
+module.exports = (caracter, program) => {
 
-        // // var token = new Token(null,null,null);
+        let treats = new treatsModel.Treats()
 
-        // if(Number.isInteger(caracter))
-        // {
-        //     // token.getToken() = Treats.treatsDigit(caracter);
-        // }
-        // else if(caracter.value.match("/^[A-Za-z]+$/"))
-        // {
-        //     // token.getToken() = Treats.treatsIdentificator(caracter);
-        // }
-        // else if(caracter === ':')
-        // {
-        //     // token.getToken() = Treats.treatsAssignment(caracter);
-        // }
-        // else if(caracter === '+' || caracter === '-' || caracter ==='*')
-        // {
-        //     // token.getToken() = Treats.treatsArithmetic(caracter);
-        // }
-        // else if(caracter === '<' || caracter === '>' || caracter ==='=')
-        // {
-        //     // token.getToken() = Treats.treatsRelational(caracter);
-        // }
-        // else if(caracter === ';' || caracter === ',' || caracter ==='(' || caracter === ')' || caracter ==='.')
-        // {
-        //     // token.getToken() = Treats.treatsPunctuation(caracter);
-        // }
-        // else
-        // {
-        //     //Erro
-        // }
+        if(caracter.match(/\d+/g))
+        {
+            return treats.treatsDigit(caracter,program);
+        }
+        else if(caracter.match(/^[A-Za-z]+$/))
+        {
+            // token.setToken() = Treats.treatsIdentificator(caracter);
+        }
+        else if(caracter === ':')
+        {
+            // token.setToken() = Treats.treatsAssignment(caracter);
+        }
+        else if(caracter === '+' || caracter === '-' || caracter ==='*')
+        {
+            // token.setToken() = Treats.treatsArithmetic(caracter);
+        }
+        else if(caracter === '<' || caracter === '>' || caracter ==='=')
+        {
+            // token.setToken() = Treats.treatsRelational(caracter);
+        }
+        else if(caracter === ';' || caracter === ',' || caracter ==='(' || caracter === ')' || caracter ==='.')
+        {
+            // token.setToken() = Treats.treatsPunctuation(caracter);
+        }
+        else
+        {
+            throw "error no catchToken"
+        }
 
-        // return token;
+        return 0;
     }

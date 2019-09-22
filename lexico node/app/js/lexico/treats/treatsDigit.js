@@ -1,20 +1,30 @@
 const tokenModel = require("../../../../models/Token");
 
 //Imports
-module.exports = (caracter) =>
+module.exports = (num,program) =>
 {
-    var num = caracter;
-    var token = new Token();
-    
-    // read(caracter);
+    var token = new tokenModel.Token(null,null,null);
 
-    while((Number.isInteger(caracter)))
+    // if(program.length <= 0){
+        // token.setSymbol('snúmero');
+        // token.setLexem(num);
+        // return {'token': token, 'program': program};
+    // }
+
+    var character = read(program);
+
+    while(character && character.match(/\d+/g))
     {
-        num = num + caracter;
-        // read(caracter);
+        num = num + character;
+        character = read(program);
     }
-    // token.setSymbol('snúmero');
-    // token.setLexem(num);
 
-    // return token;
+    token.setSymbol('snumero');
+    token.setLexem(num);
+
+    return {'token': token, 'program': program};
+}
+
+function read(character){
+    return character.shift();
 }

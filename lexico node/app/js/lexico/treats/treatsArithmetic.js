@@ -24,5 +24,5 @@ module.exports = (caracter) =>
     read(caracter);
     token.setLexem(arithmetic);
 
-    return token;
+    return {'token': token, 'program': program};
 }

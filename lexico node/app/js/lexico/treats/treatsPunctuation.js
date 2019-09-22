@@ -30,5 +30,5 @@ module.exports = (caracter) =>
     read(caracter);
     token.setLexem(punctuation);
 
-    return token;
+    return {'token': token, 'program': program};
 }

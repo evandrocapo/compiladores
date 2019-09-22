@@ -9,19 +9,19 @@ class Token {
         return this.lexem;
     }
 
-    getSymbol() {
-        return this.symbol;
-    }
-
     setLexem(params){
         this.lexem = params;
+    }
+
+    getSymbol() {
+        return this.symbol;
     }
 
     setSymbol(params){
         this.symbol = params;
     }
 
-    setToken = (lexem,symbol) => {
+    setToken(lexem,symbol){
         this.symbol;
         this.lexem;
     }

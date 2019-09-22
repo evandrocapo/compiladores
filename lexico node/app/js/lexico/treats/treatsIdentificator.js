@@ -16,5 +16,5 @@ module.exports = (caracter) =>
     // token.setLexem(id);
     // treatsReservedWord(id,token);
 
-    // return token;
+    return {'token': token, 'program': program};
 }

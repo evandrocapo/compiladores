@@ -1,4 +1,4 @@
-// const catchToken = require('../app/js/lexico/catchToken')
+const catchToken = require('../app/js/lexico/catchToken')
 const tokenModel = require('./Token');
 
 class Lexic {
@@ -9,7 +9,7 @@ class Lexic {
         this.character = null;
     }
 
-    main() {
+    async main() {
         var isFileEnd = false;
         var list;
 
@@ -24,7 +24,7 @@ class Lexic {
                     this.character = readCharacter(this.program);
                 }
                 while (this.character === ' ' && !isFileEnd) {
-                    this.tokens = insertList(this.character, this.tokens);
+                    // this.tokens = insertList(this.character, this.tokens);
                     this.character = readCharacter(this.program);
                 }
             }
@@ -32,12 +32,16 @@ class Lexic {
             if (!isFileEnd) {
                 // this.tokens = insertList(this.character, this.tokens);
                 // this.character = catchToken(this.program);
-                this.tokens(insertList(catchToken(this.program), this.tokens));
+                let result = catchToken(this.character,this.program)
+                this.tokens = insertList(result.token, this.tokens);
+                this.program = result.program
+                if(this.program.length <= 0) isFileEnd = true;
+                this.character = readCharacter(this.program)
             }
         }
 
         
-        console.log(this.tokens.join(''));
+        console.log(this.tokens);
         return this.tokens;
     }
 
@@ -50,10 +54,6 @@ function insertList (token,listaTokens){
 
 function readCharacter(program){
     return program.shift();
-}
-
-function catchToken(character){
-    // return character.shift()
 }
 
 module.exports = {Lexic}

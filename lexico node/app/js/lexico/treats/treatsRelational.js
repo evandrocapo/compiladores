@@ -57,5 +57,5 @@ module.exports = (caracter) =>
     
     token.setLexem(relational);
 
-    return token;
+    return {'token': token, 'program': program};
 }

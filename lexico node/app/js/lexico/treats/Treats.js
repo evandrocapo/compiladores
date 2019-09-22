@@ -7,19 +7,18 @@ const treatsRelational = require('../treats/treatsRelational')
 class Treats{
 
     constructor(){
-        // this.token = new Token();
         this.character = null;
     }
 
-    treatsDigit = (caracter) => treatsDigit;
+    treatsDigit = treatsDigit;
 
-    treatsIdentificator = (caracter) => treatsIdentificator;
+    treatsIdentificator = treatsIdentificator;
 
-    treatsAssignment = (caracter) => treatsAssignment;
+    treatsAssignment = treatsAssignment;
 
-    treatsPunctuation = (caracter) => treatsPunctuation;
+    treatsPunctuation = treatsPunctuation;
 
-    treatsRelational = (caracter) => treatsRelational;
+    treatsRelational = treatsRelational;
 
     getCharacter(){
         return this.caracter;
