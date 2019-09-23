@@ -66,5 +66,5 @@ module.exports = (id, token) =>
             token.setSymbol('sidentificador');
         break;
     }
-    return {'token': token, 'program': program};
+    return token;
 }

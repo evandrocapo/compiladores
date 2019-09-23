@@ -1,20 +1,26 @@
 const treatsReservedWord = require('./treatsReservedWord')
 const tokenModel = require('../../../../models/Token');
 
-module.exports = (caracter) =>
+module.exports = (character,program, linha) =>
 {
-    var id = caracter;
-    var token = new Token();
+    var token = new tokenModel.Token(null,null,null);
+    var id = character;
 
-    // read(caracter);
+    character = read(program);
 
-    while(caracter.value.match("/^[A-Za-z]+$/") || caracter === '_')
+    while(character && character.match(/^[A-Za-z]+$/) || character === '_')
     {
-       id = id + caracter;
-    //    read(caracter); 
+       id = id + character;
+       character = read(program)
     }
-    // token.setLexem(id);
-    // treatsReservedWord(id,token);
 
-    return {'token': token, 'program': program};
+    token.setLexem(id);
+    token.setLine(linha)
+    token = treatsReservedWord(id,token);
+
+    return {'token': token, 'program': program, 'character': character};
+}
+
+function read(character){
+    return character.shift();
 }

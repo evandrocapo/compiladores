@@ -1,22 +1,28 @@
 const tokenModel = require('../../../../models/Token');
 
-module.exports = (caracter) =>
+module.exports = (character, program, linha) =>
 {
-    var assignment = caracter;
-    var token = new Token();
-    read(caracter);
+    console.log(character)
+    var assignment = character;
+    var token = new tokenModel.Token();
+    character = read(program);
 
-    if(caracter === '=')
+    if(character === '=')
     {
-        assignment = assignment + caracter;
-        read(caracter);
+        assignment = assignment + character;
         token.setSymbol('satribuiçao');
     }
     else
     {
         token.setSymbol('sdoispontos');
     }
-    token.setSymbol(assignment);
+    token.setLexem(assignment);
+    token.setLine(linha)
+    character = read(program);
 
-    return {'token': token, 'program': program};
+    return {'token': token, 'program': program, 'character': character};
+}
+
+function read(character){
+    return character.shift();
 }

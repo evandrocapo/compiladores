@@ -25,6 +25,14 @@ class Token {
         this.symbol;
         this.lexem;
     }
+
+    getLine(){
+        return this.line;
+    }
+
+    setLine(line){
+        this.line = line;
+    }
 }
 
 module.exports = {Token}

@@ -7,36 +7,47 @@ class Lexic {
         this.tokens = new Array; // Array<Tokens>
         this.program = Array.from(program);
         this.character = null;
+        this.linha = 1;
     }
 
     async main() {
         var isFileEnd = false;
         var list;
+        console.log(this.linha)
 
-        this.character = readCharacter(this.program);
+        let result = readCharacter(this.program, this.linha);
+        this.character = result.char;
+        this.linha = result.linha
 
         while (!isFileEnd) {
-            while (this.character === '{' || this.character === ' ' && !isFileEnd) {
+            while (this.character === '{' || this.character === ' ' || this.character === '\t' && !isFileEnd) {
                 if (this.character === '{') {
                     while (this.character !== '}' && !isFileEnd) {
-                        this.character = readCharacter(this.program);
+                        let result = readCharacter(this.program, this.linha);
+                        this.character = result.char;
+                        this.linha = result.linha
                     }
-                    this.character = readCharacter(this.program);
+                    let result = readCharacter(this.program, this.linha);
+                    this.character = result.char;
+                    this.linha = result.linha
                 }
-                while (this.character === ' ' && !isFileEnd) {
+                while (this.character === ' ' || this.character === '\t' && !isFileEnd) {
                     // this.tokens = insertList(this.character, this.tokens);
-                    this.character = readCharacter(this.program);
+                    let result = readCharacter(this.program, this.linha);
+                    this.character = result.char;
+                    this.linha = result.linha
                 }
             }
             if(this.character == undefined) isFileEnd = true;
             if (!isFileEnd) {
                 // this.tokens = insertList(this.character, this.tokens);
                 // this.character = catchToken(this.program);
-                let result = catchToken(this.character,this.program)
+                let result = catchToken(this.character,this.program, this.linha);
                 this.tokens = insertList(result.token, this.tokens);
-                this.program = result.program
-                if(this.program.length <= 0) isFileEnd = true;
-                this.character = readCharacter(this.program)
+                this.program = result.program;
+                this.character = result.character;
+                if(this.program.length <= 0 && this.character == undefined) isFileEnd = true;
+                console.log(this.character)
             }
         }
 
@@ -52,8 +63,18 @@ function insertList (token,listaTokens){
     return listaTokens;
 }
 
-function readCharacter(program){
-    return program.shift();
+function readCharacter(program, linha){
+    let char = program.shift();
+    let i = 0;
+
+    while(char == '\n' || char == '\r') {
+        char = program.shift();
+        i = i + 1;
+    }
+
+    linha = linha + (i/2);
+
+    return {'char': char, 'linha': linha};
 }
 
 module.exports = {Lexic}

@@ -1,38 +1,37 @@
 const treatsModel = require('./treats/Treats')
 const tokenModel = require('../../../models/Token');
 
-module.exports = (caracter, program) => {
+module.exports = (caracter, program, linha) => {
 
         let treats = new treatsModel.Treats()
 
         if(caracter.match(/\d+/g))
         {
-            return treats.treatsDigit(caracter,program);
+            return treats.treatsDigit(caracter,program, linha);
+                   
         }
         else if(caracter.match(/^[A-Za-z]+$/))
         {
-            // token.setToken() = Treats.treatsIdentificator(caracter);
+            return treats.treatsIdentificator(caracter,program, linha);
         }
         else if(caracter === ':')
         {
-            // token.setToken() = Treats.treatsAssignment(caracter);
+            return treats.treatsAssignment(caracter,program, linha);
         }
         else if(caracter === '+' || caracter === '-' || caracter ==='*')
         {
-            // token.setToken() = Treats.treatsArithmetic(caracter);
+            return treats.treatsArithmetic(caracter,program, linha);
         }
         else if(caracter === '<' || caracter === '>' || caracter ==='=')
         {
-            // token.setToken() = Treats.treatsRelational(caracter);
+            return treats.treatsRelational(caracter,program, linha);
         }
         else if(caracter === ';' || caracter === ',' || caracter ==='(' || caracter === ')' || caracter ==='.')
         {
-            // token.setToken() = Treats.treatsPunctuation(caracter);
+            return treats.treatsPunctuation(caracter,program, linha);
         }
         else
         {
             throw "error no catchToken"
         }
-
-        return 0;
     }

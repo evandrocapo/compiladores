@@ -1,15 +1,9 @@
 const tokenModel = require("../../../../models/Token");
 
 //Imports
-module.exports = (num,program) =>
+module.exports = (num,program, linha) =>
 {
     var token = new tokenModel.Token(null,null,null);
-
-    // if(program.length <= 0){
-        // token.setSymbol('snúmero');
-        // token.setLexem(num);
-        // return {'token': token, 'program': program};
-    // }
 
     var character = read(program);
 
@@ -21,8 +15,9 @@ module.exports = (num,program) =>
 
     token.setSymbol('snumero');
     token.setLexem(num);
+    token.setLine(linha)
 
-    return {'token': token, 'program': program};
+    return {'token': token, 'program': program, 'character': character};
 }
 
 function read(character){
