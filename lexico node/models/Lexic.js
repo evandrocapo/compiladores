@@ -10,7 +10,7 @@ class Lexic {
         this.linha = 1;
     }
 
-    async main() {
+    main() {
         var isFileEnd = false;
         var list;
 
@@ -18,39 +18,44 @@ class Lexic {
         this.character = result.char;
         this.linha = result.linha
 
-        while (!isFileEnd) {
-            while (this.character === '{' || this.character === ' ' || this.character === '\t' && !isFileEnd) {
-                if (this.character === '{') {
-                    while (this.character !== '}' && !isFileEnd) {
+        try{
+            while (!isFileEnd) {
+                while (this.character === '{' || this.character === ' ' || this.character === '\t' && !isFileEnd) {
+                    if (this.character === '{') {
+                        while (this.character !== '}' && !isFileEnd) {
+                            let result = readCharacter(this.program, this.linha);
+                            this.character = result.char;
+                            this.linha = result.linha
+                            if(this.character == undefined) throw "O arquivo acabou e nao houve o fechamento do comentario. \nLinha: " + this.linha;
+                        }
                         let result = readCharacter(this.program, this.linha);
                         this.character = result.char;
                         this.linha = result.linha
                     }
-                    let result = readCharacter(this.program, this.linha);
-                    this.character = result.char;
-                    this.linha = result.linha
+                    while (this.character === ' ' || this.character === '\t' && !isFileEnd) {
+                        let result = readCharacter(this.program, this.linha);
+                        this.character = result.char;
+                        this.linha = result.linha
+                    }
                 }
-                while (this.character === ' ' || this.character === '\t' && !isFileEnd) {
-                    let result = readCharacter(this.program, this.linha);
+                if(this.character == undefined) isFileEnd = true;
+                if (!isFileEnd) {
+                    let result = catchToken(this.character,this.program, this.linha);
+                    this.tokens = insertList(result.token, this.tokens);
+                    this.program = result.program;
+                    this.character = result.character;
+                    result = verificador(this.character,this.program,this.linha)
                     this.character = result.char;
-                    this.linha = result.linha
+                    this.program = result.program;
+                    this.linha = result.linha;
+                    if(this.program.length <= 0 && this.character == undefined) isFileEnd = true;
                 }
             }
-            if(this.character == undefined) isFileEnd = true;
-            if (!isFileEnd) {
-                let result = catchToken(this.character,this.program, this.linha);
-                this.tokens = insertList(result.token, this.tokens);
-                this.program = result.program;
-                this.character = result.character;
-                result = verificador(this.character,this.program,this.linha)
-                this.character = result.char;
-                this.program = result.program;
-                this.linha = result.linha;
-                if(this.program.length <= 0 && this.character == undefined) isFileEnd = true;
-            }
+            console.log(this.tokens);
+            return this.tokens;
+        }catch(error){
+            throw error;
         }
-        console.log(this.tokens);
-        return this.tokens;
     }
 
 }

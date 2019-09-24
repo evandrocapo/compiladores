@@ -25,8 +25,6 @@ module.exports = (character, program, linha) =>
     token.setLexem(arithmetic);
     token.setLine(linha)
 
-    console.log(token, character)
-
     return {'token': token, 'program': program, 'character': character};
 }
 

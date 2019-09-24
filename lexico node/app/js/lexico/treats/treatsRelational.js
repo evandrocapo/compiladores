@@ -1,16 +1,16 @@
 const tokenModel = require('../../../../models/Token');
 
 //Imports
-module.exports = (caracter) =>
+module.exports = (character,program,linha) =>
 {
-    var relational = caracter;
-    var token = new Token();
-    //read(caracter);
+    var relational = character;
+    var token = new tokenModel.Token();
+    character = read(program)
 
-    if(caracter === '>' || caracter === '<')
+    if(character === '>' || character === '<')
     {
-        read(caracter);
-        if(caracter === '=')
+        character = read(program)
+        if(character === '=')
         {
             if(relational ==='>')
             {
@@ -20,8 +20,8 @@ module.exports = (caracter) =>
             {
                 token.setSymbol('smenorig');
             }
-            relational = relational + caracter;  
-            read(caracter);
+            relational = relational + character;  
+            character = read(program)
         }
         else
         {
@@ -35,27 +35,33 @@ module.exports = (caracter) =>
             }
         }
     }
-    else if(caracter === '=')
+    else if(character === '=')
     {
         token.setSymbol('sig');
-        read(caracter);
+        character = read(program)
     }
-    else if(caracter === '!')
+    else if(character === '!')
     {
-        read(caracter);
-        if(caracter === '=')
+        character = read(program)
+        if(character === '=')
         {
             token.setSymbol('sdif');
-            relational = relational + caracter; 
-            read(caracter);
+            relational = relational + character; 
+            character = read(program)
         }
         else
         {
-            //erro
+            throw "Erro no treatsRelational"
         }
     }
     
     token.setLexem(relational);
+    token.setLine(linha)
+    
 
-    return {'token': token, 'program': program};
+    return {'token': token, 'program': program, 'character': character};
+}
+
+function read(character){
+    return character.shift();
 }

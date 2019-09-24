@@ -74,13 +74,11 @@ ipcMain.on('exec', async () => {
     try{
         if(await this.program){
             console.log("")
-            console.log(this.program);
-            console.log("")
             let lexico = new lexicModel.Lexic(this.program)
             lexico.main()
         }
     }catch(error){
-        console.error("Ocorreu na index.js na função 'exec': ")
+        console.error("Ocorreu na index.js na funcao 'exec': ")
         console.error(error);
     }
 })

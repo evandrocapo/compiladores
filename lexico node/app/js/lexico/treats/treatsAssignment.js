@@ -2,7 +2,6 @@ const tokenModel = require('../../../../models/Token');
 
 module.exports = (character, program, linha) =>
 {
-    console.log(character)
     var assignment = character;
     var token = new tokenModel.Token();
     character = read(program);

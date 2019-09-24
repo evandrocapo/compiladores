@@ -5,8 +5,6 @@ module.exports = (caracter, program, linha) => {
 
         let treats = new treatsModel.Treats()
 
-        console.log(caracter, program)
-
         if(caracter.match(/\d+/g))
         {
             return treats.treatsDigit(caracter,program, linha);
@@ -22,7 +20,6 @@ module.exports = (caracter, program, linha) => {
         }
         else if(caracter === '+' || caracter === '-' || caracter ==='*')
         {
-            console.log("entrei aqui ?")
             return treats.treatsArithmetic(caracter,program, linha);
         }
         else if(caracter === '<' || caracter === '>' || caracter ==='=')
@@ -35,6 +32,6 @@ module.exports = (caracter, program, linha) => {
         }
         else
         {
-            throw "error no catchToken " + caracter
+            throw "error no Token: " + caracter + "\n" + "linha: " + linha;
         }
     }
