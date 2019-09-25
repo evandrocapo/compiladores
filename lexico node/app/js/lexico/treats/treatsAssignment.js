@@ -17,7 +17,6 @@ module.exports = (character, program, linha) =>
     }
     token.setLexem(assignment);
     token.setLine(linha)
-    character = read(program);
 
     return {'token': token, 'program': program, 'character': character};
 }
