@@ -8,7 +8,7 @@ module.exports = (character,program, linha) =>
 
     character = read(program);
 
-    while(character && character.match(/^[A-Za-z]+$/) || character === '_')
+    while(character && character.match(/^[A-Za-z]+$/) || character === '_' || character.match(/\d+/g))
     {
        id = id + character;
        character = read(program)

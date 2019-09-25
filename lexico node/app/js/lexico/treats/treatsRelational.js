@@ -5,10 +5,10 @@ module.exports = (character,program,linha) =>
 {
     var relational = character;
     var token = new tokenModel.Token();
-    character = read(program)
 
     if(character === '>' || character === '<')
     {
+        
         character = read(program)
         if(character === '=')
         {

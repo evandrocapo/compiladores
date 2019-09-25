@@ -22,7 +22,7 @@ module.exports = (caracter, program, linha) => {
         {
             return treats.treatsArithmetic(caracter,program, linha);
         }
-        else if(caracter === '<' || caracter === '>' || caracter ==='=')
+        else if(caracter === '<' || caracter === '>' || caracter === '=')
         {
             return treats.treatsRelational(caracter,program, linha);
         }
