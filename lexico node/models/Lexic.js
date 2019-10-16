@@ -19,7 +19,7 @@ class Lexic {
         this.linha = result.linha
 
         try{
-            while (!isFileEnd) {
+            //while (!isFileEnd) {
                 while (this.character === '{' || this.character === ' ' || this.character === '\t' && !isFileEnd) {
                     if (this.character === '{') {
                         while (this.character !== '}' && !isFileEnd) {
@@ -41,18 +41,19 @@ class Lexic {
                 if(this.character == undefined) isFileEnd = true;
                 if (!isFileEnd) {
                     let result = catchToken(this.character,this.program, this.linha);
-                    this.tokens = insertList(result.token, this.tokens);
+                    //this.tokens = insertList(result.token, this.tokens);
                     this.program = result.program;
                     this.character = result.character;
                     result = verificador(this.character,this.program,this.linha)
                     this.character = result.char;
                     this.program = result.program;
                     this.linha = result.linha;
-                    if(this.program.length <= 0 && this.character == undefined) isFileEnd = true;
+                    if(this.program.length <= 0 && this.character == undefined) isFileEnd = true; 
                 }
-            }
+           // }
             console.log(this.tokens);
-            return this.tokens;
+            //return this.tokens;
+            return result.token;
         }catch(error){
             throw error;
         }
