@@ -3,15 +3,15 @@ const tokenModel = require('../../../../models/Token');
 //Imports
 module.exports = (token) =>
 {
-   token = lexic(token)
+   token = this.lexic.doLexic()
    analyzeExpression()
    if (token.simbolo === 'sentao')
    {
-       token = lexic(token)
+       token = this.lexic.doLexic()
        analyzeSimpleCommand()
        if(token.simbolo === 'ssenao')
        {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         analyzeSimpleCommand()
        }
    }

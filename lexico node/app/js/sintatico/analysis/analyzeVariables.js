@@ -7,10 +7,10 @@ module.exports = (token) => {
             pesquisa(tabela)
             if (!tabela.duplicidade) {
                 tabela = insere(tabela)
-                token = lexic(token)
+                token = this.lexic.doLexic()
                 if (token.simbolo === 'svírgula' || token.simbolo === 'sdoispontos') {
                     if (token.simbolo === 'svirgula') {
-                        token = lexic(token)
+                        token = this.lexic.doLexic()
                         if (token.simbolo === 'sdoispontos') {
                             //error
                         }
@@ -32,6 +32,6 @@ module.exports = (token) => {
         }
     }
     while (token.simbolo === 'sdoispontos')
-    token = lexic(token)
+    token = this.lexic.doLexic()
     analyzeType()
 }

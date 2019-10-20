@@ -1,5 +1,6 @@
 const tokenModel = require('../../../../models/Token');
 
+
 //Imports
 module.exports = (token) =>
 {
@@ -13,7 +14,7 @@ module.exports = (token) =>
             }
             else
             {
-                token = lexic(token)
+                token = this.lexic.doLexic()
             }
         }
         else
@@ -23,20 +24,20 @@ module.exports = (token) =>
     }
     else if(token.simbolo ===  'snumero')
     {
-        token = lexic(token)
+        token = this.lexic.doLexic()
     }
     else if (token.simbolo === 'snao')
     {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         analyzeFactor()
     }
     else if (token.simbolo === ' sabre_parenteses')
     {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         analyzeExpression()
         if(token.simbolo === 'sfecha_parenteses')
         {
-            token = lexic(token)
+            token = this.lexic.doLexic()
         }
         else
         {
@@ -45,7 +46,7 @@ module.exports = (token) =>
     }
     else if (token.lexema === 'verdadeiro' || token.lexema === 'falso')
     {
-        token = lexic(token)
+        token = this.lexic.doLexic()
     }
     else
     {

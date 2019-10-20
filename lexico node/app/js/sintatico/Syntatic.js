@@ -1,13 +1,19 @@
 const catchToken = require('../app/js/lexico/catchToken')
 const tokenModel = require('./Token');
+import Lexic from '../../../../models/Lexic.js';
 
 class Syntatic {
 
+    constructor()
+    {
+        this.lexic = Lexic.getInstance();
+    }
+
     main() {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         if (token.simbolo === 'sprograma') {
             insereTabela(tabela);
-            token = lexic(token)
+            token =  this.lexic.doLexic()
             if(token.simbolo === 'spontovirgula')
             {
                 analyzeBlock()

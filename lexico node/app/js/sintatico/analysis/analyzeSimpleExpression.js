@@ -5,11 +5,11 @@ module.exports = (token) =>
 {
    if(token.simbolo === 'smais' || token.simbolo === 'smenos')
    {
-       token = lexic(token)
+       token = this.lexic.doLexic()
        analyzeTerm()
        while(token.simbolo === 'smais' || token.simbolo === 'smenos' || token.simbolo === 'sou')
        {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         analyzeTerm()
        }
    }

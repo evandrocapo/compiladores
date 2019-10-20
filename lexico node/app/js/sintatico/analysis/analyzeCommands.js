@@ -5,13 +5,13 @@ module.exports = (token) =>
 {
    if(token.simbolo === 'sinicio')
    {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         analyzeSimpleCommand()
         while(token.simbolo !== 'sfim')
         {
             if(token.simbolo === 'spontovirgula')
             {
-                token = lexic(token)
+                token = this.lexic.doLexic()
                 if(token.simbolo !== 'sfim')
                 {
                     analyzeSimpleCommand()
@@ -25,7 +25,7 @@ module.exports = (token) =>
             {
                 //error
             }
-            token = lexic(token)
+            token = this.lexic.doLexic()
         }
    }
    else

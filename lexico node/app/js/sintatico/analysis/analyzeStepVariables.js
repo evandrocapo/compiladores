@@ -5,7 +5,7 @@ module.exports = (token) =>
 {
    if(token.simbolo === 'svar')
    {
-       token = lexic(token)
+       token = this.lexic.doLexic()
        if(token.simbolo === ' sidentificador')
        {
            while (token.simbolo === ' sidentificador')
@@ -13,7 +13,7 @@ module.exports = (token) =>
                 analyzeVariables()
                 if(token.simbolo === 'spontovirg')
                 {
-                    token = lexic(token)
+                    token = this.lexic.doLexic()
                 }
                 else
                 {

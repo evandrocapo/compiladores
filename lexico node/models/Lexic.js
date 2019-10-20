@@ -10,7 +10,17 @@ class Lexic {
         this.linha = 1;
     }
 
-    main() {
+    getInstance()
+    {
+        if(instance === null || instance === undefined)
+        {
+            this.instance = new Lexic(program);
+        }
+        return this.instance;
+    }
+
+
+    doLexic() {
         var isFileEnd = false;
         var list;
 

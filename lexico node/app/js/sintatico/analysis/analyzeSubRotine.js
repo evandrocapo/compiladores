@@ -14,7 +14,7 @@ module.exports = (token) =>
                 analyzeFuncDeclaration()
             }
             if (token.simbolo === 'spontovirgula') {
-                token = lexic(token)
+                token = this.lexic.doLexic()
             }
             else {
                 //error

@@ -7,7 +7,7 @@ module.exports = (token) =>
 
     while(token.simbolo === 'smult' || token.simbolo === 'sdiv' || token.simbolo === 'se')
     {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         analyzeFactor()
     }
    

@@ -2,14 +2,14 @@ const tokenModel = require('../../../../models/Token');
 
 //Imports
 module.exports = (token) => {
-    token = lexic(token)
+    token = this.lexic.doLexic()
     if (token.simbolo === 'sabre_parenteses') {
-        token = lexic(token)
+        token = this.lexic.doLexic()
         if (token.simbolo === 'sidentificador') {
             if (pesquisa(tabela)) {
-                token = lexic(token)
+                token = this.lexic.doLexic()
                 if (token.simbolo === 'sfecha_parenteses') {
-                    token = lexic(token)
+                    token = this.lexic.doLexic()
                 }
                 else {
                     //error
