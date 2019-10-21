@@ -6,8 +6,8 @@ module.exports = (token) =>
 {
     if(token.simbolo === 'sidentificador')
     {
-        if(pesquisa(tabela))
-        {
+        //if(pesquisa(tabela))
+        //{
             if(tabela.simbolo === 'função inteiro' || tabela.simbolo === 'função inteiro')
             {
                 analyzeCallFunc()
@@ -16,11 +16,11 @@ module.exports = (token) =>
             {
                 token = this.lexic.doLexic()
             }
-        }
-        else
-        {
+        //}
+        //else
+        //{
             //error
-        }
+        //}
     }
     else if(token.simbolo ===  'snumero')
     {

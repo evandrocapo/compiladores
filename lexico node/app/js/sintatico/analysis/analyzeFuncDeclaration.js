@@ -4,13 +4,13 @@ const tokenModel = require('../../../../models/Token');
 module.exports = (token) =>
 {
    token = this.lexic.doLexic()
-   var nivel = 'L'
+   //var nivel = 'L'
 
    if( token.simbolo === 'sidentificador')
    {
-       if(!pesquisa(tabela))
-       {
-            insere(tabela,nivel)
+       //if(!pesquisa(tabela))
+       //{
+            //insere(tabela,nivel)
             token = this.lexic.doLexic()
             if( token.simbolo === 'sdoispontos')
             {
@@ -42,12 +42,12 @@ module.exports = (token) =>
                 //error
             }
 
-       }
-       else
-       {
+       //}
+       //else
+       //{
            //error
-       }
-       desempilha(tabela)
+       //}
+       //desempilha(tabela)
    }
    
 }

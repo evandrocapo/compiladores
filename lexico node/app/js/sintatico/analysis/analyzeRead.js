@@ -7,7 +7,7 @@ module.exports = (token) =>
     if (token.simbolo === 'sabre_parenteses') {
         token = this.lexic.doLexic()
         if (token.simbolo === 'sidentificador') {
-            if (pesquisa(tabela)) {
+            //if (pesquisa(tabela)) {
                 token = this.lexic.doLexic()
                 if (token.simbolo === 'sfecha_parenteses') {
                     token = this.lexic.doLexic()
@@ -15,10 +15,10 @@ module.exports = (token) =>
                 else {
                     //error
                 }
-            }
-            else {
+            //}
+           // else {
                 //error
-            }
+            //}
         } else {
             //error
         }

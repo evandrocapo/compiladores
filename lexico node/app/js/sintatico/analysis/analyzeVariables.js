@@ -4,9 +4,9 @@ const tokenModel = require('../../../../models/Token');
 module.exports = (token) => {
     do {
         if (token.simbolo === 'sidentificador') {
-            pesquisa(tabela)
-            if (!tabela.duplicidade) {
-                tabela = insere(tabela)
+           // pesquisa(tabela)
+            //if (!tabela.duplicidade) {
+                //tabela = insere(tabela)
                 token = this.lexic.doLexic()
                 if (token.simbolo === 'svírgula' || token.simbolo === 'sdoispontos') {
                     if (token.simbolo === 'svirgula') {
@@ -22,10 +22,10 @@ module.exports = (token) => {
                 else {
                     //error
                 }
-            }
-            else {
+            //}
+            //else {
                 //error
-            }
+           // }
         }
         else {
             //error

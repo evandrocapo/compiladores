@@ -12,7 +12,7 @@ class Syntatic {
     main() {
         token = this.lexic.doLexic()
         if (token.simbolo === 'sprograma') {
-            insereTabela(tabela);
+            //insereTabela(tabela);
             token =  this.lexic.doLexic()
             if(token.simbolo === 'spontovirgula')
             {

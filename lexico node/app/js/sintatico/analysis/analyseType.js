@@ -9,7 +9,7 @@ module.exports = (token) =>
    }
    else
    {
-       tabela = inserir(tabela)
+       //tabela = inserir(tabela)
        token = this.lexic.doLexic()
    }
    
