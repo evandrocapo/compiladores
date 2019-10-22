@@ -1,8 +1,8 @@
 const tokenModel = require('../../../../models/Token');
-const analyzeCallFunc = require('../app/js/sintatico/analysis/analyzeCallFunc');
-const analyzeFactor = require('../app/js/sintatico/analysis/analyzeFactor');
-const analyzeExpression = require('../app/js/sintatico/analysis/analyzeExpression');
-const Lexic = require('../models/Lexic');
+const analyzeCallFunc = require('./analyzeCallFunc');
+const analyzeFactor = require('./analyzeFactor');
+const analyzeExpression = require('./analyzeExpression');
+const Lexic = require('../../../../models/Lexic');
 
 
 //Imports

@@ -5,7 +5,7 @@ const analyzeWhile = require('./analyzeWhile')
 const analyzeRead = require('./analyzeRead')
 const analyzeWrite = require('./analyzeWrite')
 const analyzeCommands = require('./analyzeCommands')
-const Lexic = require('../models/Lexic');
+const Lexic = require('../../../../models/Lexic');
 
 //Imports
 module.exports = (token) =>

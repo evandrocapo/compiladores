@@ -1,7 +1,7 @@
 const tokenModel = require('../../../../models/Token');
 const analyzeExpression = require('./analyzeExpression')
 const analyzeSimpleCommand = require('./analyzeSimpleCommand')
-const Lexic = require('../models/Lexic');
+const Lexic = require('../../../../models/Lexic');
 
 //Imports
 module.exports = (token) =>
