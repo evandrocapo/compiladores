@@ -9,11 +9,12 @@ class Lexic {
         this.character = null;
         this.linha = 1;
         this.isFileEnd = false;
+        this.instance = null;
     }
 
     getInstance()
     {
-        if(instance === null || instance === undefined)
+        if(this.instance === null || this.instance === undefined)
         {
             this.instance = new Lexic();
         }
