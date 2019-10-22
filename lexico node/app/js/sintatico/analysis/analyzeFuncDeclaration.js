@@ -1,9 +1,13 @@
 const tokenModel = require('../../../../models/Token');
+const Lexic = require('../models/Lexic');
+const analyzeBlock = require('../app/js/sintatico/analysis/analyzeBlock');
+const Lexic = require('../models/Lexic');
 
 //Imports
 module.exports = (token) =>
 {
-   token = this.lexic.doLexic()
+    lexic = Lexic.getInstance();
+   token = lexic.doLexic()
    //var nivel = 'L'
 
    if( token.simbolo === 'sidentificador')
@@ -11,10 +15,10 @@ module.exports = (token) =>
        //if(!pesquisa(tabela))
        //{
             //insere(tabela,nivel)
-            token = this.lexic.doLexic()
+            token = lexic.doLexic()
             if( token.simbolo === 'sdoispontos')
             {
-                token = this.lexic.doLexic()
+                token = lexic.doLexic()
                 if(token.simbolo === 'sinteiro' || token.simbolo === 'sbooleano')
                 {
                     if(token.simbolo === 'sinteiro')
@@ -25,10 +29,10 @@ module.exports = (token) =>
                     {
                         //poe tipo na tabela
                     }
-                    token = this.lexic.doLexic()
+                    token = lexic.doLexic()
                     if(token.simbolo === 'sponto_virgula')
                     {
-                        analyzeBlock()
+                        analyzeBlock(token)
                     }
                 }
                 else

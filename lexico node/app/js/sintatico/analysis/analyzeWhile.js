@@ -1,14 +1,18 @@
 const tokenModel = require('../../../../models/Token');
+const analyzeExpression = require('./analyzeExpression')
+const analyzeSimpleCommand = require('./analyzeSimpleCommand')
+const Lexic = require('../models/Lexic');
 
 //Imports
 module.exports = (token) =>
 {
-   token = this.lexic.doLexic()
-   analyzeExpression()
+    lexic = Lexic.getInstance();
+   token = lexic.doLexic()
+   analyzeExpression(token)
    if(token.simbolo === 'sfaca')
    {
-        token = this.lexic.doLexic() 
-        analyzeSimpleCommand()
+        token = lexic.doLexic() 
+        analyzeSimpleCommand(token)
    }
    else
    {

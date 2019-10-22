@@ -1,19 +1,23 @@
 const tokenModel = require('../../../../models/Token');
+const Lexic = require('../models/Lexic');
+const analyzeVariables = require('./analyzeVariables')
+const Lexic = require('../models/Lexic');
 
 //Imports
 module.exports = (token) =>
 {
+    lexic = Lexic.getInstance();
    if(token.simbolo === 'svar')
    {
-       token = this.lexic.doLexic()
+       token = lexic.doLexic()
        if(token.simbolo === ' sidentificador')
        {
            while (token.simbolo === ' sidentificador')
            {
-                analyzeVariables()
+                analyzeVariables(token)
                 if(token.simbolo === 'spontovirg')
                 {
-                    token = this.lexic.doLexic()
+                    token = lexic.doLexic()
                 }
                 else
                 {

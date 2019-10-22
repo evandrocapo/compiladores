@@ -1,16 +1,20 @@
 const tokenModel = require('../../../../models/Token');
+const analyzeAssignment = require('../app/js/sintatico/analysis/analyzeAssignment');
+const analyzeCallProc = require('../app/js/sintatico/analysis/analyzeCallProc');
+const Lexic = require('../models/Lexic');
 
 //Imports
 module.exports = (token) =>
 {
-   token = this.lexic.doLexic()
+     lexic = Lexic.getInstance();
+   token = lexic.doLexic()
    if(token.simbolo === 'satribuicao')
    {
-       analyzeAssignment()
+        analyzeAssignment(token)
    }
    else
    {
-       analyseCallProc()
+        analyzeCallProc(token)
    }
    
 }

@@ -1,20 +1,25 @@
 const tokenModel = require('../../../../models/Token');
+const Lexic = require('../models/Lexic');
+const analyzeProcDeclaration = require('./analyzeProcDeclaration')
+const analyzeFuncDeclaration = require('./analyzeFuncDeclaration')
+const Lexic = require('../models/Lexic');
 
 //Imports
 module.exports = (token) =>
 {
+    lexic = Lexic.getInstance();
     if (token.simbolo === 'sprocedimento' || token.simbolo === 'sfuncao') {
         //codigo vermelho
         while (token.simbolo === 'sprocedimento' || token.simbolo === 'sfuncao') {
             if (token.simbolo === 'sprocedimento') {
-                analyzeProcDeclaration()
+                analyzeProcDeclaration(token)
 
             }
             else {
-                analyzeFuncDeclaration()
+                analyzeFuncDeclaration(token)
             }
             if (token.simbolo === 'spontovirgula') {
-                token = this.lexic.doLexic()
+                token = lexic.doLexic()
             }
             else {
                 //error

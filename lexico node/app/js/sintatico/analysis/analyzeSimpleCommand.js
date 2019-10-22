@@ -1,4 +1,11 @@
 const tokenModel = require('../../../../models/Token');
+const analyzeAtribCallProc = require('./analyzeAtribCallProc')
+const analyzeIf = require('./analyzeIf')
+const analyzeWhile = require('./analyzeWhile')
+const analyzeRead = require('./analyzeRead')
+const analyzeWrite = require('./analyzeWrite')
+const analyzeCommands = require('./analyzeCommands')
+const Lexic = require('../models/Lexic');
 
 //Imports
 module.exports = (token) =>
@@ -6,22 +13,22 @@ module.exports = (token) =>
    switch(token.simbolo)
    {
        case 'sidentificador':
-           analyzeAtribCallProc()
+           analyzeAtribCallProc(token)
            break;
         case 'sse':
-            analyzeIf()
+            analyzeIf(token)
             break;
         case 'senquanto':
-            analyzeWhile()
+            analyzeWhile(token)
             break;
         case 'sleia':
-            analyzeRead()
+            analyzeRead(token)
             break;
         case 'sescreva':
-            analyzeWrite()
+            analyzeWrite(token)
             break;
         default:
-            analyzeCommands()
+            analyzeCommands(token)
             break;
    }
    

@@ -3,25 +3,30 @@ const tokenModel = require('./Token');
 
 class Lexic {
 
-    constructor(program) {
+    constructor() {
         this.tokens = new Array; // Array<Tokens>
-        this.program = Array.from(program);
+        this.program = null //Array.from(program);
         this.character = null;
         this.linha = 1;
+        this.isFileEnd = false;
     }
 
     getInstance()
     {
         if(instance === null || instance === undefined)
         {
-            this.instance = new Lexic(program);
+            this.instance = new Lexic();
         }
         return this.instance;
     }
 
+    setProgram(program){
+        this.program = Array.from(program);
+    }
+
 
     doLexic() {
-        var isFileEnd = false;
+        // var this.isFileEnd = false;
         var list;
 
         let result = readCharacter(this.program, this.linha);
@@ -29,10 +34,10 @@ class Lexic {
         this.linha = result.linha
 
         try{
-            //while (!isFileEnd) {
-                while (this.character === '{' || this.character === ' ' || this.character === '\t' && !isFileEnd) {
+            //while (!this.isFileEnd) {
+                while (this.character === '{' || this.character === ' ' || this.character === '\t' && !this.isFileEnd) {
                     if (this.character === '{') {
-                        while (this.character !== '}' && !isFileEnd) {
+                        while (this.character !== '}' && !this.isFileEnd) {
                             let result = readCharacter(this.program, this.linha);
                             this.character = result.char;
                             this.linha = result.linha
@@ -42,14 +47,14 @@ class Lexic {
                         this.character = result.char;
                         this.linha = result.linha
                     }
-                    while (this.character === ' ' || this.character === '\t' && !isFileEnd) {
+                    while (this.character === ' ' || this.character === '\t' && !this.isFileEnd) {
                         let result = readCharacter(this.program, this.linha);
                         this.character = result.char;
                         this.linha = result.linha
                     }
                 }
-                if(this.character == undefined) isFileEnd = true;
-                if (!isFileEnd) {
+                if(this.character == undefined) this.isFileEnd = true;
+                if (!this.isFileEnd) {
                     let result = catchToken(this.character,this.program, this.linha);
                     //this.tokens = insertList(result.token, this.tokens);
                     this.program = result.program;
@@ -58,10 +63,11 @@ class Lexic {
                     this.character = result.char;
                     this.program = result.program;
                     this.linha = result.linha;
-                    if(this.program.length <= 0 && this.character == undefined) isFileEnd = true; 
+                    if(this.program.length <= 0 && this.character == undefined) this.isFileEnd = true; 
                 }
            // }
-            console.log(this.tokens);
+            // console.log(this.tokens);
+            console.log(result.token);
             //return this.tokens;
             return result.token;
         }catch(error){

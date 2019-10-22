@@ -1,20 +1,24 @@
 const tokenModel = require('../../../../models/Token');
+const analyzeSimpleCommand = require('../app/js/sintatico/analysis/analyzeSimpleCommand');
+const Lexic = require('../models/Lexic');
+
 
 //Imports
 module.exports = (token) =>
 {
+    lexic = Lexic.getInstance();
    if(token.simbolo === 'sinicio')
    {
-        token = this.lexic.doLexic()
-        analyzeSimpleCommand()
+        token = lexic.doLexic()
+        analyzeSimpleCommand(token)
         while(token.simbolo !== 'sfim')
         {
             if(token.simbolo === 'spontovirgula')
             {
-                token = this.lexic.doLexic()
+                token = lexic.doLexic()
                 if(token.simbolo !== 'sfim')
                 {
-                    analyzeSimpleCommand()
+                    analyzeSimpleCommand(token)
                 }
                 else
                 {
@@ -25,7 +29,7 @@ module.exports = (token) =>
             {
                 //error
             }
-            token = this.lexic.doLexic()
+            token = lexic.doLexic()
         }
    }
    else

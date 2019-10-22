@@ -1,16 +1,19 @@
 const tokenModel = require('../../../../models/Token');
+const Lexic = require('../models/Lexic');
+const analyzeType = require('./analyzeType')
 
 //Imports
 module.exports = (token) => {
+    lexic = Lexic.getInstance();
     do {
         if (token.simbolo === 'sidentificador') {
            // pesquisa(tabela)
             //if (!tabela.duplicidade) {
                 //tabela = insere(tabela)
-                token = this.lexic.doLexic()
+                token = lexic.doLexic()
                 if (token.simbolo === 'svírgula' || token.simbolo === 'sdoispontos') {
                     if (token.simbolo === 'svirgula') {
-                        token = this.lexic.doLexic()
+                        token = lexic.doLexic()
                         if (token.simbolo === 'sdoispontos') {
                             //error
                         }
@@ -32,6 +35,6 @@ module.exports = (token) => {
         }
     }
     while (token.simbolo === 'sdoispontos')
-    token = this.lexic.doLexic()
-    analyzeType()
+    token = lexic.doLexic()
+    analyzeType(token)
 }
