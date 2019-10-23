@@ -8,6 +8,7 @@ class Syntatic {
     constructor() {
         this.lexic = Lexic;
         this.token = null;
+        this.analize = new Analyze();
     }
 
     main() {
@@ -19,7 +20,8 @@ class Syntatic {
             this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {
-                    Analyze.main(this.token)
+                    console.log(Analyze)
+                    Analyze.Analyze.main(this.token)
                     if(this.token.symbol === 'sponto')
                     {
                         if(this.lexic.isFileEnd)

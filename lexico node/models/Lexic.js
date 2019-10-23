@@ -57,9 +57,6 @@ class Lexic {
                 if(this.character == undefined) this.isFileEnd = true;
                 if (!this.isFileEnd) {
                     let result = catchToken(this.character,this.program, this.linha);
-                    console.log(result.token.lexem)
-                    if(result.token.lexem ===';')
-                    console.log('pegou')
                     //this.tokens = insertList(result.token, this.tokens);
                     var lexicToken = result.token;
                     this.program = result.program;
