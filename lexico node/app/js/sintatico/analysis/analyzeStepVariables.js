@@ -5,29 +5,29 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
-   if(token.simbolo === 'svar')
+    lexic = Lexic;
+   if(token.symbol === 'svar')
    {
        token = lexic.doLexic()
-       if(token.simbolo === ' sidentificador')
+       if(token.symbol === ' sidentificador')
        {
-           while (token.simbolo === ' sidentificador')
+           while (token.symbol === ' sidentificador')
            {
                 analyzeVariables(token)
-                if(token.simbolo === 'spontovirg')
+                if(token.symbol === 'spontovirg')
                 {
                     token = lexic.doLexic()
                 }
                 else
                 {
-                    //error
+                    throw "error"
                 }
                 
            }
        }
        else
        {
-           //error
+        throw "error"
        }
    }
    

@@ -4,26 +4,26 @@ const analyzeType = require('./analyzeType')
 
 //Imports
 module.exports = (token) => {
-    lexic = Lexic.getInstance();
+    lexic = Lexic;
     do {
-        if (token.simbolo === 'sidentificador') {
+        if (token.symbol === 'sidentificador') {
            // pesquisa(tabela)
             //if (!tabela.duplicidade) {
                 //tabela = insere(tabela)
                 token = lexic.doLexic()
-                if (token.simbolo === 'svírgula' || token.simbolo === 'sdoispontos') {
-                    if (token.simbolo === 'svirgula') {
+                if (token.symbol === 'svírgula' || token.symbol === 'sdoispontos') {
+                    if (token.symbol === 'svirgula') {
                         token = lexic.doLexic()
-                        if (token.simbolo === 'sdoispontos') {
-                            //error
+                        if (token.symbol === 'sdoispontos') {
+                            throw "error"
                         }
                     }
                     else {
-                        //error
+                        throw "error"
                     }
                 }
                 else {
-                    //error
+                    throw "error"
                 }
             //}
             //else {
@@ -31,10 +31,10 @@ module.exports = (token) => {
            // }
         }
         else {
-            //error
+            throw "error"
         }
     }
-    while (token.simbolo === 'sdoispontos')
+    while (token.symbol === 'sdoispontos')
     token = lexic.doLexic()
     analyzeType(token)
 }

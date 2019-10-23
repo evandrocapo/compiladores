@@ -6,22 +6,22 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
-    if (token.simbolo === 'sprocedimento' || token.simbolo === 'sfuncao') {
+    lexic = Lexic;
+    if (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
         //codigo vermelho
-        while (token.simbolo === 'sprocedimento' || token.simbolo === 'sfuncao') {
-            if (token.simbolo === 'sprocedimento') {
+        while (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
+            if (token.symbol === 'sprocedimento') {
                 analyzeProcDeclaration(token)
 
             }
             else {
                 analyzeFuncDeclaration(token)
             }
-            if (token.simbolo === 'spontovirgula') {
+            if (token.symbol === 'sponto_virgula') {
                 token = lexic.doLexic()
             }
             else {
-                //error
+                throw "error"
             }
         }
     }

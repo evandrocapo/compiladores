@@ -6,20 +6,21 @@ const Analyze = require('../models/Analyze');
 class Syntatic {
 
     constructor() {
-        this.lexic = Lexic.getInstance();
+        this.lexic = Lexic;
         this.token = null;
     }
 
     main() {
         this.token = this.lexic.doLexic()
-        if (this.token.simbolo === 'sprograma') {
-            if(this.token.simbolo === 'sidentificador'){
+        if (this.token.symbol === 'sprograma') {
+            this.token = this.lexic.doLexic()
+            if(this.token.symbol === 'sidentificador'){
             //insereTabela(tabela);
             this.token = this.lexic.doLexic()
-                if(this.token.simbolo === 'spontovirgula')
+                if(this.token.symbol === 'sponto_virgula')
                 {
                     Analyze.main(this.token)
-                    if(this.token.simbolo === 'sponto')
+                    if(this.token.symbol === 'sponto')
                     {
                         if(this.lexic.isFileEnd)
                         {
@@ -28,26 +29,26 @@ class Syntatic {
                         }
                         else
                         {
-                            //error
+                           throw "error"
                         }
                     }
                     else
                     {
-                        //error
+                       throw "error"
                     }
                 }
                 else
                 {
-                    //error
+                   throw "error esperava um ponto e virgula caralho"
                 }
             }
             else{
-                //error
+               throw "error"
             }
         }
         else
         {
-            //error
+           throw "error"
         }
     }
 }

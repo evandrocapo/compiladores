@@ -6,14 +6,14 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
+    lexic = Lexic;
    token = lexic.doLexic()
    analyzeExpression(token)
-   if (token.simbolo === 'sentao')
+   if (token.symbol === 'sentao')
    {
        token = lexic.doLexic()
        analyzeSimpleCommand(token)
-       if(token.simbolo === 'ssenao')
+       if(token.symbol === 'ssenao')
        {
         token = lexic.doLexic()
         analyzeSimpleCommand(token)

@@ -5,22 +5,22 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
+    lexic = Lexic;
    token = lexic.doLexic()
    //var nivel = 'L'
 
-   if( token.simbolo === 'sidentificador')
+   if( token.symbol === 'sidentificador')
    {
        //if(!pesquisa(tabela))
        //{
             //insere(tabela,nivel)
             token = lexic.doLexic()
-            if( token.simbolo === 'sdoispontos')
+            if( token.symbol === 'sdoispontos')
             {
                 token = lexic.doLexic()
-                if(token.simbolo === 'sinteiro' || token.simbolo === 'sbooleano')
+                if(token.symbol === 'sinteiro' || token.symbol === 'sbooleano')
                 {
-                    if(token.simbolo === 'sinteiro')
+                    if(token.symbol === 'sinteiro')
                     {
                         //poe tipo na tabela
                     }
@@ -29,20 +29,20 @@ module.exports = (token) =>
                         //poe tipo na tabela
                     }
                     token = lexic.doLexic()
-                    if(token.simbolo === 'sponto_virgula')
+                    if(token.symbol === 'sponto_virgula')
                     {
                         analyzeBlock(token)
                     }
                 }
                 else
                 {
-                    //error
+                   throw "error"
                 }
 
             }
             else
             {
-                //error
+               throw "error"
             }
 
        //}

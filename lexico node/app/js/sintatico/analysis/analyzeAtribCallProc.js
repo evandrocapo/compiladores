@@ -6,9 +6,9 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-     lexic = Lexic.getInstance();
+     lexic = Lexic;
    token = lexic.doLexic()
-   if(token.simbolo === 'satribuicao')
+   if(token.symbol === 'satribuicao')
    {
         analyzeAssignment(token)
    }

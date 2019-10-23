@@ -8,12 +8,12 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
-    if(token.simbolo === 'sidentificador')
+    lexic = Lexic;
+    if(token.symbol === 'sidentificador')
     {
         //if(pesquisa(tabela))
         //{
-            // if(tabela.simbolo === 'função inteiro' || tabela.simbolo === 'função inteiro')
+            // if(tabela.symbol === 'função inteiro' || tabela.symbol === 'função inteiro')
             // {
                 analyzeCallFunc(token)
             // }
@@ -27,35 +27,35 @@ module.exports = (token) =>
             //error
         //}
     }
-    else if(token.simbolo ===  'snumero')
+    else if(token.symbol ===  'snumero')
     {
         token = lexic.doLexic()
     }
-    else if (token.simbolo === 'snao')
+    else if (token.symbol === 'snao')
     {
         token = lexic.doLexic()
         analyzeFactor(token)
     }
-    else if (token.simbolo === ' sabre_parenteses')
+    else if (token.symbol === ' sabre_parenteses')
     {
         token = this.lexic.doLexic()
         analyzeExpression(token)
-        if(token.simbolo === 'sfecha_parenteses')
+        if(token.symbol === 'sfecha_parenteses')
         {
             token = lexic.doLexic()
         }
         else
         {
-            //error
+           Lexic
         }
     }
-    else if (token.lexema === 'verdadeiro' || token.lexema === 'falso')
+    else if (token.lexem === 'verdadeiro' || token.lexem === 'falso')
     {
         token = lexic.doLexic()
     }
     else
     {
-        //error
+       Lexic
     }
    
 }

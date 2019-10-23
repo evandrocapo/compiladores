@@ -10,7 +10,7 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-   switch(token.simbolo)
+   switch(token.symbol)
    {
        case 'sidentificador':
            analyzeAtribCallProc(token)

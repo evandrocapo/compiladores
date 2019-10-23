@@ -4,22 +4,22 @@ const Lexic = require('../../../../models/Lexic');
 
 //Imports
 module.exports = (token) => {
-    lexic = Lexic.getInstance();
+    lexic = Lexic;
     token = lexic.doLexic()
     //var nivel = 'L'
 
-    if (token.simbolo === 'sidentificador') {
+    if (token.symbol === 'sidentificador') {
         //if (!pesquisa(tabela)) {
-            insere(tabela, nivel)
+            //insere(tabela, nivel)
             token = lexic.doLexic()
 
             token = lexic.doLexic()
-            if (token.simbolo === 'sponto_virgula') {
+            if (token.symbol === 'sponto_virgula') {
                 analyzeBlock(token)
             }
             else
             {
-                //error
+               throw "error"
             }
         //}
         //else {

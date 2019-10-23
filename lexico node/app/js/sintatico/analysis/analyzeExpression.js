@@ -5,9 +5,9 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-   if(token.simbolo === 'smaior' || token.simbolo === 'sig' || token.simbolo === 'smenor' || token.simbolo === 'smenorig' || token.simbolo === 'sdif' || token.simbolo === 'smaiorig' )
+   if(token.symbol === 'smaior' || token.symbol === 'sig' || token.symbol === 'smenor' || token.symbol === 'smenorig' || token.symbol === 'sdif' || token.symbol === 'smaiorig' )
    {
-        lexic = Lexic.getInstance();
+        lexic = Lexic;
         token = lexic.doLexic()
        analyzeSimpleExpression()
    }

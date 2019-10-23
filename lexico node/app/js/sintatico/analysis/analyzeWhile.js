@@ -6,17 +6,17 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
+    lexic = Lexic;
    token = lexic.doLexic()
    analyzeExpression(token)
-   if(token.simbolo === 'sfaca')
+   if(token.symbol === 'sfaca')
    {
         token = lexic.doLexic() 
         analyzeSimpleCommand(token)
    }
    else
    {
-       //error
+    throw "error"
    }
    
 }

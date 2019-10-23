@@ -6,35 +6,35 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
-   if(token.simbolo === 'sinicio')
+    lexic = Lexic;
+   if(token.symbol === 'sinicio')
    {
         token = lexic.doLexic()
         analyzeSimpleCommand(token)
-        while(token.simbolo !== 'sfim')
+        while(token.symbol !== 'sfim')
         {
-            if(token.simbolo === 'spontovirgula')
+            if(token.symbol === 'sponto_virgula')
             {
                 token = lexic.doLexic()
-                if(token.simbolo !== 'sfim')
+                if(token.symbol !== 'sfim')
                 {
                     analyzeSimpleCommand(token)
                 }
                 else
                 {
-                    //error
+                   throw "error"
                 }
             }
             else
             {
-                //error
+               throw "error"
             }
             token = lexic.doLexic()
         }
    }
    else
    {
-       //error
+      throw "error"
    }
    
 }

@@ -11,7 +11,7 @@ class Lexic {
         this.isFileEnd = false;
         this.instance = null;
     }
-
+/*
     getInstance()
     {
         if(this.instance === null || this.instance === undefined)
@@ -20,7 +20,7 @@ class Lexic {
         }
         return this.instance;
     }
-
+*/
     setProgram(program){
         this.program = Array.from(program);
     }
@@ -57,7 +57,11 @@ class Lexic {
                 if(this.character == undefined) this.isFileEnd = true;
                 if (!this.isFileEnd) {
                     let result = catchToken(this.character,this.program, this.linha);
+                    console.log(result.token.lexem)
+                    if(result.token.lexem ===';')
+                    console.log('pegou')
                     //this.tokens = insertList(result.token, this.tokens);
+                    var lexicToken = result.token;
                     this.program = result.program;
                     this.character = result.character;
                     result = verificador(this.character,this.program,this.linha)
@@ -68,9 +72,9 @@ class Lexic {
                 }
            // }
             // console.log(this.tokens);
-            console.log(result.token);
+            console.log(lexicToken);
             //return this.tokens;
-            return result.token;
+            return lexicToken;
         }catch(error){
             throw error;
         }
@@ -110,4 +114,4 @@ function verificador(char,program, linha){
     return {'char': char, 'program': program, 'linha': linha};
 }
 
-module.exports = {Lexic}
+module.exports = new Lexic();

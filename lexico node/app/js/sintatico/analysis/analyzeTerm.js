@@ -5,10 +5,10 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
+    lexic = Lexic;
     analyzeFactor(token)
 
-    while(token.simbolo === 'smult' || token.simbolo === 'sdiv' || token.simbolo === 'se')
+    while(token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se')
     {
         token = lexic.doLexic()
         analyzeFactor(token)

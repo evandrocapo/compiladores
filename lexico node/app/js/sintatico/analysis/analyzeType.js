@@ -4,10 +4,10 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    lexic = Lexic.getInstance();
-   if(token.símbolo !== 'sinteiro' && token.símbolo !== 'sbooleano')
+    lexic = Lexic;
+   if(token.symbol !== 'sinteiro' && token.symbol !== 'sbooleano')
    {
-       //error
+    throw "error"
    }
    else
    {
