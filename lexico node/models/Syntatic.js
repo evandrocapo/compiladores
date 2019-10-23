@@ -11,6 +11,7 @@ class Syntatic {
     }
 
     main() {
+        let analyzer = new Analyze.Analyze();
         this.token = this.lexic.doLexic()
         if (this.token.symbol === 'sprograma') {
             this.token = this.lexic.doLexic()
@@ -19,7 +20,7 @@ class Syntatic {
             this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {
-                    new Analyze.Analyze().main(this.token)
+                    analyzer.analyzeBlock(this.token)
                     if(this.token.symbol === 'sponto')
                     {
                         if(this.lexic.isFileEnd)
