@@ -7,4 +7,6 @@ module.exports = (token) => {
     lexic = Lexic;
     token = lexic.doLexic()
     token = analyzeExpression(token)
+
+    return token
 }

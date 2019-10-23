@@ -26,25 +26,37 @@ module.exports = (token) =>
 
        if(token.symbol === 'sidentificador'){
         token =  analyzeAtribCallProc(token)
+        console.log('1')
+        console.log(token)
        }
        else{
             if(token.symbol === 'sse') {
                 token = analyzeIf(token)
+                console.log('2')
+                console.log(token)
             }      
             else{
                 if(token.symbol === 'senquanto'){
                     token = analyzeWhile(token)
+                    console.log('3')
+                    console.log(token)
                 }
                 else{
                     if(token.symbol === 'sleia'){
                         token = analyzeRead(token)
+                        console.log('4')
+                        console.log(token)
                     }
                     else{
                         if(token.symbol === 'sescreva'){
                             token = analyzeWrite(token)
+                            console.log('5')
+                            console.log(token)
                         }
                         else{
                             token = analyzeCommands(token)
+                            console.log('6')
+                            console.log(token)
                         }
                     }
                 }

@@ -11,7 +11,6 @@ module.exports = (token) =>
    {
         token = lexic.doLexic()
         token = analyzeSimpleCommand(token)
-        console.log('terminei aqui ó')
         while(token.symbol !== 'sfim')
         {
             if(token.symbol === 'sponto_virgula')
@@ -21,17 +20,13 @@ module.exports = (token) =>
                 {
                     token = analyzeSimpleCommand(token)
                 }
-                else
-                {
-                   throw "Esperava fim"
-                }
             }
             else
             {
                throw "Esperava ;"
             }
-            token = lexic.doLexic()
         }
+        token = lexic.doLexic()
    }
    else
    {

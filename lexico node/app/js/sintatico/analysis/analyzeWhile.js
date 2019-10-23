@@ -9,6 +9,8 @@ module.exports = (token) =>
     lexic = Lexic;
    token = lexic.doLexic()
    token = analyzeExpression(token)
+   console.log('esse carinha aqui')
+   console.log(token)
    if(token.symbol === 'sfaca')
    {
         token = lexic.doLexic() 

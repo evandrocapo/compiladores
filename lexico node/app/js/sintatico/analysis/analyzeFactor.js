@@ -36,9 +36,9 @@ module.exports = (token) =>
         token = lexic.doLexic()
         token = analyzeFactor(token)
     }
-    else if (token.symbol === ' sabre_parenteses')
+    else if (token.symbol === 'sabre_parenteses')
     {
-        token = this.lexic.doLexic()
+        token = lexic.doLexic()
         token = analyzeExpression(token)
         if(token.symbol === 'sfecha_parenteses')
         {

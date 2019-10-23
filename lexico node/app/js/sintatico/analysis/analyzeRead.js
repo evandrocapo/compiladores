@@ -15,18 +15,18 @@ module.exports = (token) =>
                     token = lexic.doLexic()
                 }
                 else {
-                    throw "error"
+                    throw "Esperava )"
                 }
             //}
            // else {
                 //error
             //}
         } else {
-            throw "error"
+            throw "Esperava identificador"
         }
     }
     else {
-        throw "error"
+        throw "Esperava ("
     }
 
     return token
