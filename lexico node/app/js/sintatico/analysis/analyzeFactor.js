@@ -15,7 +15,7 @@ module.exports = (token) =>
         //{
             // if(tabela.symbol === 'função inteiro' || tabela.symbol === 'função inteiro')
             // {
-                analyzeCallFunc(token)
+                token = analyzeCallFunc(token)
             // }
             // else
             // {
@@ -34,12 +34,12 @@ module.exports = (token) =>
     else if (token.symbol === 'snao')
     {
         token = lexic.doLexic()
-        analyzeFactor(token)
+        token = analyzeFactor(token)
     }
     else if (token.symbol === ' sabre_parenteses')
     {
         token = this.lexic.doLexic()
-        analyzeExpression(token)
+        token = analyzeExpression(token)
         if(token.symbol === 'sfecha_parenteses')
         {
             token = lexic.doLexic()
@@ -57,5 +57,7 @@ module.exports = (token) =>
     {
        Lexic
     }
+
+    return token
    
 }

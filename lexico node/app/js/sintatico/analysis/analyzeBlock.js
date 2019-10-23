@@ -9,7 +9,9 @@ module.exports = (token) =>
 {
    lexic = Lexic;
    token = lexic.doLexic()
-   analyzeStepVariables(token)
-   analyzeSubRotine(token)
-   analyzeCommands(token)
+   token = analyzeStepVariables(token)
+   token = analyzeSubRotine(token)
+   token = analyzeCommands(token)
+
+   return token
 }

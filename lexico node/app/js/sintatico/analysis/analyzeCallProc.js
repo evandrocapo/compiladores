@@ -14,4 +14,6 @@ module.exports = (token) =>
     {
        throw "error"
     }
+
+    return token
 }

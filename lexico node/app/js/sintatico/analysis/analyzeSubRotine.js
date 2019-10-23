@@ -11,11 +11,11 @@ module.exports = (token) =>
         //codigo vermelho
         while (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
             if (token.symbol === 'sprocedimento') {
-                analyzeProcDeclaration(token)
+                token = analyzeProcDeclaration(token)
 
             }
             else {
-                analyzeFuncDeclaration(token)
+                token = analyzeFuncDeclaration(token)
             }
             if (token.symbol === 'sponto_virgula') {
                 token = lexic.doLexic()
@@ -25,5 +25,7 @@ module.exports = (token) =>
             }
         }
     }
+
+    return token
    
 }

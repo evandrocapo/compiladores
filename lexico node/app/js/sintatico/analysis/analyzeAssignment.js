@@ -6,5 +6,5 @@ const Lexic = require('../../../../models/Lexic');
 module.exports = (token) => {
     lexic = Lexic;
     token = lexic.doLexic()
-    analyseExpression(token)
+    token = analyzeExpression(token)
 }

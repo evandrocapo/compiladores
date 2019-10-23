@@ -6,12 +6,12 @@ const Lexic = require('../../../../models/Lexic');
 module.exports = (token) =>
 {
     lexic = Lexic;
-    analyzeFactor(token)
+    token = analyzeFactor(token)
 
     while(token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se')
     {
         token = lexic.doLexic()
-        analyzeFactor(token)
+        token = analyzeFactor(token)
     }
    
 }

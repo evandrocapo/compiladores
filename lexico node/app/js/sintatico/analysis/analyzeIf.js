@@ -8,20 +8,20 @@ module.exports = (token) =>
 {
     lexic = Lexic;
    token = lexic.doLexic()
-   analyzeExpression(token)
+   token = analyzeExpression(token)
    if (token.symbol === 'sentao')
    {
        token = lexic.doLexic()
-       analyzeSimpleCommand(token)
+       token = analyzeSimpleCommand(token)
        if(token.symbol === 'ssenao')
        {
         token = lexic.doLexic()
-        analyzeSimpleCommand(token)
+        token = analyzeSimpleCommand(token)
        }
    }
    else
    {
        //error
    }
-   
+   return token
 }

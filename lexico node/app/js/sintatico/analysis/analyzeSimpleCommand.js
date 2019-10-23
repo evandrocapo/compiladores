@@ -13,23 +13,24 @@ module.exports = (token) =>
    switch(token.symbol)
    {
        case 'sidentificador':
-           analyzeAtribCallProc(token)
+        token =  analyzeAtribCallProc(token)
            break;
         case 'sse':
-            analyzeIf(token)
+            token =  analyzeIf(token)
             break;
         case 'senquanto':
-            analyzeWhile(token)
+            token = analyzeWhile(token)
             break;
         case 'sleia':
-            analyzeRead(token)
+            token = analyzeRead(token)
             break;
         case 'sescreva':
-            analyzeWrite(token)
+            token = analyzeWrite(token)
             break;
         default:
-            analyzeCommands(token)
+            token =  analyzeCommands(token)
             break;
    }
-   
+
+   return token
 }

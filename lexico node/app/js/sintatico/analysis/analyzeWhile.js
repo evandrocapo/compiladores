@@ -8,15 +8,17 @@ module.exports = (token) =>
 {
     lexic = Lexic;
    token = lexic.doLexic()
-   analyzeExpression(token)
+   token = analyzeExpression(token)
    if(token.symbol === 'sfaca')
    {
         token = lexic.doLexic() 
-        analyzeSimpleCommand(token)
+        token = analyzeSimpleCommand(token)
    }
    else
    {
     throw "error"
    }
+
+   return token
    
 }

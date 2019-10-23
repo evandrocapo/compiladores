@@ -10,11 +10,11 @@ module.exports = (token) =>
    token = lexic.doLexic()
    if(token.symbol === 'satribuicao')
    {
-        analyzeAssignment(token)
+     token = analyzeAssignment(token)
    }
    else
    {
-        analyzeCallProc(token)
+     token = analyzeCallProc(token)
    }
-   
+   return token
 }

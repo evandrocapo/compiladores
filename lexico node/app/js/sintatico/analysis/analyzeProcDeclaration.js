@@ -15,7 +15,7 @@ module.exports = (token) => {
 
             token = lexic.doLexic()
             if (token.symbol === 'sponto_virgula') {
-                analyzeBlock(token)
+                token = analyzeBlock(token)
             }
             else
             {
@@ -28,5 +28,6 @@ module.exports = (token) => {
         //desempilha(tabela)
     }
     
+    return token
 
 }
