@@ -37,7 +37,7 @@ module.exports = (token) => {
                             token = lexic.doLexic()
                         }
                         else {
-                            throw "Esperava ;"
+                            throw "Erro -> Esperava ;"
                         }
                     }
                 }
@@ -47,7 +47,7 @@ module.exports = (token) => {
             }
             else
             {
-               throw "Esperava ;"
+               throw "Erro -> Esperava ;"
             }
         //}
         //else {

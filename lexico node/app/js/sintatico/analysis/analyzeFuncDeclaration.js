@@ -54,7 +54,7 @@ module.exports = (token) =>
                                     token = lexic.doLexic()
                                 }
                                 else {
-                                    throw "Esperava ;"
+                                    throw "Erro -> Esperava ;"
                                 }
                             }
                         }
@@ -63,13 +63,13 @@ module.exports = (token) =>
                 }
                 else
                 {
-                   throw "error"
+                   throw "Erro -> Erro no tipo"
                 }
 
             }
             else
             {
-               throw "error"
+               throw "Erro -> Esperava :"
             }
 
        //}

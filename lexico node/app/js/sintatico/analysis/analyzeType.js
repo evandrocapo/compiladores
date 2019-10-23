@@ -7,7 +7,7 @@ module.exports = (token) =>
     lexic = Lexic;
    if(token.symbol !== 'sinteiro' && token.symbol !== 'sbooleano')
    {
-    throw "error"
+    throw "Erro -> Esperava tipos"
    }
    else
    {

@@ -1,7 +1,7 @@
 const tokenModel = require('../../../../models/Token');
 const analyzeCallFunc = require('./analyzeCallFunc');
 const analyzeExpression = require('./analyzeExpression');
-const analyzeFactor = require('./analyzeFactor2');
+const analyzeFactor = require('./analyzeFactor');
 const Lexic = require('../../../../models/Lexic');
 
 

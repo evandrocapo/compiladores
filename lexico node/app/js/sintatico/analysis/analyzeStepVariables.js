@@ -20,14 +20,14 @@ module.exports = (token) =>
                 }
                 else
                 {
-                    throw "error"
+                    throw "Erro -> Esperava ;"
                 }
                 
            }
        }
        else
        {
-        throw "error"
+        throw "Erro -> Esperava identificador"
        }
    }
 

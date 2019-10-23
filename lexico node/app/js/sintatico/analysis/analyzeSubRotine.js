@@ -21,7 +21,7 @@ module.exports = (token) =>
                 token = lexic.doLexic()
             }
             else {
-                throw "Esperava ;"
+                throw "Erro -> Esperava ;"
             }
         }
     }

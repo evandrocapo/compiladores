@@ -15,12 +15,12 @@ module.exports = (token) => {
                     if (token.symbol === 'svirgula') {
                         token = lexic.doLexic()
                         if (token.symbol === 'sdoispontos') {
-                            throw ": não esperado"
+                            throw "Erro -> : nao esperado"
                         }
                     }
                 }
                 else {
-                    throw "Esperava , ou :"
+                    throw "Erro -> Esperava , ou :"
                 }
             //}
             //else {
@@ -28,7 +28,7 @@ module.exports = (token) => {
            // }
         }
         else {
-            throw "Esperava identificador"
+            throw "Erro -> Esperava identificador"
         }
     }
     while (token.symbol !== 'sdoispontos')

@@ -23,14 +23,14 @@ module.exports = (token) =>
             }
             else
             {
-               throw "Esperava ;"
+               throw "Erro -> Esperava ;"
             }
         }
         token = lexic.doLexic()
    }
    else
    {
-      throw "Esperava inicio"
+      throw "Erro -> Esperava inicio"
    }
 
    return token
