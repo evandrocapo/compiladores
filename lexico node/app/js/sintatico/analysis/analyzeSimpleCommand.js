@@ -10,7 +10,6 @@ const Lexic = require('../../../../models/Lexic');
 //Imports
 module.exports = (token) =>
 {
-    console.log('antes do switch')
    switch(token.symbol)
    {
        case 'sidentificador':

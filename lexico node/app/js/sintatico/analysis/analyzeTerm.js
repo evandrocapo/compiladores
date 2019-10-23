@@ -13,5 +13,5 @@ module.exports = (token) =>
         token = lexic.doLexic()
         token = analyzeFactor(token)
     }
-   
+   return token
 }

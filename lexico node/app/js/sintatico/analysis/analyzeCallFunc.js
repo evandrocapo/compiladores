@@ -5,7 +5,7 @@ const Lexic = require('../../../../models/Lexic');
 module.exports = (token) =>
 {
     lexic = Lexic;
-   token = lexic.doLexic()
+    
    if(token.symbol === 'sidentificador')
    {
         //inserir na tabela
@@ -14,6 +14,7 @@ module.exports = (token) =>
    {
       throw "error"
    }
+   token = lexic.doLexic()
    
    return token
 }

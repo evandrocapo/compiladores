@@ -9,7 +9,8 @@ module.exports = (character, program, linha) =>
     if(character === '=')
     {
         assignment = assignment + character;
-        token.setSymbol('satribuiçao');
+        token.setSymbol('satribuicao');
+        character = read(program);
     }
     else
     {

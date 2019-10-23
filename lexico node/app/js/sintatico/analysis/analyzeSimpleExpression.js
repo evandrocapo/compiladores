@@ -9,13 +9,13 @@ module.exports = (token) =>
    if(token.symbol === 'smais' || token.symbol === 'smenos')
    {
        token = lexic.doLexic()
+    }
        token = analyzeTerm(token)
        while(token.symbol === 'smais' || token.symbol === 'smenos' || token.symbol === 'sou')
        {
         token = lexic.doLexic()
         token = analyzeTerm(token)
        }
-   }
 
    return token
    

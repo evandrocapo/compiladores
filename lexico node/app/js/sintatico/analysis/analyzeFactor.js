@@ -46,7 +46,7 @@ module.exports = (token) =>
         }
         else
         {
-           Lexic
+           'Esperava fecha parenteses'
         }
     }
     else if (token.lexem === 'verdadeiro' || token.lexem === 'falso')
@@ -55,7 +55,7 @@ module.exports = (token) =>
     }
     else
     {
-       Lexic
+       throw "esperava um fator"
     }
 
     return token

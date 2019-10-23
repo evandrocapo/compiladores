@@ -10,8 +10,8 @@ module.exports = (token) =>
    if(token.symbol === 'sinicio')
    {
         token = lexic.doLexic()
-        console.log('realmente entrou aqui')
         token = analyzeSimpleCommand(token)
+        console.log('terminei aqui ó')
         while(token.symbol !== 'sfim')
         {
             if(token.symbol === 'sponto_virgula')

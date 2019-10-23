@@ -10,6 +10,7 @@ module.exports = (token) =>
    {
         lexic = Lexic;
         token = lexic.doLexic()
+        console.log(token)
         token = analyzeSimpleExpression(token)
    }
    return token;
