@@ -29,21 +29,21 @@ class Syntatic {
                         }
                         else
                         {
-                           throw "error"
+                           throw "Error -> Acabou apos ."
                         }
                     }
                     else
                     {
-                       throw "error"
+                       throw "Error -> Esperava ."
                     }
                 }
                 else
                 {
-                   throw "error esperava um ponto e virgula caralho"
+                   throw "Error -> Esperava ;"
                 }
             }
             else{
-               throw "error"
+               throw "Error -> Esperava identificador"
             }
         }
         else
