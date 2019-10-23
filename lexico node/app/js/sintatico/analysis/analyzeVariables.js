@@ -11,19 +11,16 @@ module.exports = (token) => {
             //if (!tabela.duplicidade) {
                 //tabela = insere(tabela)
                 token = lexic.doLexic()
-                if (token.symbol === 'svírgula' || token.symbol === 'sdoispontos') {
+                if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                     if (token.symbol === 'svirgula') {
                         token = lexic.doLexic()
                         if (token.symbol === 'sdoispontos') {
-                            throw "error"
+                            throw ": não esperado"
                         }
-                    }
-                    else {
-                        throw "error"
                     }
                 }
                 else {
-                    throw "error"
+                    throw "Esperava , ou :"
                 }
             //}
             //else {
@@ -31,7 +28,7 @@ module.exports = (token) => {
            // }
         }
         else {
-            throw "error"
+            throw "Esperava identificador"
         }
     }
     while (token.symbol === 'sdoispontos')

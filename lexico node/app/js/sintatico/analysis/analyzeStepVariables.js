@@ -9,9 +9,9 @@ module.exports = (token) =>
    if(token.symbol === 'svar')
    {
        token = lexic.doLexic()
-       if(token.symbol === ' sidentificador')
+       if(token.symbol === 'sidentificador')
        {
-           while (token.symbol === ' sidentificador')
+           while (token.symbol === 'sidentificador')
            {
                 analyzeVariables(token)
                 if(token.symbol === 'spontovirg')
