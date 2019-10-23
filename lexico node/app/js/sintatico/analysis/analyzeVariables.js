@@ -31,7 +31,7 @@ module.exports = (token) => {
             throw "Esperava identificador"
         }
     }
-    while (token.symbol === 'sdoispontos')
+    while (token.symbol !== 'sdoispontos')
     token = lexic.doLexic()
-    analyzeType(token)
+    return analyzeType(token)
 }

@@ -12,7 +12,7 @@ module.exports = (token) =>
    else
    {
        //tabela = inserir(tabela)
-       token = lexic.doLexic()
+       return token = lexic.doLexic()
    }
    
 }

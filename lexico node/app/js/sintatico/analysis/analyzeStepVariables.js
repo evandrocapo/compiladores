@@ -13,8 +13,10 @@ module.exports = (token) =>
        {
            while (token.symbol === 'sidentificador')
            {
-                analyzeVariables(token)
-                if(token.symbol === 'spontovirg')
+                token = analyzeVariables(token)
+                console.log('cansei')
+                console.log(token)
+                if(token.symbol === 'sponto_virgula')
                 {
                     token = lexic.doLexic()
                 }
