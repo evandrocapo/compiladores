@@ -25,7 +25,7 @@ class Syntatic {
                         if(this.lexic.isFileEnd)
                         {
                             //success
-                            console.log('compilou doido')
+                            console.log('compilou')
                         }
                         else
                         {

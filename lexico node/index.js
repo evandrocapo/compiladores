@@ -80,7 +80,7 @@ ipcMain.on('exec', async () => {
             syntatic.main()
         }
     }catch(error){
-        console.error("Ocorreu na index.js na funcao 'exec': ")
+        //console.error("Ocorreu na index.js na funcao 'exec': ")
         console.error(error);
     }
 })
