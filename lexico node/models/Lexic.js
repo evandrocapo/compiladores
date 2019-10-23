@@ -10,6 +10,7 @@ class Lexic {
         this.linha = 1;
         this.isFileEnd = false;
         this.instance = null;
+        this.firstExecuted = true;
     }
 /*
     getInstance()
@@ -29,10 +30,13 @@ class Lexic {
     doLexic() {
         // var this.isFileEnd = false;
         var list;
-
-        let result = readCharacter(this.program, this.linha);
-        this.character = result.char;
-        this.linha = result.linha
+        if(this.firstExecuted)
+        {
+            let result = readCharacter(this.program, this.linha);
+            this.character = result.char;
+            this.linha = result.linha
+            this.firstExecuted = false;
+        }
 
         try{
             //while (!this.isFileEnd) {
