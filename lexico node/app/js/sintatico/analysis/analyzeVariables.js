@@ -11,6 +11,7 @@ module.exports = (token) => {
             //if (!tabela.duplicidade) {
                 //tabela = insere(tabela)
                 token = lexic.doLexic()
+                console.log('estou com '+token.lexem)
                 if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                     if (token.symbol === 'svirgula') {
                         token = lexic.doLexic()

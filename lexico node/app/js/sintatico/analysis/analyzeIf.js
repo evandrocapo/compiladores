@@ -21,7 +21,7 @@ module.exports = (token) =>
    }
    else
    {
-       //error
+       throw 'Esperava então'
    }
    return token
 }

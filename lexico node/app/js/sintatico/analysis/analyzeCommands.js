@@ -10,6 +10,7 @@ module.exports = (token) =>
    if(token.symbol === 'sinicio')
    {
         token = lexic.doLexic()
+        console.log('realmente entrou aqui')
         token = analyzeSimpleCommand(token)
         while(token.symbol !== 'sfim')
         {
@@ -22,19 +23,19 @@ module.exports = (token) =>
                 }
                 else
                 {
-                   throw "error"
+                   throw "Esperava fim"
                 }
             }
             else
             {
-               throw "error"
+               throw "Esperava ;"
             }
             token = lexic.doLexic()
         }
    }
    else
    {
-      throw "error"
+      throw "Esperava inicio"
    }
 
    return token

@@ -27,7 +27,7 @@ module.exports = (character,program,linha) =>
         {
             if(relational === '>')
             {
-                token.setSymbol('smenor');
+                token.setSymbol('smaior');
             }
             else if (relational === '<')
             {

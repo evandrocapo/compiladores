@@ -17,8 +17,8 @@ module.exports = (id, token) =>
         case 'faca':
             token.setSymbol('sfaca');
         break;
-        case 'início':
-            token.setSymbol('sinício');
+        case 'inicio':
+            token.setSymbol('sinicio');
         break;
         case 'fim':
             token.setSymbol('sfim');
