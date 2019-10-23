@@ -24,27 +24,31 @@ module.exports = (token) =>
        //retirar gambiarra
        //token = analyzeSimpleCommand(token)
 
-       switch(token.symbol)
-       {
-           case 'sidentificador':
-            token =  analyzeAtribCallProc(token)
-               break;
-            case 'sse':
+       if(token.symbol === 'sidentificador'){
+        token =  analyzeAtribCallProc(token)
+       }
+       else{
+            if(token.symbol === 'sse') {
                 token = analyzeIf(token)
-                console.log('sai')
-                break;
-            case 'senquanto':
-                token = analyzeWhile(token)
-                break;
-            case 'sleia':
-                token = analyzeRead(token)
-                break;
-            case 'sescreva':
-                token = analyzeWrite(token)
-                break;
-            default:
-                token = analyzeCommands(token)
-                break;
+            }      
+            else{
+                if(token.symbol === 'senquanto'){
+                    token = analyzeWhile(token)
+                }
+                else{
+                    if(token.symbol === 'sleia'){
+                        token = analyzeRead(token)
+                    }
+                    else{
+                        if(token.symbol === 'sescreva'){
+                            token = analyzeWrite(token)
+                        }
+                        else{
+                            token = analyzeCommands(token)
+                        }
+                    }
+                }
+            }
        }
 
        if(token.symbol === 'ssenao')
@@ -52,27 +56,32 @@ module.exports = (token) =>
         token = lexic.doLexic()
         //retirar gambiarra
         //token = analyzeSimpleCommand(token)
-        switch(token.symbol)
-        {
-            case 'sidentificador':
-             token =  analyzeAtribCallProc(token)
-                break;
-             case 'sse':
-                 token =  analyzeIf(token)
-                 break;
-             case 'senquanto':
-                 token = analyzeWhile(token)
-                 break;
-             case 'sleia':
-                 token = analyzeRead(token)
-                 break;
-             case 'sescreva':
-                 token = analyzeWrite(token)
-                 break;
-             default:
-                 token = analyzeCommands(token)
-                 break;
-        }
+        if(token.symbol === 'sidentificador'){
+            token =  analyzeAtribCallProc(token)
+           }
+           else{
+                if(token.symbol === 'sse') {
+                    token = analyzeIf(token)
+                }      
+                else{
+                    if(token.symbol === 'senquanto'){
+                        token = analyzeWhile(token)
+                    }
+                    else{
+                        if(token.symbol === 'sleia'){
+                            token = analyzeRead(token)
+                        }
+                        else{
+                            if(token.symbol === 'sescreva'){
+                                token = analyzeWrite(token)
+                            }
+                            else{
+                                token = analyzeCommands(token)
+                            }
+                        }
+                    }
+                }
+           }
 
        }
    }
