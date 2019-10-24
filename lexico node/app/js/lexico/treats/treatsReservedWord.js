@@ -14,6 +14,9 @@ module.exports = (id, token) =>
         case 'enquanto':
             token.setSymbol('senquanto');
         break;
+        case 'senao':
+            token.setSymbol('ssenao');
+        break;
         case 'faca':
             token.setSymbol('sfaca');
         break;

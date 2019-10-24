@@ -26,6 +26,16 @@ class Lexic {
         this.program = Array.from(program);
     }
 
+    reset(){
+        this.tokens = new Array; // Array<Tokens>
+        this.program = null //Array.from(program);
+        this.character = null;
+        this.linha = 1;
+        this.isFileEnd = false;
+        this.instance = null;
+        this.firstExecuted = true;
+    }
+
 
     doLexic() {
         // var this.isFileEnd = false;
@@ -73,7 +83,9 @@ class Lexic {
                 }
            // }
             // console.log(this.tokens);
+            if(lexicToken !== undefined)
             console.log(lexicToken);
+            else lexicToken = new tokenModel.Token('', '', this.linha)
             //return this.tokens;
             return lexicToken;
         }catch(error){

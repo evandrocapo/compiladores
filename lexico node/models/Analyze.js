@@ -32,6 +32,7 @@ class Analyze {
         token = this.analyzeStepVariables(token)
         token = this.analyzeSubRotine(token)
         token = this.analyzeCommands(token)
+        return token;
     }
     analyzeCallFunc(token)
     {
@@ -41,24 +42,23 @@ class Analyze {
         }
         else
         {
-           throw "error"
+           throw "Erro -> Chamada de funcao"
         }
         token = this.lexic.doLexic()
-        
         return token
     }
 
     analyzeCallProc(token)
     {
-        if(token.symbol === 'sidentificador')
+        if(token.symbol === 'sponto_virgula')
         {
              //inserir na tabela
         }
         else
         {
-           throw "error"
+            //console.log(token)
+           //throw "Erro -> Chamada de procedimento"
         }
-        token = this.lexic.doLexic()
         
         return token
     }
@@ -261,7 +261,6 @@ class Analyze {
             //}
             //desempilha(tabela)
         }
-        
         return token
     }
 
@@ -417,7 +416,7 @@ class Analyze {
                     token = this.lexic.doLexic()
                 }
                 else {
-                    throw "Erro -> Esperava ;"
+                    throw "Erro -> Esperava ; [analyzeSubRotine]"
                 }
             }
         }

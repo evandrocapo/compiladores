@@ -75,6 +75,7 @@ ipcMain.on('exec', async () => {
     try{
         if(await this.program){
             let lexic = lexicModel;
+            lexic.reset();
             lexic.setProgram(this.program);
             let syntatic = new syntaticModel.Syntatic()
             syntatic.main()

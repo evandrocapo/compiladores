@@ -20,9 +20,11 @@ class Syntatic {
             this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {
-                    analyzer.analyzeBlock(this.token)
+                    this.token = analyzer.analyzeBlock(this.token)
+                    
                     if(this.token.symbol === 'sponto')
                     {
+                        this.token = this.lexic.doLexic()
                         if(this.lexic.isFileEnd)
                         {
                             //success
