@@ -8,6 +8,7 @@ import Breakpoint from '../breakpoint/Breakpoint'
 import Entrada from '../entrada/Entrada'
 import Saida from '../saida/Saida'
 import { Divider } from '@material-ui/core';
+import axios from 'axios' 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,8 +21,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+var recuperarDados = async () =>{
+  return await axios.get('/maquina/' + window.location.pathname.replace("/",""))
+}
+
 export default function FullWidthGrid() {
   const classes = useStyles();
+  var dados
+
+  async function carregar(){
+    dados = await recuperarDados();
+    dados = dados.data
+    console.log(dados)
+  }  
+
+  carregar().then(() => {
+      console.log("carregado");
+  })
 
   return (
     <div className={classes.root}>
@@ -34,29 +50,29 @@ export default function FullWidthGrid() {
 
       <Grid container spacing={3} justify="center">
         <Grid item xs={'12'} sm={'auto'} lg={'auto'} >
-          <Funcao/>
+          <Funcao dados={dados}/>
         </Grid>
       
         <Grid item xs={'12'} sm={'auto'} lg={'auto'}>
-          <Pilha/>
+          <Pilha dados={dados}/>
         </Grid>
 
         <Grid item xs={12} sm={9}>
-            <Divider/>
+            <Divider dados={dados}/>
         </Grid>
       </Grid>
 
       <Grid container spacing={3} justify="center">
         <Grid item xs={'auto'} sm={'auto'} lg={'auto'}>
-          <Entrada/>
+          <Entrada dados={dados}/>
         </Grid>
 
         <Grid item xs={'auto'} sm={'auto'} lg={'auto'}>
-          <Saida/>
+          <Saida dados={dados}/>
         </Grid>
 
         <Grid item xs={'auto'} sm={'auto'} lg={'auto'}>
-          <Breakpoint/>
+          <Breakpoint dados={dados}/>
         </Grid>
       </Grid>
 

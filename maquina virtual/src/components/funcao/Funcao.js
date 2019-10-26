@@ -28,21 +28,23 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData(0, 'NULL', '', '', 'Não faz nada'),
-  createData(1, 'JMP', 0, '', 'Loop infinito'),
-  createData(0, 'NULL', '', '', 'Não faz nada'),
-  createData(1, 'JMP', 0, '', 'Loop infinito'),
-  createData(0, 'NULL', '', '', 'Não faz nada'),
-  createData(1, 'JMP', 0, '', 'Loop infinito'),
-  createData(0, 'NULL', '', '', 'Não faz nada'),
-  createData(1, 'JMP', 0, '', 'Loop infinito'),
-  createData(0, 'NULL', '', '', 'Não faz nada'),
-  createData(1, 'JMP', 0, '', 'Loop infinito'),
-];
-
-export default function SimpleTable() {
+export default function SimpleTable(props) {
   const classes = useStyles();
+
+  console.log(props)
+
+  const rows = [
+    createData(0, 'NULL', '', '', 'Não faz nada'),
+    createData(1, 'JMP', 0, '', 'Loop infinito'),
+    createData(0, 'NULL', '', '', 'Não faz nada'),
+    createData(1, 'JMP', 0, '', 'Loop infinito'),
+    createData(0, 'NULL', '', '', 'Não faz nada'),
+    createData(1, 'JMP', 0, '', 'Loop infinito'),
+    createData(0, 'NULL', '', '', 'Não faz nada'),
+    createData(1, 'JMP', 0, '', 'Loop infinito'),
+    createData(0, 'NULL', '', '', 'Não faz nada'),
+    createData(1, 'JMP', 0, '', 'Loop infinito'),
+  ];
 
   return (
     <Paper className={classes.root}>
