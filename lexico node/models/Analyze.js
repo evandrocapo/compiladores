@@ -39,6 +39,7 @@ class Analyze {
         if(token.symbol === 'sidentificador')
         {
              //inserir na tabela
+             console.log('analyzeCallFunc');
         }
         else
         {
@@ -114,7 +115,8 @@ class Analyze {
             //{
                 // if(tabela.symbol === 'função inteiro' || tabela.symbol === 'função inteiro')
                 // {
-                    token = this.analyzeCallFunc(token)
+                    //token = this.analyzeCallFunc(token)
+                    token = this.lexic.doLexic()
                 // }
                 // else
                 // {
