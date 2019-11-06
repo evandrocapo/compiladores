@@ -1,5 +1,9 @@
 class Generator{
 
+    constructor() {
+        this.codigo = new Array;
+    }
+
     geraLDC(){
 
         return ;
