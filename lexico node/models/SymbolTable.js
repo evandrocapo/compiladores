@@ -1,7 +1,11 @@
+const SymbolVar = require('../models/SymbolVar');
+const SymbolProc = require('../models/SymbolProc');
+const SymbolProgram = require('../models/SymbolProgram');
+
 class SymbolTable{
 
     constructor() {
-        this.name = new String;
+        this.stack = [];
     }
 
     getName(){
@@ -9,31 +13,35 @@ class SymbolTable{
     }
 
     setName(){
+        return ;
+    }
+
+    inserir(tipo, lexem){
+        if(tipo === "var") this.stack.push(new SymbolVar());
+        else if(tipo === "proc") this.stack.push(new SymbolProc());
+        else if(tipo === "program") this.stack.push(new SymbolProgram())
+        else throw "error"
 
     }
 
-    inserir(){
-
-    }
-
-    inserirTipoTabela(){
-
-    }
+    // inserirTipoTabela(){
+    //     return ;   
+    // }
 
     desempilhar(){
-
+        return ;
     }
 
     pesquisarDupli(){
-
+        return ;
     }
 
     pesquisarDeclaProc(){
-
+        return ;
     }
 
     pesquisarDeclaFunc(){
-        
+        return ;
     }
 }
 
