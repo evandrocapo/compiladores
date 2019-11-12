@@ -16,7 +16,8 @@ class SymbolTable{
         else throw "error";
     }
 
-    desempilhar(){
+    desempilhar(lexem){
+        while(lexem != this.stack.pop().symbol.lexem)
         return this.stack.pop();
     }
 
