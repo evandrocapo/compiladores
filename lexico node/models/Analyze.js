@@ -1,8 +1,9 @@
 const Lexic = require('./Lexic');
 
 class Analyze {
-    constructor() { 
+    constructor(stack) { 
         this.lexic = Lexic;
+        this.stack = stack;
     }
 
 
