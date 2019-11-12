@@ -17,7 +17,7 @@ class SymbolTable{
     }
 
     desempilhar(lexem){
-        while(lexem != this.stack.pop().symbol.lexem)
+        while(lexem != this.stack.pop().symbol.lexem){}
         return this.stack.pop();
     }
 
