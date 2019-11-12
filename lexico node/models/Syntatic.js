@@ -2,6 +2,7 @@ const catchToken = require('../app/js/lexico/catchToken')
 const tokenModel = require('./Token');
 const Lexic = require('../models/Lexic');
 const Analyze = require('../models/Analyze');
+const SymbolTable = require('../models/SymbolTable');
 const Semantic = require('../models/Semantic');
 
 class Syntatic {
@@ -9,19 +10,19 @@ class Syntatic {
     constructor() {
         this.lexic = Lexic;
         this.semantic = Semantic;
+        this.symbolTable = new SymbolTable();
         this.token = null;
         this.pilha = [];
     }
 
     main() {
-        let analyzer = new Analyze.Analyze();
+        let analyzer = new Analyze.Analyze(this.symbolTable);
         this.token = this.lexic.doLexic()
         if (this.token.symbol === 'sprograma') {
-            // this.semantic.insereTabela("simbolProg", this.token.lexem);
             this.token = this.lexic.doLexic()
             if(this.token.symbol === 'sidentificador'){
-            //insereTabela(tabela);
-            this.token = this.lexic.doLexic()
+                this.symbolTable.insereTabela("simbolProg", this.token.lexem);
+                this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {
                     this.token = analyzer.analyzeBlock(this.token)

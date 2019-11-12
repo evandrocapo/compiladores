@@ -1,8 +1,10 @@
 const Lexic = require('./Lexic');
 
 class Analyze {
-    constructor() { 
+    constructor(symbolTable) { 
         this.lexic = Lexic;
+        this.scope = 'programa';
+        this.symbolTable = symbolTable;
     }
 
 
@@ -168,10 +170,11 @@ class Analyze {
     analyzeFuncDeclaration(token)
     {
         token = this.lexic.doLexic()
-        //var nivel = 'L'
+        
      
         if( token.symbol === 'sidentificador')
         {
+            this.scope = token.lexem;
             //if(!pesquisa(tabela))
             //{
                  //insere(tabela,nivel)
@@ -243,15 +246,16 @@ class Analyze {
     analyzeProcDeclaration(token)
     {
         token = this.lexic.doLexic()
-        //var nivel = 'L'
     
         if (token.symbol === 'sidentificador') {
-            //if (!pesquisa(tabela)) {
+            this.scope = token.lexem;
+            if (!this.pesquisa(this.stack, this.lexem, this.scope)) {
                 //insere(tabela, nivel)
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
 
                     token =  this.analyzeBlock(token)
+
                 }
                 else
                 {
@@ -373,7 +377,7 @@ class Analyze {
     {
         do {
             if (token.symbol === 'sidentificador') {
-               // pesquisa(tabela)
+               pesquisa(!token.lexem , scope)
                 //if (!tabela.duplicidade) {
                     //tabela = insere(tabela)
                     token = this.lexic.doLexic()
@@ -473,7 +477,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                //if (pesquisa(tabela)) {
+                if (this.semantic.pesquisa(token.lexem)) {
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
@@ -481,7 +485,7 @@ class Analyze {
                     else {
                         throw "Erro -> Esperava )"
                     }
-                //}
+                }
                //else {
                     //error
                 //}
