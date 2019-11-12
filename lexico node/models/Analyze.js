@@ -249,7 +249,7 @@ class Analyze {
     
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
-            if (!this.pesquisa(this.stack, this.lexem, this.scope)) {
+            if (!this.pesquisa(this.symbolTable, this.lexem, this.scope)) {
                 //insere(tabela, nivel)
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
