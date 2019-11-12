@@ -8,28 +8,15 @@ class SymbolTable{
         this.stack = [];
     }
 
-    getName(){
-        return ;
+    inserir(tipo, lexem, scope){
+        if(tipo === "var") this.stack.push(new SymbolVar(lexem, scope));
+        else if(tipo === "proc") this.stack.push(new SymbolProc(lexem, scope));
+        else if(tipo === "program") this.stack.push(new SymbolProgram(lexem, scope));
+        else throw "error";
     }
-
-    setName(){
-        return ;
-    }
-
-    inserir(tipo, lexem){
-        if(tipo === "var") this.stack.push(new SymbolVar());
-        else if(tipo === "proc") this.stack.push(new SymbolProc());
-        else if(tipo === "program") this.stack.push(new SymbolProgram())
-        else throw "error"
-
-    }
-
-    // inserirTipoTabela(){
-    //     return ;   
-    // }
 
     desempilhar(){
-        return ;
+        return this.stack.pop();
     }
 
     pesquisarDupli(){
