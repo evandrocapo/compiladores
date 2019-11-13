@@ -115,7 +115,8 @@ class Analyze {
         
         if(token.symbol === 'sidentificador')
         {
-            tabela = this.symbolTable.pesquisa(token.lexem, this.scope)
+            tabela = this.symbolTable.pesquisar(token.lexem, this.scope)
+            console.log(tabela)
             if(tabela)
             {
                 if(tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano')
@@ -178,7 +179,7 @@ class Analyze {
         if( token.symbol === 'sidentificador')
         {
             this.scope = token.lexem;
-             if(!this.symbolTable.pesquisa(token.lexem, this.scope)){
+             if(!this.symbolTable.pesquisar(token.lexem, this.scope)){
                 
                 this.symbolTable.inserir('proc', token.lexem, this.scope)
                  token = this.lexic.doLexic()
@@ -252,7 +253,7 @@ class Analyze {
     
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
-             if(!this.symbolTable.pesquisa(token.lexem, this.scope)){
+             if(!this.symbolTable.pesquisar(token.lexem, this.scope)){
                 
                 this.symbolTable.inserir('proc', token.lexem, this.scope)
              
@@ -281,7 +282,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                if (this.symbolTable.pesquisa(token.lexem, this.scope)) {
+                if (this.symbolTable.pesquisar(token.lexem, this.scope)) {
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()

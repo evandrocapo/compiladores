@@ -21,8 +21,7 @@ class SymbolTable{
 
         do{
             stackTipo.push(this.stack.pop()) // retira da pilha e joga na aux
-        }while(stackTipo[stackTipo.length-1] != 'var' || stackTipo[stackTipo.length-1] != 'func'
-        || stackTipo.length < 0);
+        }while(((stackTipo[stackTipo.length-1] instanceof SymbolVar.SymbolVar)) || ((stackTipo[stackTipo.length-1] instanceof SymbolProc.SymbolProc)));
 
         this.stack.push(stackTipo.pop()) // retorna para a pilha o tipo "var ou func"
 
@@ -42,6 +41,7 @@ class SymbolTable{
 
     pesquisarDupli(lexem,scope){
         var a,stackDupli=[];
+        
         do{
             a = this.stack.pop();
             stackDupli.push(a);
@@ -60,11 +60,13 @@ class SymbolTable{
     }
 
     pesquisar(lexem,scope){
+        
         var stackDuplic = this.stack.slice();
         var aux;
-
+        
         while(!(stackDuplic[stackDuplic.length-1] instanceof SymbolProgram.SymbolProgram)){
             aux = stackDuplic.pop();
+            console.log(aux)
             if(aux.symbol.lexem == lexem) return aux;
         }
 
