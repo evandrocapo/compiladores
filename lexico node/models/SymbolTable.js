@@ -58,7 +58,7 @@ class SymbolTable{
         return false;
     }
 
-    pesquisar(lexem){
+    pesquisar(lexem,scope){
         var stackDuplic = this.stack.slice();
         var aux;
 
