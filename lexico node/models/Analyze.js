@@ -111,24 +111,27 @@ class Analyze {
 
     analyzeFactor(token)
     {
+        var tabela = null
+        
         if(token.symbol === 'sidentificador')
         {
-            //if(pesquisa(tabela))
-            //{
-                // if(tabela.symbol === 'função inteiro' || tabela.symbol === 'função inteiro')
-                // {
-                    //token = this.analyzeCallFunc(token)
+            tabela = this.symbolTable.pesquisa(token.lexem, this.scope)
+            if(tabela)
+            {
+                if(tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano')
+                {
+                    token = this.analyzeCallFunc(token)
                     token = this.lexic.doLexic()
-                // }
-                // else
-                // {
-                //     token = this.this.lexic.doLexic()
-                // }
-            //}
-            //else
-            //{
-                //error
-            //}
+                }
+                else
+                {
+                    token = this.this.lexic.doLexic()
+                }
+            }
+            else
+            {
+                throw "Erro -> Nao declarado"
+            }
         }
         else if(token.symbol ===  'snumero')
         {
@@ -175,9 +178,9 @@ class Analyze {
         if( token.symbol === 'sidentificador')
         {
             this.scope = token.lexem;
-             if(!this.symbolTable.pesquisa(this.lexem, this.scope)){
+             if(!this.symbolTable.pesquisa(token.lexem, this.scope)){
                 
-                this.symbolTable.insere('proc', this.lexem, this.scope)
+                this.symbolTable.insere('proc', token.lexem, this.scope)
                  token = this.lexic.doLexic()
                  if( token.symbol === 'sdoispontos')
                  {
@@ -186,11 +189,11 @@ class Analyze {
                      {
                          if(token.symbol === 'sinteiro')
                          {
-                             //poe tipo na tabela
+                            this.symbolTable.insereTipo(token.lexem)
                          }
                          else
                          {
-                             //poe tipo na tabela
+                            this.symbolTable.insereTipo(token.lexem)
                          }
                          token = this.lexic.doLexic()
                          if(token.symbol === 'sponto_virgula')
@@ -214,7 +217,7 @@ class Analyze {
             {
                 throw "Erro -> Nome de funcao existente"
             }
-            this.symbolTable.desempilha(this.lexem)
+            this.symbolTable.desempilha(token.lexem)
         }
      
         return token
@@ -249,9 +252,9 @@ class Analyze {
     
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
-             if(!this.symbolTable.pesquisa(this.lexem, this.scope)){
+             if(!this.symbolTable.pesquisa(token.lexem, this.scope)){
                 
-                this.symbolTable.insere('proc', this.lexem, this.scope)
+                this.symbolTable.insere('proc', token.lexem, this.scope)
              
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
@@ -267,7 +270,7 @@ class Analyze {
             else {
                 throw "Erro -> Nome de procedimento existente"
             }
-            this.symbolTable.desempilha(this.lexem)
+            this.symbolTable.desempilha(token.lexem)
         }
         return token
     }
@@ -278,7 +281,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                //if (pesquisa(tabela)) {
+                if (this.symbolTable.pesquisa(token.lexem, this.scope)) {
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
@@ -286,10 +289,10 @@ class Analyze {
                     else {
                         throw "Erro -> Esperava )"
                     }
-                //}
-               // else {
-                    //error
-                //}
+                }
+                else {
+                    throw "Erro -> Variavel nao declarada"
+                }
             } else {
                 throw "Erro -> Esperava identificador"
             }
@@ -379,9 +382,8 @@ class Analyze {
     {
         do {
             if (token.symbol === 'sidentificador') {
-               pesquisa(!token.lexem , scope)
-                //if (!tabela.duplicidade) {
-                    //tabela = insere(tabela)
+                if (!this.symbolTable.pesquisarDupli(token.lexem, this.scope)) {
+                    this.symbolTable.insere('var', token.lexem, this.scope)
                     token = this.lexic.doLexic()
                     if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                         if (token.symbol === 'svirgula') {
@@ -394,10 +396,10 @@ class Analyze {
                     else {
                         throw "Erro -> Esperava , ou :"
                     }
-                //}
-                //else {
-                    //error
-               // }
+                }
+                else {
+                    throw "Erro -> Variavel com nome existente"
+                }
             }
             else {
                 throw "Erro -> Esperava identificador"
@@ -451,7 +453,7 @@ class Analyze {
         }
         else
         {
-            //tabela = inserir(tabela)
+            this.symbolTable.insereTipo(token.lexem)
             return token = this.lexic.doLexic()
         }
     }
@@ -488,9 +490,9 @@ class Analyze {
                         throw "Erro -> Esperava )"
                     }
                 }
-               //else {
-                    //error
-                //}
+               else {
+                throw "Erro -> Variavel nao declarada"
+                }
             } else {
                 throw "Erro -> Esperava identificador"
             }
