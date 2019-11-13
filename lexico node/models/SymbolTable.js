@@ -39,7 +39,7 @@ class SymbolTable{
         return ;
     }
 
-    pesquisarDupli(lexem){
+    pesquisarDupli(lexem,scope){
         var a,stackDupli=[];
         do{
             a = this.stack.pop();
