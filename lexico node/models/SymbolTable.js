@@ -39,16 +39,35 @@ class SymbolTable{
         return ;
     }
 
-    pesquisarDupli(){
-        return ;
+    pesquisarDupli(lexem){
+        var a,stackDupli=[];
+        do{
+            a = this.stack.pop();
+            stackDupli.push(a);
+        }
+        while(a instanceof SymbolVar);
+        this.stack.push(stackDupli.pop());
+        this.stack.concat(stackDupli.reverse()); // voltou a pilha
+        stackDupli.reverse(); // reverta de novo
+
+        do{
+            if(stackDupli == lexem) return true
+            stackDupli.pop()
+        }while(stackDupli.length > 0);
+        
+        return false;
     }
 
-    pesquisarDeclaProc(){
-        return ;
-    }
+    pesquisar(lexem){
+        var stackDuplic = this.stack.slice();
+        var aux;
 
-    pesquisarDeclaFunc(){
-        return ;
+        while(!(stackDuplic[stackDuplic.length-1] instanceof SymbolProgram)){
+            aux = stackDuplic.pop();
+            if(aux.symbol.lexem == lexem) return aux;
+        }
+
+        return null;
     }
 }
 
