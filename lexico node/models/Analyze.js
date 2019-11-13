@@ -217,7 +217,7 @@ class Analyze {
             {
                 throw "Erro -> Nome de funcao existente"
             }
-            this.symbolTable.desempilha(token.lexem)
+            this.symbolTable.desempilhar()
         }
      
         return token
@@ -270,7 +270,7 @@ class Analyze {
             else {
                 throw "Erro -> Nome de procedimento existente"
             }
-            this.symbolTable.desempilha(token.lexem)
+            this.symbolTable.desempilhar()
         }
         return token
     }
@@ -382,7 +382,7 @@ class Analyze {
     {
         do {
             if (token.symbol === 'sidentificador') {
-                if (!this.symbolTable.pesquisarDupli(token.lexem, this.scope)) {
+                if (!this.symbolTable.pesquisarDupli(token.lexem)) {
                     this.symbolTable.inserir('var', token.lexem, this.scope)
                     token = this.lexic.doLexic()
                     if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
