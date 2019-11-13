@@ -17,8 +17,10 @@ class SymbolTable{
     }
 
     desempilhar(lexem){
-        while(lexem != this.stack.pop().symbol.lexem){}
-        return this.stack.pop();
+        var a;
+        while(lexem != (a = this.stack.pop().symbol.lexem)){}
+        this.stack.push(a)
+        return a;
     }
 
     pesquisarDupli(){
