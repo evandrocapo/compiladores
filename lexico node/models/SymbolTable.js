@@ -16,6 +16,22 @@ class SymbolTable{
         else throw "error";
     }
 
+    inserirTipo(lexem){
+        var stackTipo=[],aux;
+
+        do{
+            stackTipo.push(this.stack.pop()) // retira da pilha e joga na aux
+        }while(stackTipo[stackTipo.length-1] != 'var' || stackTipo[stackTipo.length-1] != 'func');
+
+        this.stack.push(stackTipo.pop()) // retorna para a pilha o tipo "var ou func"
+
+        do{
+            aux = stackTipo.pop()
+            aux.type = lexem;
+            this.stack.push(aux)
+        }while(stackTipo.length > 0)
+    }
+
     desempilhar(lexem){
         var a;
         while(lexem != (a = this.stack.pop().symbol.lexem)){}
