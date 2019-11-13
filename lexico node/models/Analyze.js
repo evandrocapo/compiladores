@@ -175,9 +175,9 @@ class Analyze {
         if( token.symbol === 'sidentificador')
         {
             this.scope = token.lexem;
-            //if(!pesquisa(tabela))
-            //{
-                 //insere(tabela,nivel)
+             if(!this.symbolTable.pesquisa(this.lexem, this.scope)){
+                
+                this.symbolTable.insere('proc', this.lexem, this.scope)
                  token = this.lexic.doLexic()
                  if( token.symbol === 'sdoispontos')
                  {
@@ -209,12 +209,12 @@ class Analyze {
                     throw "Erro -> Esperava :"
                  }
      
-            //}
-            //else
-            //{
-                //error
-            //}
-            //desempilha(tabela)
+            }
+            else
+            {
+                throw "Erro -> Nome de funcao existente"
+            }
+            this.symbolTable.desempilha(this.lexem)
         }
      
         return token
@@ -249,8 +249,10 @@ class Analyze {
     
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
-            if (!this.pesquisa(this.symbolTable, this.lexem, this.scope)) {
-                //insere(tabela, nivel)
+             if(!this.symbolTable.pesquisa(this.lexem, this.scope)){
+                
+                this.symbolTable.insere('proc', this.lexem, this.scope)
+             
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
 
@@ -261,11 +263,11 @@ class Analyze {
                 {
                    throw "Erro -> Esperava ;"
                 }
-            //}
-            //else {
-                //error
-            //}
-            //desempilha(tabela)
+            }
+            else {
+                throw "Erro -> Nome de procedimento existente"
+            }
+            this.symbolTable.desempilha(this.lexem)
         }
         return token
     }
@@ -477,7 +479,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                if (this.semantic.pesquisa(token.lexem)) {
+                if (this.symbolTable.pesquisa(token.lexem)) {
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
