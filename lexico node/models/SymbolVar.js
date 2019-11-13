@@ -6,7 +6,7 @@ class SymbolVar{
         this.type = null;
         this.value = null;
         this.memPos = null;
-        this.symbol = new Symbol(lexam,scope);
+        this.symbol = new Symbol.Symbol(lexam,scope);
     }
 
     getType(){

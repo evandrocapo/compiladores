@@ -9,11 +9,11 @@ class SymbolTable{
     }
 
     inserir(tipo, lexem, scope){
-        if(tipo === "var") this.stack.push(new SymbolVar(lexem, scope));
-        else if(tipo === "proc") this.stack.push(new SymbolProc(lexem, scope));
-        else if(tipo === "func") this.stack.push(new SymbolProc(lexem, scope));
-        else if(tipo === "program") this.stack.push(new SymbolProgram(lexem, scope));
-        else throw "error";
+        if(tipo === "var") this.stack.push(new SymbolVar.SymbolVar(lexem, scope));
+        else if(tipo === "proc") this.stack.push(new SymbolProc.SymbolProc(lexem, scope));
+        else if(tipo === "func") this.stack.push(new SymbolProc.SymbolProc(lexem, scope));
+        else if(tipo === "program") this.stack.push(new SymbolProgram.SymbolProgram(lexem, scope));
+        else throw "SymbolTable error";
     }
 
     inserirTipo(lexem){
@@ -21,7 +21,8 @@ class SymbolTable{
 
         do{
             stackTipo.push(this.stack.pop()) // retira da pilha e joga na aux
-        }while(stackTipo[stackTipo.length-1] != 'var' || stackTipo[stackTipo.length-1] != 'func');
+        }while(stackTipo[stackTipo.length-1] != 'var' || stackTipo[stackTipo.length-1] != 'func'
+        || stackTipo.length < 0);
 
         this.stack.push(stackTipo.pop()) // retorna para a pilha o tipo "var ou func"
 
@@ -34,7 +35,7 @@ class SymbolTable{
 
     desempilhar(){
         var a;
-        while((a = this.stack.pop()) instanceof SymbolVar){}
+        while((a = this.stack.pop()) instanceof SymbolVar.SymbolVar){}
         this.stack.push(a)
         return ;
     }
@@ -45,7 +46,7 @@ class SymbolTable{
             a = this.stack.pop();
             stackDupli.push(a);
         }
-        while(a instanceof SymbolVar);
+        while(a instanceof SymbolVar.SymbolVar);
         this.stack.push(stackDupli.pop());
         this.stack.concat(stackDupli.reverse()); // voltou a pilha
         stackDupli.reverse(); // reverta de novo
@@ -62,7 +63,7 @@ class SymbolTable{
         var stackDuplic = this.stack.slice();
         var aux;
 
-        while(!(stackDuplic[stackDuplic.length-1] instanceof SymbolProgram)){
+        while(!(stackDuplic[stackDuplic.length-1] instanceof SymbolProgram.SymbolProgram)){
             aux = stackDuplic.pop();
             if(aux.symbol.lexem == lexem) return aux;
         }

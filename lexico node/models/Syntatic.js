@@ -10,7 +10,7 @@ class Syntatic {
     constructor() {
         this.lexic = Lexic;
         this.semantic = Semantic;
-        this.symbolTable = new SymbolTable();
+        this.symbolTable = new SymbolTable.SymbolTable();
         this.token = null;
         this.pilha = [];
     }
@@ -21,7 +21,7 @@ class Syntatic {
         if (this.token.symbol === 'sprograma') {
             this.token = this.lexic.doLexic()
             if(this.token.symbol === 'sidentificador'){
-                this.symbolTable.insereTabela("simbolProg", this.token.lexem);
+                this.symbolTable.inserir("program", this.token.lexem, this.token.lexem);
                 this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {
@@ -56,7 +56,7 @@ class Syntatic {
         }
         else
         {
-           throw "error"
+            throw "Error -> Esperava programa"
         }
     }
 }
