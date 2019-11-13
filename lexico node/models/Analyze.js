@@ -8,7 +8,7 @@ class Analyze {
     }
 
 
-    analyzeAssignment(token)
+    analyzeAssignment(token)///////////////////////////////
     {
         token = this.lexic.doLexic()
         token = this.analyzeExpression(token)
@@ -36,7 +36,7 @@ class Analyze {
         token = this.analyzeCommands(token)
         return token;
     }
-    analyzeCallFunc(token)
+    analyzeCallFunc(token)/////////////////////////////////////////////////
     {
         if(token.symbol === 'sidentificador')
         {
@@ -51,7 +51,7 @@ class Analyze {
         return token
     }
 
-    analyzeCallProc(token)
+    analyzeCallProc(token)////////////////////////////////////////////////////
     {
         if(token.symbol === 'sponto_virgula')
         {
@@ -180,7 +180,7 @@ class Analyze {
             this.scope = token.lexem;
              if(!this.symbolTable.pesquisa(token.lexem, this.scope)){
                 
-                this.symbolTable.insere('proc', token.lexem, this.scope)
+                this.symbolTable.inserir('proc', token.lexem, this.scope)
                  token = this.lexic.doLexic()
                  if( token.symbol === 'sdoispontos')
                  {
@@ -189,11 +189,11 @@ class Analyze {
                      {
                          if(token.symbol === 'sinteiro')
                          {
-                            this.symbolTable.insereTipo(token.lexem)
+                            this.symbolTable.inserirTipo(token.lexem)
                          }
                          else
                          {
-                            this.symbolTable.insereTipo(token.lexem)
+                            this.symbolTable.inserirTipo(token.lexem)
                          }
                          token = this.lexic.doLexic()
                          if(token.symbol === 'sponto_virgula')
@@ -254,7 +254,7 @@ class Analyze {
             this.scope = token.lexem;
              if(!this.symbolTable.pesquisa(token.lexem, this.scope)){
                 
-                this.symbolTable.insere('proc', token.lexem, this.scope)
+                this.symbolTable.inserir('proc', token.lexem, this.scope)
              
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
@@ -383,7 +383,7 @@ class Analyze {
         do {
             if (token.symbol === 'sidentificador') {
                 if (!this.symbolTable.pesquisarDupli(token.lexem, this.scope)) {
-                    this.symbolTable.insere('var', token.lexem, this.scope)
+                    this.symbolTable.inserir('var', token.lexem, this.scope)
                     token = this.lexic.doLexic()
                     if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                         if (token.symbol === 'svirgula') {
@@ -453,7 +453,7 @@ class Analyze {
         }
         else
         {
-            this.symbolTable.insereTipo(token.lexem)
+            this.symbolTable.inserirTipo(token.lexem)
             return token = this.lexic.doLexic()
         }
     }
