@@ -32,11 +32,11 @@ class SymbolTable{
         }while(stackTipo.length > 0)
     }
 
-    desempilhar(lexem){
+    desempilhar(){
         var a;
-        while(lexem != (a = this.stack.pop().symbol.lexem)){}
+        while((a = this.stack.pop()) instanceof SymbolVar){}
         this.stack.push(a)
-        return a;
+        return ;
     }
 
     pesquisarDupli(){
