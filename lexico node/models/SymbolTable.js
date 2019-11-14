@@ -41,32 +41,31 @@ class SymbolTable{
 
     pesquisarDupli(lexem,scope){
         var a,stackDupli=[];
-        
         do{
             a = this.stack.pop();
             stackDupli.push(a);
         }
         while(a instanceof SymbolVar.SymbolVar);
         this.stack.push(stackDupli.pop());
-        this.stack.concat(stackDupli.reverse()); // voltou a pilha
+        this.stack = this.stack.concat(stackDupli.reverse()); // voltou a pilha
         stackDupli.reverse(); // reverta de novo
 
         do{
             if(stackDupli == lexem) return true
             stackDupli.pop()
         }while(stackDupli.length > 0);
-        
         return false;
     }
 
     pesquisar(lexem,scope){
         
         var stackDuplic = this.stack.slice();
+        console.log(stackDuplic)
         var aux;
         
         while(!(stackDuplic[stackDuplic.length-1] instanceof SymbolProgram.SymbolProgram)){
             aux = stackDuplic.pop();
-            console.log(aux)
+            // console.log(aux)
             if(aux.symbol.lexem == lexem) return aux;
         }
 
