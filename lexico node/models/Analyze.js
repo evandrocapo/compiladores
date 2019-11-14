@@ -1,4 +1,5 @@
 const Lexic = require('./Lexic');
+const SymbolProc = require('../models/SymbolProc');
 
 class Analyze {
     constructor(symbolTable) { 
@@ -17,6 +18,14 @@ class Analyze {
     }
     analyzeAtribCallProc(token)
     {
+        if(this.symbolTable.pesquisar(token.lexem, this.scope))
+        {
+
+        }
+        else
+        {
+            throw 'Error -> Variavel nao existente'
+        }
         token = this.lexic.doLexic()
         if(token.symbol === 'satribuicao')
         {
@@ -24,7 +33,17 @@ class Analyze {
         }
         else
         {
-          token = this.analyzeCallProc(token)
+            //if(this.symbolTable.pesquisar(token.lexem, this.scope))
+            {
+                token = this.analyzeCallProc(token)
+            }
+           // else
+            {
+              //  console.log('antes do erro')
+              //  console.log(token)
+               // throw 'Error -> Procedimento nao existente'
+            }
+          
         }
         return token
     }
@@ -40,7 +59,6 @@ class Analyze {
     {
         if(token.symbol === 'sidentificador')
         {
-             //inserir na tabela
              console.log('analyzeCallFunc');
         }
         else
@@ -53,16 +71,6 @@ class Analyze {
 
     analyzeCallProc(token)////////////////////////////////////////////////////
     {
-        if(token.symbol === 'sponto_virgula')
-        {
-             //inserir na tabela
-        }
-        else
-        {
-            //console.log(token)
-           //throw "Erro -> Chamada de procedimento"
-        }
-        
         return token
     }
 
@@ -109,7 +117,7 @@ class Analyze {
         return token;
     }
 
-    analyzeFactor(token)
+    analyzeFactor(token)////////////////////////////
     {
         var tabela = null
         
@@ -119,14 +127,14 @@ class Analyze {
             console.log(tabela)
             if(tabela)
             {
-                if(tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano')
+                if(tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano' && (tabela instanceof SymbolProc.SymbolProc))
                 {
                     token = this.analyzeCallFunc(token)
                     token = this.lexic.doLexic()
                 }
                 else
                 {
-                    token = this.this.lexic.doLexic()
+                    token = this.lexic.doLexic()
                 }
             }
             else
@@ -236,7 +244,10 @@ class Analyze {
 
             if(token.symbol === 'ssenao')
             {
+                console.log('aca')
              token = this.lexic.doLexic()
+             console.log('o token eh')
+             console.log(token)
              token = this.analyzeSimpleCommand(token)  
             }
         }
@@ -325,6 +336,7 @@ class Analyze {
                  token = this.analyzeWrite(token)
                  break;
              default:
+                 console.log('aqui')
                  token = this.analyzeCommands(token)
                  break;
         }
@@ -482,7 +494,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                if (this.symbolTable.pesquisa(token.lexem)) {
+                if (this.symbolTable.pesquisar(token.lexem)) {
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()

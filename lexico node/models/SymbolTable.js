@@ -60,12 +60,10 @@ class SymbolTable{
     pesquisar(lexem,scope){
         
         var stackDuplic = this.stack.slice();
-        console.log(stackDuplic)
         var aux;
         
         while(!(stackDuplic[stackDuplic.length-1] instanceof SymbolProgram.SymbolProgram)){
             aux = stackDuplic.pop();
-            // console.log(aux)
             if(aux.symbol.lexem == lexem) return aux;
         }
 
