@@ -6,6 +6,7 @@ class Analyze {
         this.lexic = Lexic;
         this.scope = 'programa';
         this.symbolTable = symbolTable;
+        this.expression = null;
     }
 
 
@@ -81,12 +82,17 @@ class Analyze {
     }
 
     analyzeExpression(token) {
+
         token = this.analyzeSimpleExpression(token)
+        this.expression += token;
         if (token.symbol === 'smaior' || token.symbol === 'sig' || token.symbol === 'smenor' || token.symbol === 'smenorig' || token.symbol === 'sdif' || token.symbol === 'smaiorig') {
             this.lexic = this.lexic;
             token = this.lexic.doLexic()
+            this.expression += token;
             token = this.analyzeSimpleExpression(token)
+            this.expression += token;
         }
+        //this.expression = Semantic.Semantic.posfixa(expression)
         return token;
     }
 
