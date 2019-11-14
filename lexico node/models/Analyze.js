@@ -2,7 +2,7 @@ const Lexic = require('./Lexic');
 const SymbolProc = require('../models/SymbolProc');
 
 class Analyze {
-    constructor(symbolTable) { 
+    constructor(symbolTable) {
         this.lexic = Lexic;
         this.scope = 'programa';
         this.symbolTable = symbolTable;
@@ -13,42 +13,26 @@ class Analyze {
     {
         token = this.lexic.doLexic()
         token = this.analyzeExpression(token)
-    
+
         return token
     }
-    analyzeAtribCallProc(token)
-    {
-        if(this.symbolTable.pesquisar(token.lexem, this.scope))
-        {
-
-        }
-        else
-        {
-            throw 'Error -> Variavel nao existente'
-        }
-        token = this.lexic.doLexic()
-        if(token.symbol === 'satribuicao')
-        {
-          token = this.analyzeAssignment(token)
-        }
-        else
-        {
-            //if(this.symbolTable.pesquisar(token.lexem, this.scope))
-            {
+    analyzeAtribCallProc(token) {
+        if (this.symbolTable.pesquisar(token.lexem, this.scope)) {
+            token = this.lexic.doLexic()
+            if (token.symbol === 'satribuicao') {
+                token = this.analyzeAssignment(token)
+            }
+            else {
                 token = this.analyzeCallProc(token)
             }
-           // else
-            {
-              //  console.log('antes do erro')
-              //  console.log(token)
-               // throw 'Error -> Procedimento nao existente'
-            }
-          
         }
+        else {
+            throw 'Error -> Declaracao nao existente'
+        }
+
         return token
     }
-    analyzeBlock(token)
-    {
+    analyzeBlock(token) {
         token = this.lexic.doLexic()
         token = this.analyzeStepVariables(token)
         token = this.analyzeSubRotine(token)
@@ -57,13 +41,11 @@ class Analyze {
     }
     analyzeCallFunc(token)/////////////////////////////////////////////////
     {
-        if(token.symbol === 'sidentificador')
-        {
-             console.log('analyzeCallFunc');
+        if (token.symbol === 'sidentificador') {
+            console.log('analyzeCallFunc');
         }
-        else
-        {
-           throw "Erro -> Chamada de funcao"
+        else {
+            throw "Erro -> Chamada de funcao"
         }
         token = this.lexic.doLexic()
         return token
@@ -74,45 +56,36 @@ class Analyze {
         return token
     }
 
-    analyzeCommands(token)
-    {
-        if(token.symbol === 'sinicio')
-        {
-             token = this.lexic.doLexic()
-             token = this.analyzeSimpleCommand(token)
-             while(token.symbol !== 'sfim')
-             {
-                 if(token.symbol === 'sponto_virgula')
-                 {
-                     token = this.lexic.doLexic()
-                     if(token.symbol !== 'sfim')
-                     {
-                         token = this.analyzeSimpleCommand(token)
-                     }
-                 }
-                 else
-                 {
+    analyzeCommands(token) {
+        if (token.symbol === 'sinicio') {
+            token = this.lexic.doLexic()
+            token = this.analyzeSimpleCommand(token)
+            while (token.symbol !== 'sfim') {
+                if (token.symbol === 'sponto_virgula') {
+                    token = this.lexic.doLexic()
+                    if (token.symbol !== 'sfim') {
+                        token = this.analyzeSimpleCommand(token)
+                    }
+                }
+                else {
                     throw "Erro -> Esperava ;"
-                 }
-             }
-             token = this.lexic.doLexic()
+                }
+            }
+            token = this.lexic.doLexic()
         }
-        else
-        {
-           throw "Erro -> Esperava inicio"
+        else {
+            throw "Erro -> Esperava inicio"
         }
-     
+
         return token
     }
 
-    analyzeExpression(token)
-    {
+    analyzeExpression(token) {
         token = this.analyzeSimpleExpression(token)
-        if(token.symbol === 'smaior' || token.symbol === 'sig' || token.symbol === 'smenor' || token.symbol === 'smenorig' || token.symbol === 'sdif' || token.symbol === 'smaiorig' )
-        {
-             this.lexic = this.lexic;
-             token = this.lexic.doLexic()
-             token = this.analyzeSimpleExpression(token)
+        if (token.symbol === 'smaior' || token.symbol === 'sig' || token.symbol === 'smenor' || token.symbol === 'smenorig' || token.symbol === 'sdif' || token.symbol === 'smaiorig') {
+            this.lexic = this.lexic;
+            token = this.lexic.doLexic()
+            token = this.analyzeSimpleExpression(token)
         }
         return token;
     }
@@ -120,163 +93,135 @@ class Analyze {
     analyzeFactor(token)////////////////////////////
     {
         var tabela = null
-        
-        if(token.symbol === 'sidentificador')
-        {
+
+        if (token.symbol === 'sidentificador') {
             tabela = this.symbolTable.pesquisar(token.lexem, this.scope)
             console.log(tabela)
-            if(tabela)
-            {
-                if(tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano' && (tabela instanceof SymbolProc.SymbolProc))
-                {
+            if (tabela) {
+                if (tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano' && (tabela instanceof SymbolProc.SymbolProc)) {
                     token = this.analyzeCallFunc(token)
                     token = this.lexic.doLexic()
                 }
-                else
-                {
+                else {
                     token = this.lexic.doLexic()
                 }
             }
-            else
-            {
+            else {
                 throw "Erro -> Nao declarado"
             }
         }
-        else if(token.symbol ===  'snumero')
-        {
+        else if (token.symbol === 'snumero') {
             token = this.lexic.doLexic()
         }
-        else if (token.symbol === 'snao')
-        {
+        else if (token.symbol === 'snao') {
             token = this.lexic.doLexic()
             token = this.analyzeFactor(token)
         }
-        else if (token.symbol === 'sabre_parenteses')
-        {
+        else if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
 
             token = this.analyzeExpression(token)
-            
-            if(token.symbol === 'sfecha_parenteses')
-            {
+
+            if (token.symbol === 'sfecha_parenteses') {
                 token = this.lexic.doLexic()
             }
-            else
-            {
-               'Erro -> Esperava fecha parenteses'
+            else {
+                'Erro -> Esperava fecha parenteses'
             }
         }
-        else if (token.lexem === 'verdadeiro' || token.lexem === 'falso')
-        {
+        else if (token.lexem === 'verdadeiro' || token.lexem === 'falso') {
             token = this.lexic.doLexic()
         }
-        else
-        {
-           throw "Erro -> Esperava um fator"
+        else {
+            throw "Erro -> Esperava um fator"
         }
-    
+
         return token
-       
+
     }
 
-    analyzeFuncDeclaration(token)
-    {
+    analyzeFuncDeclaration(token) {
         token = this.lexic.doLexic()
-        
-     
-        if( token.symbol === 'sidentificador')
-        {
+
+
+        if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
-             if(!this.symbolTable.pesquisar(token.lexem, this.scope)){
-                
+            if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
+
                 this.symbolTable.inserir('proc', token.lexem, this.scope)
-                 token = this.lexic.doLexic()
-                 if( token.symbol === 'sdoispontos')
-                 {
-                     token = this.lexic.doLexic()
-                     if(token.symbol === 'sinteiro' || token.symbol === 'sbooleano')
-                     {
-                         if(token.symbol === 'sinteiro')
-                         {
+                token = this.lexic.doLexic()
+                if (token.symbol === 'sdoispontos') {
+                    token = this.lexic.doLexic()
+                    if (token.symbol === 'sinteiro' || token.symbol === 'sbooleano') {
+                        if (token.symbol === 'sinteiro') {
                             this.symbolTable.inserirTipo(token.lexem)
-                         }
-                         else
-                         {
+                        }
+                        else {
                             this.symbolTable.inserirTipo(token.lexem)
-                         }
-                         token = this.lexic.doLexic()
-                         if(token.symbol === 'sponto_virgula')
-                         {
-                             token =  this.analyzeBlock(token)
-                         }
-                     }
-                     else
-                     {
+                        }
+                        token = this.lexic.doLexic()
+                        if (token.symbol === 'sponto_virgula') {
+                            token = this.analyzeBlock(token)
+                        }
+                    }
+                    else {
                         throw "Erro -> Erro no tipo"
-                     }
-     
-                 }
-                 else
-                 {
+                    }
+
+                }
+                else {
                     throw "Erro -> Esperava :"
-                 }
-     
+                }
+
             }
-            else
-            {
+            else {
                 throw "Erro -> Nome de funcao existente"
             }
             this.symbolTable.desempilhar()
         }
-     
+
         return token
     }
 
-    analyzeIf(token)
-    {
+    analyzeIf(token) {
         token = this.lexic.doLexic()
         token = this.analyzeExpression(token)
-        if (token.symbol === 'sentao')
-        {
+        if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
 
             token = this.analyzeSimpleCommand(token)
 
-            if(token.symbol === 'ssenao')
-            {
+            if (token.symbol === 'ssenao') {
                 console.log('aca')
-             token = this.lexic.doLexic()
-             console.log('o token eh')
-             console.log(token)
-             token = this.analyzeSimpleCommand(token)  
+                token = this.lexic.doLexic()
+                console.log('o token eh')
+                console.log(token)
+                token = this.analyzeSimpleCommand(token)
             }
         }
-        else
-        {
+        else {
             throw 'Erro -> Esperava então'
         }
         return token
     }
 
-    analyzeProcDeclaration(token)
-    {
+    analyzeProcDeclaration(token) {
         token = this.lexic.doLexic()
-    
+
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
-             if(!this.symbolTable.pesquisar(token.lexem, this.scope)){
-                
+            if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
+
                 this.symbolTable.inserir('proc', token.lexem, this.scope)
-             
+
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
 
-                    token =  this.analyzeBlock(token)
+                    token = this.analyzeBlock(token)
 
                 }
-                else
-                {
-                   throw "Erro -> Esperava ;"
+                else {
+                    throw "Erro -> Esperava ;"
                 }
             }
             else {
@@ -287,8 +232,7 @@ class Analyze {
         return token
     }
 
-    analyzeRead(token)
-    {
+    analyzeRead(token) {
         token = this.lexic.doLexic()
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
@@ -312,87 +256,74 @@ class Analyze {
         else {
             throw "Erro -> Esperava ("
         }
-    
+
         return token
     }
 
-    analyzeSimpleCommand(token)
-    {
-        switch(token.symbol)
-        {
+    analyzeSimpleCommand(token) {
+        switch (token.symbol) {
             case 'sidentificador':
-             token =  this.analyzeAtribCallProc(token)
+                token = this.analyzeAtribCallProc(token)
                 break;
-             case 'sse':
-                 token =  this.analyzeIf(token)
-                 break;
-             case 'senquanto':
-                 token = this.analyzeWhile(token)
-                 break;
-             case 'sleia':
-                 token = this.analyzeRead(token)
-                 break;
-             case 'sescreva':
-                 token = this.analyzeWrite(token)
-                 break;
-             default:
-                 console.log('aqui')
-                 token = this.analyzeCommands(token)
-                 break;
+            case 'sse':
+                token = this.analyzeIf(token)
+                break;
+            case 'senquanto':
+                token = this.analyzeWhile(token)
+                break;
+            case 'sleia':
+                token = this.analyzeRead(token)
+                break;
+            case 'sescreva':
+                token = this.analyzeWrite(token)
+                break;
+            default:
+                console.log('aqui')
+                token = this.analyzeCommands(token)
+                break;
         }
-     
+
         return token
     }
 
-    analyzeSimpleExpression(token)
-    {
-        if(token.symbol === 'smais' || token.symbol === 'smenos')
-        {
+    analyzeSimpleExpression(token) {
+        if (token.symbol === 'smais' || token.symbol === 'smenos') {
             token = this.lexic.doLexic()
-         }
+        }
+        token = this.analyzeTerm(token)
+        while (token.symbol === 'smais' || token.symbol === 'smenos' || token.symbol === 'sou') {
+            token = this.lexic.doLexic()
             token = this.analyzeTerm(token)
-            while(token.symbol === 'smais' || token.symbol === 'smenos' || token.symbol === 'sou')
-            {
-             token = this.lexic.doLexic()
-             token = this.analyzeTerm(token)
-            }
-     
+        }
+
         return token
     }
 
-    analyzeStepVariables(token)
-    {
-        if(token.symbol === 'svar')
-        {
+    analyzeStepVariables(token) {
+        if (token.symbol === 'svar') {
             token = this.lexic.doLexic()
-            if(token.symbol === 'sidentificador')
-            {
-                while (token.symbol === 'sidentificador')
-                {
-                     token = this.analyzeVariables(token)
-                     if(token.symbol === 'sponto_virgula')
-                     {
-                         token = this.lexic.doLexic()
-                     }
-                     else
-                     {
-                         throw "Erro -> Esperava ;"
-                     }
-                     
+            if (token.symbol === 'sidentificador') {
+                while (token.symbol === 'sidentificador') {
+                    token = this.analyzeVariables(token)
+                    if (token.symbol === 'sponto_virgula') {
+                        token = this.lexic.doLexic()
+                    }
+                    else {
+                        throw "Erro -> Esperava ;"
+                    }
+
                 }
             }
-            else
-            {
-             throw "Erro -> Esperava identificador"
+            else {
+                throw "Erro -> Esperava identificador"
             }
         }
-     
+
         return token
-        
+
     }
 
-    analyzeVariables(token)
-    {
+    analyzeVariables(token) {
         do {
             if (token.symbol === 'sidentificador') {
                 if (!this.symbolTable.pesquisarDupli(token.lexem)) {
@@ -423,14 +354,13 @@ class Analyze {
         return this.analyzeType(token)
     }
 
-    analyzeSubRotine(token)
-    {
+    analyzeSubRotine(token) {
         if (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
             //codigo vermelho
             while (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
                 if (token.symbol === 'sprocedimento') {
                     token = this.analyzeProcDeclaration(token)
-    
+
                 }
                 else {
                     token = this.analyzeFuncDeclaration(token)
@@ -443,53 +373,45 @@ class Analyze {
                 }
             }
         }
-    
+
         return token
     }
 
-    analyzeTerm(token)
-    {    token = this.analyzeFactor(token)
+    analyzeTerm(token) {
+        token = this.analyzeFactor(token)
 
-        while(token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se')
-        {
+        while (token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se') {
             token = this.lexic.doLexic()
             token = this.analyzeFactor(token)
         }
-       return token
+        return token
     }
 
-    analyzeType(token)
-    {
-        if(token.symbol !== 'sinteiro' && token.symbol !== 'sbooleano')
-        {
-         throw "Erro -> Esperava tipos"
+    analyzeType(token) {
+        if (token.symbol !== 'sinteiro' && token.symbol !== 'sbooleano') {
+            throw "Erro -> Esperava tipos"
         }
-        else
-        {
+        else {
             this.symbolTable.inserirTipo(token.lexem)
             return token = this.lexic.doLexic()
         }
     }
 
-    analyzeWhile(token)
-    {
+    analyzeWhile(token) {
         token = this.lexic.doLexic()
         token = this.analyzeExpression(token)
-        if(token.symbol === 'sfaca')
-        {
-             token = this.lexic.doLexic()
-             token = this.analyzeSimpleCommand(token)
+        if (token.symbol === 'sfaca') {
+            token = this.lexic.doLexic()
+            token = this.analyzeSimpleCommand(token)
         }
-        else
-        {
-         throw "Erro -> esperava faca"
+        else {
+            throw "Erro -> esperava faca"
         }
-     
+
         return token
     }
 
-    analyzeWrite(token)
-    {
+    analyzeWrite(token) {
         token = this.lexic.doLexic()
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
@@ -503,8 +425,8 @@ class Analyze {
                         throw "Erro -> Esperava )"
                     }
                 }
-               else {
-                throw "Erro -> Variavel nao declarada"
+                else {
+                    throw "Erro -> Variavel nao declarada"
                 }
             } else {
                 throw "Erro -> Esperava identificador"
@@ -513,7 +435,7 @@ class Analyze {
         else {
             throw "Erro -> Esperava ("
         }
-    
+
         return token
     }
 }
