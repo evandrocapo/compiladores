@@ -23,14 +23,12 @@ class Semantic{
             else
             {   
                 aux = this.pilha.pop();
-                if(aux === ')')
+                if(exp[i] === ')')
                 {
-                    aux = this.pilha.pop();
                     do
                     {
                         result += aux;
                         aux = this.pilha.pop();
-                        console.log(aux)
                     }while(aux !== '(')
                             
                 }
