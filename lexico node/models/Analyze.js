@@ -6,7 +6,7 @@ class Analyze {
         this.lexic = Lexic;
         this.scope = 'programa';
         this.symbolTable = symbolTable;
-        this.expression = null;
+        this.expression = new Array();
     }
 
 
