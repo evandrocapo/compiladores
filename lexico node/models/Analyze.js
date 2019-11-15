@@ -325,8 +325,12 @@ class Analyze {
             token = this.lexic.doLexic()
             this.expression.push(token.lexem)
             token = this.analyzeTerm(token)
+            this.expression.push(token.lexem)
         }
-        if(token.symbol!== 'sfecha_parenteses')
+        if(token.symbol!== 'sfecha_parenteses' && token.symbol !== 'smult' && 
+        token.symbol !== 'sdiv' && token.symbol !== 'se' &&
+        token.symbol !== 'smais' && token.symbol !== 'smenos' && token.symbol !== 'sou'
+        && token.symbol !== 'snumero' && token.symbol !== 'sidentificador')
         this.expression.pop()
         return token
     }
@@ -414,8 +418,8 @@ class Analyze {
         token = this.analyzeFactor(token)
 
         while (token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se') {
-            token = this.lexic.doLexic()
             this.expression.push(token.lexem)
+            token = this.lexic.doLexic()
             token = this.analyzeFactor(token)
         }
         return token
