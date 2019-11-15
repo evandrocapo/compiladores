@@ -11,54 +11,65 @@ class Semantic{
         var result = '';
         var length = exp.length;
 
-        for(var i = 0; i< length; i++)
+        var aux = this.pilha.pop();
+
+        for(var i = 0; i < length; i++)
         {
+            
             if(this.priority(exp[i]) === null)
             {
                 result += exp[i];
             }
             else
-            {
-                //do
-                //{
-                var aux = this.pilha.pop();
-
-                    if(aux)
+            {   
+                aux = this.pilha.pop();
+                if(aux === ')')
+                {
+                    aux = this.pilha.pop();
+                    do
                     {
-                        if(aux === ')')
-                        {
-                            while((aux = this.pilha.pop()) !== '(')
-                            {
-                                result += aux;
-                            }
+                        result += aux;
+                        aux = this.pilha.pop();
+                        console.log(aux)
+                    }while(aux !== '(')
                             
-                        }
-                        else
+                }
+                else
+                {
+                    if(this.priority(exp[i]) >= this.priority(aux) && aux != undefined
+                    && this.priority(aux)!= 0)
+                    {
+                        while(this.priority(exp[i]) >= this.priority(aux) && aux != undefined
+                        && this.priority(aux)!= 0)
                         {
-                            if(this.priority(aux) >= this.priority(exp[i]) && this.priority(aux) !== 0)
-                            {
-                                while(this.priority(aux) >= this.priority(exp[i]) && this.priority(aux) !== 0)
-                                {
-                                    result += this.priority(aux);
-                                    aux = this.pilha.pop();
-                                }
-                                this.pilha.push(exp[i]);
-                            }
-                            else
-                            {
-                                this.pilha.push(exp[i]);
-                            }
+                            result += aux;
+                            aux = this.pilha.pop();
                         }
-                       
+                        if(aux != undefined)
+                        {
+                            this.pilha.push(aux);
+                        }
+                        this.pilha.push(exp[i]);
+                        
                     }
-               // }while(this.priority(aux) >= this.priority(exp[i]))
-
+                    else
+                    {
+                        if(aux != undefined)
+                        {
+                            this.pilha.push(aux);
+                        }
+                        this.pilha.push(exp[i]);
+                    }
+                    
+                }
+                    
             }
+            console.log(this.pilha)
         }
-        var rest = null;
-        while(rest = this.pilha.pop)
+
+        while(this.pilha.length > 0)
         {
-            result += rest;
+            result += this.pilha.pop();
         }
 
         return result;
