@@ -8,6 +8,7 @@ class Analyze {
         this.scope = 'programa';
         this.symbolTable = symbolTable;
         this.expression = new Array();
+        this.doPosFixa = true;
     }
 
 
@@ -93,11 +94,14 @@ class Analyze {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleExpression(token)
         }
-        console.log(this.expression)
-        this.expression = new Semantic.Semantic().posFixa(this.expression)
-        console.log(this.expression)
-
-        this.expression = new Array()
+        if(this.doPosFixa)
+        {
+            console.log(this.expression)
+            this.expression = new Semantic.Semantic().posFixa(this.expression)
+            console.log(this.expression)
+    
+            this.expression = new Array()
+        }
 
         return token;
     }
@@ -132,8 +136,9 @@ class Analyze {
         }
         else if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
-
+            this.doPosFixa = false;
             token = this.analyzeExpression(token)
+            this.doPosFixa = true;
 
             if (token.symbol === 'sfecha_parenteses') {
                 token = this.lexic.doLexic()
