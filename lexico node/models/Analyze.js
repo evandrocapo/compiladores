@@ -8,7 +8,7 @@ class Analyze {
         this.scope = 'programa';
         this.symbolTable = symbolTable;
         this.expression = new Array();
-        this.doPosFixa = true;
+        this.doPosFixa = 0;
     }
 
 
@@ -94,7 +94,7 @@ class Analyze {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleExpression(token)
         }
-        if(this.doPosFixa)
+        if(this.doPosFixa === 0)
         {
             console.log(this.expression)
             this.expression = new Semantic.Semantic().posFixa(this.expression)
@@ -110,7 +110,7 @@ class Analyze {
     {
         var tabela = null
 
-        
+        this.expression.push(token.lexem)
 
         if (token.symbol === 'sidentificador') {
             tabela = this.symbolTable.pesquisar(token.lexem, this.scope)
@@ -136,11 +136,12 @@ class Analyze {
         }
         else if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
-            this.doPosFixa = false;
+            this.doPosFixa++;
             token = this.analyzeExpression(token)
-            this.doPosFixa = true;
-
+            
             if (token.symbol === 'sfecha_parenteses') {
+                this.expression.push(token.lexem)
+                this.doPosFixa--;
                 token = this.lexic.doLexic()
             }
             else {
@@ -293,7 +294,6 @@ class Analyze {
                 token = this.analyzeWrite(token)
                 break;
             default:
-                console.log('aqui')
                 token = this.analyzeCommands(token)
                 break;
         }
@@ -302,7 +302,7 @@ class Analyze {
     }
 
     analyzeSimpleExpression(token) {
-        this.expression.push(token.lexem)
+        
         if (token.symbol === 'smais' || token.symbol === 'smenos') {
             
             if(token.symbol === 'smais')
@@ -313,25 +313,19 @@ class Analyze {
             {
                 token.lexem = '-u'
             }
-            this.expression.pop()
             this.expression.push(token.lexem)
             token = this.lexic.doLexic()
-            this.expression.push(token.lexem)
         }
         token = this.analyzeTerm(token)
-        this.expression.push(token.lexem)
+        
         
         while (token.symbol === 'smais' || token.symbol === 'smenos' || token.symbol === 'sou') {
+            this.expression.push(token.lexem)
             token = this.lexic.doLexic()
-            this.expression.push(token.lexem)
             token = this.analyzeTerm(token)
-            this.expression.push(token.lexem)
+            
         }
-        if(token.symbol!== 'sfecha_parenteses' && token.symbol !== 'smult' && 
-        token.symbol !== 'sdiv' && token.symbol !== 'se' &&
-        token.symbol !== 'smais' && token.symbol !== 'smenos' && token.symbol !== 'sou'
-        && token.symbol !== 'snumero' && token.symbol !== 'sidentificador')
-        this.expression.pop()
+
         return token
     }
 
