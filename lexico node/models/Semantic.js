@@ -81,14 +81,18 @@ class Semantic{
                 return 0;
             case ')':
                 return 0;
+            case '-u':
+                return 1;
+            case '+u':
+                return 1;
             case 'div':
-                return 1;
+                return 2;
             case '*':
-                return 1;
+                return 2;
             case '+':
-                return 2;
+                return 3;
             case '-':
-                return 2;
+                return 3;
             case '>':
                 return 4;
             case '<':

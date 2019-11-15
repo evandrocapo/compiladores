@@ -1,5 +1,6 @@
 const Lexic = require('./Lexic');
 const SymbolProc = require('../models/SymbolProc');
+const Semantic = require('../models/Semantic');
 
 class Analyze {
     constructor(symbolTable) {
@@ -83,16 +84,21 @@ class Analyze {
 
     analyzeExpression(token) {
 
+        
         token = this.analyzeSimpleExpression(token)
-        this.expression += token;
+        
         if (token.symbol === 'smaior' || token.symbol === 'sig' || token.symbol === 'smenor' || token.symbol === 'smenorig' || token.symbol === 'sdif' || token.symbol === 'smaiorig') {
             this.lexic = this.lexic;
+            this.expression.push(token.lexem)
             token = this.lexic.doLexic()
-            this.expression += token;
             token = this.analyzeSimpleExpression(token)
-            this.expression += token;
         }
-        //this.expression = Semantic.Semantic.posfixa(expression)
+        console.log(this.expression)
+        this.expression = new Semantic.Semantic().posFixa(this.expression)
+        console.log(this.expression)
+
+        this.expression = new Array()
+
         return token;
     }
 
@@ -100,9 +106,10 @@ class Analyze {
     {
         var tabela = null
 
+        
+
         if (token.symbol === 'sidentificador') {
             tabela = this.symbolTable.pesquisar(token.lexem, this.scope)
-            console.log(tabela)
             if (tabela) {
                 if (tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano' && (tabela instanceof SymbolProc.SymbolProc)) {
                     token = this.analyzeCallFunc(token)
@@ -198,10 +205,7 @@ class Analyze {
             token = this.analyzeSimpleCommand(token)
 
             if (token.symbol === 'ssenao') {
-                console.log('aca')
                 token = this.lexic.doLexic()
-                console.log('o token eh')
-                console.log(token)
                 token = this.analyzeSimpleCommand(token)
             }
         }
@@ -293,15 +297,32 @@ class Analyze {
     }
 
     analyzeSimpleExpression(token) {
+        this.expression.push(token.lexem)
         if (token.symbol === 'smais' || token.symbol === 'smenos') {
+            
+            if(token.symbol === 'smais')
+            {
+                token.lexem = '+u'
+            }
+            else
+            {
+                token.lexem = '-u'
+            }
+            this.expression.pop()
+            this.expression.push(token.lexem)
             token = this.lexic.doLexic()
+            this.expression.push(token.lexem)
         }
         token = this.analyzeTerm(token)
+        this.expression.push(token.lexem)
+        
         while (token.symbol === 'smais' || token.symbol === 'smenos' || token.symbol === 'sou') {
             token = this.lexic.doLexic()
+            this.expression.push(token.lexem)
             token = this.analyzeTerm(token)
         }
-
+        if(token.symbol!== 'sfecha_parenteses')
+        this.expression.pop()
         return token
     }
 
@@ -384,10 +405,12 @@ class Analyze {
     }
 
     analyzeTerm(token) {
+        
         token = this.analyzeFactor(token)
 
         while (token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se') {
             token = this.lexic.doLexic()
+            this.expression.push(token.lexem)
             token = this.analyzeFactor(token)
         }
         return token
