@@ -8,6 +8,7 @@ class Analyze {
         this.scope = 'programa';
         this.symbolTable = symbolTable;
         this.expression = new Array();
+        this.expressionType = '';
         this.doPosFixa = 0;
     }
 
@@ -435,6 +436,7 @@ class Analyze {
         if (token.symbol === 'sfaca') {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)
+            //this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
         }
         else {
             throw "Erro -> esperava faca"
