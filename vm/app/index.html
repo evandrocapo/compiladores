@@ -1,17 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>Programa Léxico</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Maquina Virtual</title>
 </head>
+
 <body>
-    <h1>Olá Mundo</h1>
-    <label id="label"></label>
-    <button id="link-about">Sobre</button>
-    <button id="link-open">Open</button>
-    <button id="link-exec">Executar</button>
+    <div>
+        <h1>Maquina Virtual</h1>
+        <label id="label"></label>
+        <button id="link-about">Sobre</button>
+        <button id="link-open">Open</button>
+        <button id="link-exec">Executar</button>
+    </div>
+    <div>
+        <div>
+            <table style="margin-top:10px; border:2px solid black; margin-left: 10px;">
+                <thead>
+                    <tr>
+                        <th colspan="5">Instruções a serem executadas pela MV</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>I</td>
+                        <td>Instruções</td>
+                        <td>Atributo#1</td>
+                        <td>Atributo#2</td>
+                        <td>Comentario</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                        <td>Z</td>
+                        <td>I</td>
+                        <td>J</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <table style="margin-top:10px; border:2px solid black; margin-left: 10px;">
+                <thead>
+                    <tr>
+                        <th colspan="2">Conteúdo da Pilha</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>Endereço(S)</td>
+                        <td>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <table style="margin-top:10px; border:2px solid black; margin-left: 10px;">
+                <thead>
+                    <tr>
+                        <th colspan="2">Conteúdo de Entrada</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>Endereço(S)</td>
+                        <td>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <table style="margin-top:10px; border:2px solid black; margin-left: 10px;">
+                <thead>
+                    <tr>
+                        <th colspan="2">Conteúdo de Saida</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>Endereço(S)</td>
+                        <td>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <table style="margin-top:10px; border:2px solid black; margin-left: 10px;">
+                <thead>
+                    <tr>
+                        <th colspan="2">Breakpoints</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td>Endereço(S)</td>
+                        <td>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
     <script src="js/renderer.js"></script>
     <script src="js/fileOpen.js"></script>
     <script src="js/exec.js"></script>
 </body>
+
 </html>
