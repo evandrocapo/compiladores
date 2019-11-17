@@ -1,5 +1,6 @@
 const Lexic = require('./Lexic');
 const SymbolProc = require('../models/SymbolProc');
+const SymbolVar = require('../models/SymbolVar');
 const Semantic = require('../models/Semantic');
 
 class Analyze {
@@ -333,7 +334,12 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                if (this.symbolTable.pesquisar(token.lexem, this.scope)) {
+                var variable = this.symbolTable.pesquisar(token.lexem);
+                if (variable) {
+                    if(!(variable instanceof SymbolVar.SymbolVar))
+                    {
+                        throw 'Error -> Esperava variavel'
+                    }
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
@@ -534,7 +540,12 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                if (this.symbolTable.pesquisar(token.lexem)) {
+                var variable = this.symbolTable.pesquisar(token.lexem);
+                if (variable) {
+                    if(!(variable instanceof SymbolVar.SymbolVar))
+                    {
+                        throw 'Error -> Esperava variavel'
+                    }
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
