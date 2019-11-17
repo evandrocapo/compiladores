@@ -63,7 +63,11 @@ class Analyze {
             {
             token = this.lexic.doLexic()
                 if (token.symbol === 'satribuicao') {
-                token = this.analyzeAssignment(token,variable)
+                    if (!(variable instanceof SymbolVar.SymbolVar))
+                    {
+                        throw 'Error -> Esperava variavel'
+                    }
+                    token = this.analyzeAssignment(token,variable)
                 
                 }
                 else {
