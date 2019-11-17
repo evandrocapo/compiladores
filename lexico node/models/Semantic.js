@@ -8,7 +8,7 @@ class Semantic{
     }
 
     posFixa(exp){
-        var result = '';
+        var result = new Array();
         var length = exp.length;
 
         var aux = this.pilha.pop();
@@ -18,7 +18,7 @@ class Semantic{
             
             if(this.priority(exp[i]) === null)
             {
-                result += exp[i];
+                result.push(exp[i]);
             }
             else
             {   
@@ -27,7 +27,7 @@ class Semantic{
                 {
                     do
                     {
-                        result += aux;
+                        result.push(aux);
                         aux = this.pilha.pop();
                     }while(aux !== '(')
                             
@@ -40,7 +40,7 @@ class Semantic{
                         while(this.priority(exp[i]) >= this.priority(aux) && aux != undefined
                         && this.priority(aux)!= 0)
                         {
-                            result += aux;
+                            result.push(aux);
                             aux = this.pilha.pop();
                         }
                         if(aux != undefined)
@@ -67,7 +67,7 @@ class Semantic{
 
         while(this.pilha.length > 0)
         {
-            result += this.pilha.pop();
+            result.push(this.pilha.pop());
         }
 
         return result;
