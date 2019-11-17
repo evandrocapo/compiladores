@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const fileModel = require('./models/File');
 const index = '/app/index.html'
 const about = '/app/about.html'
 
