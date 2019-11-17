@@ -56,12 +56,19 @@ class Analyze {
     analyzeAtribCallProc(token) {
         var variable = this.symbolTable.pesquisar(token.lexem, this.scope)
         if (variable !== null) {
+            var tokenAux = token;
+            token = this.analyzeReturnF(token)
+            if(tokenAux === token)
+            {
             token = this.lexic.doLexic()
-            if (token.symbol === 'satribuicao') {
+                if (token.symbol === 'satribuicao') {
                 token = this.analyzeAssignment(token,variable)
-            }
-            else {
-                token = this.analyzeCallProc(token)
+                
+                }
+                else {
+                
+                    token = this.analyzeCallProc(token)
+                }
             }
         }
         else {
@@ -205,11 +212,9 @@ class Analyze {
             {
                 if(token.lexem === this.actualFunction.lexem)
                 {
-                    console.log('retornando')
                     token = this.lexic.doLexic()
                     token = this.analyzeAssignment(token, variable)
                     this.actualFunction.returned=true;
-                    console.log(this.actualFunction.returned)
                 }
             }
         }
@@ -352,8 +357,6 @@ class Analyze {
     }
 
     analyzeSimpleCommand(token) {
-
-        token = this.analyzeReturnF(token)
         switch (token.symbol) {
             case 'sidentificador':
                 token = this.analyzeAtribCallProc(token)
@@ -370,12 +373,6 @@ class Analyze {
             case 'sescreva':
                 token = this.analyzeWrite(token)
                 break;
-            case 'sponto_virgula':
-                    
-                break;
-            case 'sfim':
-                    
-                    break;
             default:
                 token = this.analyzeCommands(token)
                 break;
