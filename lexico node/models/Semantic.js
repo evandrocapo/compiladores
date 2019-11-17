@@ -123,12 +123,15 @@ class Semantic{
 
         for(var i=0;i<expression.length;i++)
         {
-            exp[i] = expression[i];
+            exp.push(expression[i]);
         }
+
+        
 
         for(var i=0;i<exp.length;i++)
         {
             symbol = symbolTable.pesquisar(exp[i],scope)
+
             if(symbol != null)
             {
                 if(symbol.type === 'inteiro')
@@ -142,16 +145,17 @@ class Semantic{
             }
             else
             {
-                if(exp === 'verdadeiro' || exp === 'falso')
+                if(exp[i] === 'verdadeiro' || exp[i] === 'falso')
                 {
                     exp[i] = 'B'
                 }
-                else
+                else if(Number.isInteger(exp[i]))
                 {
                     exp[i] = 'I'
                 }
             }
         }
+        
         
         var iterator = 0;
         var result = null;
@@ -165,15 +169,19 @@ class Semantic{
             || exp[iterator] === 'e' || exp[iterator] === 'ou' || exp[iterator] === '-')
             {
 
-                result = verifyCompatibility(exp,iterator)
+                result = this.verifyCompatibility(exp,iterator)
                 if(result === null)
                 {
-                    return null;
+                    throw 'Error -> Incompatibilidade de tipos na expressao'
                 }
-  
+                iterator = result;
             }
-            iterator = result;
-        }while(exp.lenght != 1)
+            else
+            {
+                iterator++;
+            }
+            
+        }while(exp.length != 1)
         
         return exp;    
 
@@ -211,7 +219,7 @@ class Semantic{
                 exp.splice(i-2,2)
                 return i-2
             }
-            return 'E'
+            return null
         }
         else if(factor === 'e' || factor === 'ou')
         {

@@ -16,6 +16,7 @@ class Analyze {
     analyzeAssignment(token)///////////////////////////////
     {
         token = this.lexic.doLexic()
+        this.expression = new Array();
         token = this.analyzeExpression(token)
 
         return token
@@ -101,7 +102,7 @@ class Analyze {
             this.expression = new Semantic.Semantic().posFixa(this.expression)
             console.log(this.expression)
     
-            this.expression = new Array()
+            //this.expression = new Array()
         }
 
         return token;
@@ -205,6 +206,7 @@ class Analyze {
 
     analyzeIf(token) {
         token = this.lexic.doLexic()
+        this.expression = new Array();
         token = this.analyzeExpression(token)
         if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
@@ -432,11 +434,13 @@ class Analyze {
 
     analyzeWhile(token) {
         token = this.lexic.doLexic()
+        this.expression = new Array();
         token = this.analyzeExpression(token)
+        console.log('aqui')
+        this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
         if (token.symbol === 'sfaca') {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)
-            //this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
         }
         else {
             throw "Erro -> esperava faca"
