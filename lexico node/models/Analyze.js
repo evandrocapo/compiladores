@@ -99,15 +99,12 @@ class Analyze {
         console.log(token)
         if (token.symbol === 'sinicio') {
             token = this.lexic.doLexic()
-            token = this.analyzeReturnF(token)
             token = this.analyzeSimpleCommand(token)
             while (token.symbol !== 'sfim') {
                 if (token.symbol === 'sponto_virgula') {
                     token = this.lexic.doLexic()
-                    token = this.analyzeReturnF(token)
                     if (token.symbol !== 'sfim') {
                         token = this.analyzeSimpleCommand(token)
-                        token = this.analyzeReturnF(token)
                     }
                 }
                 else {
@@ -211,11 +208,6 @@ class Analyze {
                     console.log('retornando')
                     token = this.lexic.doLexic()
                     token = this.analyzeAssignment(token, variable)
-                    token = this.lexic.doLexic()
-                    if(token.symbol === 'sponto_virgula')
-                    {
-                        token = this.lexic.doLexic()
-                    }
                     this.actualFunction.returned=true;
                     console.log(this.actualFunction.returned)
                 }
@@ -360,6 +352,8 @@ class Analyze {
     }
 
     analyzeSimpleCommand(token) {
+
+        token = this.analyzeReturnF(token)
         switch (token.symbol) {
             case 'sidentificador':
                 token = this.analyzeAtribCallProc(token)
@@ -376,6 +370,12 @@ class Analyze {
             case 'sescreva':
                 token = this.analyzeWrite(token)
                 break;
+            case 'sponto_virgula':
+                    
+                break;
+            case 'sfim':
+                    
+                    break;
             default:
                 token = this.analyzeCommands(token)
                 break;
