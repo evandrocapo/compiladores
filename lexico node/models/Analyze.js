@@ -10,6 +10,11 @@ class Analyze {
         this.expression = new Array();
         this.expressionType = '';
         this.doPosFixa = 0;
+        this.actualFunction = {
+            lexem : null,
+            returned : false,
+
+        }
     }
 
 
@@ -28,6 +33,7 @@ class Analyze {
         token = this.analyzeExpression(token)
         this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
 
+        if(variable)
         if(variable.type === 'inteiro')
         {
             if(this.expressionType.pop() !== 'I')
@@ -89,14 +95,19 @@ class Analyze {
     }
 
     analyzeCommands(token) {
+        console.log('cheguei com')
+        console.log(token)
         if (token.symbol === 'sinicio') {
             token = this.lexic.doLexic()
+            token = this.analyzeReturnF(token)
             token = this.analyzeSimpleCommand(token)
             while (token.symbol !== 'sfim') {
                 if (token.symbol === 'sponto_virgula') {
                     token = this.lexic.doLexic()
+                    token = this.analyzeReturnF(token)
                     if (token.symbol !== 'sfim') {
                         token = this.analyzeSimpleCommand(token)
+                        token = this.analyzeReturnF(token)
                     }
                 }
                 else {
@@ -188,14 +199,41 @@ class Analyze {
 
     }
 
-    analyzeFuncDeclaration(token) {
-        token = this.lexic.doLexic()
+    analyzeReturnF(token)
+    {
+        if(this.actualFunction.returned !== true)
+        {
+            var variable = this.symbolTable.pesquisar(this.actualFunction.lexem, this.scope)
+            if(this.actualFunction)
+            {
+                if(token.lexem === this.actualFunction.lexem)
+                {
+                    console.log('retornando')
+                    token = this.lexic.doLexic()
+                    token = this.analyzeAssignment(token, variable)
+                    token = this.lexic.doLexic()
+                    if(token.symbol === 'sponto_virgula')
+                    {
+                        token = this.lexic.doLexic()
+                    }
+                    this.actualFunction.returned=true;
+                    console.log(this.actualFunction.returned)
+                }
+            }
+        }
+        
+        
+        return token;
+    }
 
+    analyzeFuncDeclaration(token) {
+        
+        token = this.lexic.doLexic()
 
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
-
+                this.actualFunction.lexem = token.lexem;
                 this.symbolTable.inserir('proc', token.lexem, this.scope)
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sdoispontos') {
@@ -210,6 +248,7 @@ class Analyze {
                         token = this.lexic.doLexic()
                         if (token.symbol === 'sponto_virgula') {
                             token = this.analyzeBlock(token)
+                            
                         }
                     }
                     else {
@@ -227,6 +266,15 @@ class Analyze {
             }
             this.symbolTable.desempilhar()
         }
+
+        if(this.actualFunction.returned === false)
+        {
+            throw 'Error -> Funcao sem retorno'
+        }
+        this.actualFunction = {
+            lexem : null,
+            returned : false
+        };
 
         return token
     }
