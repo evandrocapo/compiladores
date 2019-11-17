@@ -13,19 +13,46 @@ class Analyze {
     }
 
 
-    analyzeAssignment(token)///////////////////////////////
+    analyzeAssignment(token,variable)///////////////////////////////
     {
+        if(variable === null)
+        {
+            throw 'Error -> Variavel nao declarada'
+        }
+        else
+        {
+
+        }
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
+        this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
+
+        if(variable.type === 'inteiro')
+        {
+            if(this.expressionType.pop() !== 'I')
+            {
+                throw 'Error -> Variavel do tipo inteiro'
+            }
+        }
+        else
+        {
+            if(this.expressionType.pop() !== 'B')
+            {
+                throw 'Error -> Variavel do tipo booleano'
+            }
+        }
+
+        this.symbolTable.pesquisar(token.lexem,this.scope)
 
         return token
     }
     analyzeAtribCallProc(token) {
-        if (this.symbolTable.pesquisar(token.lexem, this.scope)) {
+        var variable = this.symbolTable.pesquisar(token.lexem, this.scope)
+        if (variable !== null) {
             token = this.lexic.doLexic()
             if (token.symbol === 'satribuicao') {
-                token = this.analyzeAssignment(token)
+                token = this.analyzeAssignment(token,variable)
             }
             else {
                 token = this.analyzeCallProc(token)
@@ -208,6 +235,11 @@ class Analyze {
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
+        this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
+        if ( this.expressionType.pop() !== 'B')
+        {
+            throw 'Error -> Esperava expressao booleana'
+        }
         if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
 
@@ -436,8 +468,11 @@ class Analyze {
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
-        console.log('aqui')
         this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
+        if ( this.expressionType.pop() !== 'B')
+        {
+            throw 'Error -> Esperava expressao booleana'
+        }
         if (token.symbol === 'sfaca') {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)

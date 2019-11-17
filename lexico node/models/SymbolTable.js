@@ -27,6 +27,7 @@ class SymbolTable{
 
         do{
             aux = stackTipo.pop()
+            if(aux.type === null)
             aux.type = lexem;
             this.stack.push(aux)
         }while(stackTipo.length > 0)
