@@ -115,9 +115,16 @@ class Semantic{
         }
     }
 
-    verifyType(exp, symbolTable, scope)
+    verifyType(expression, symbolTable, scope)
     {
         var symbol;
+
+        var exp = new Array();
+
+        for(var i=0;i<expression.length;i++)
+        {
+            exp[i] = expression[i];
+        }
 
         for(var i=0;i<exp.length;i++)
         {
