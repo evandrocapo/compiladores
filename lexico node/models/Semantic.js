@@ -149,7 +149,7 @@ class Semantic{
                 {
                     exp[i] = 'B'
                 }
-                else if(Number.isInteger(exp[i]))
+                else if(Number.isInteger(Number(exp[i])))
                 {
                     exp[i] = 'I'
                 }
