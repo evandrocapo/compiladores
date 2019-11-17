@@ -1,3 +1,5 @@
+const Error = require('./Error');
+
 class Semantic{
     constructor() {
         this.pilha = new Array;
@@ -172,7 +174,7 @@ class Semantic{
                 result = this.verifyCompatibility(exp,iterator)
                 if(result === null)
                 {
-                    throw 'Error -> Incompatibilidade de tipos na expressao'
+                    throw new Error.Error('Error -> Incompatibilidade de tipos na expressao',null)
                 }
                 iterator = result;
             }

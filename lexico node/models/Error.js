@@ -19,6 +19,11 @@ class Error {
     setLine(params){
         this.line = params;
     }
+
+    show()
+    {
+        return this.type + ' na linha ' + this.line;
+    }
 }
 
 module.exports = {Error}

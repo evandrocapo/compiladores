@@ -1,4 +1,5 @@
 const tokenModel = require('../../../../models/Token');
+const Error = require('../../../../models/Error');
 
 //Imports
 module.exports = (character,program,linha) =>
@@ -51,7 +52,7 @@ module.exports = (character,program,linha) =>
         }
         else
         {
-            throw "Erro no treatsRelational"
+            throw new Error.Error("Erro no treatsRelational",linha); 
         }
     }
     

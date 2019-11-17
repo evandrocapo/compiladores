@@ -1,5 +1,6 @@
 const treatsModel = require('./treats/Treats')
 const tokenModel = require('../../../models/Token');
+const Error = require('../../../models/Error');
 
 module.exports = (caracter, program, linha) => {
 
@@ -32,6 +33,6 @@ module.exports = (caracter, program, linha) => {
         }
         else
         {
-            throw "error no Token: " + caracter + "\n" + "linha: " + linha;
+            throw new Error.Error("error no Token: " + caracter ,linha);
         }
     }

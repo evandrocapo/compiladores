@@ -1,5 +1,6 @@
 const catchToken = require('../app/js/lexico/catchToken')
 const tokenModel = require('./Token');
+const Error = require('./Error');
 
 class Lexic {
 
@@ -56,7 +57,7 @@ class Lexic {
                             let result = readCharacter(this.program, this.linha);
                             this.character = result.char;
                             this.linha = result.linha
-                            if(this.character == undefined) throw "O arquivo acabou e nao houve o fechamento do comentario. \nLinha: " + this.linha;
+                            if(this.character == undefined) throw new Error.Error("O arquivo acabou e nao houve o fechamento do comentario. \nLinha: ",this.linha).show();
                         }
                         let result = readCharacter(this.program, this.linha);
                         this.character = result.char;
@@ -89,7 +90,7 @@ class Lexic {
             //return this.tokens;
             return lexicToken;
         }catch(error){
-            throw error;
+            throw error.show();
         }
     }
 

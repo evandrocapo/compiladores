@@ -1,4 +1,5 @@
 const tokenModel = require('../../../../models/Token');
+const Error = require('../../../../models/Error');
 
 //Imports
 module.exports = (character, program, linha) =>
@@ -18,7 +19,7 @@ module.exports = (character, program, linha) =>
             token.setSymbol('smult');
         break;
         default:
-            throw "Erro no treatsArithmetic"
+            throw new Error.Error("Erro no treatsArithmetic",linha); 
         break;
     }
     character = read(program);
