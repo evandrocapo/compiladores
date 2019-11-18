@@ -4,70 +4,19 @@ class Generator{
         this.codigo = new Array;
     }
 
-    geraLDC(){
+    gera(rotulo,comando,param1,param2){ 
 
-        return ;
-    }
-    geraLDV(){
+        //jmp = command null
 
-        return ;
-    }
-    geraADD(){
 
-        return ;
+       // geraCode = ; // string
+        this.codigo.push(geraCode);
     }
-    geraSUB(){
 
-        return ;
+    getCodigo(){
+        return this.codigo;
     }
-    geraMULT(){
 
-        return ;
-    }
-    geraDIVI(){
-
-        return ;
-    }
-    geraINV(){
-
-        return ;
-    }
-    geraAND(){
-
-        return ;
-    }
-    geraOR(){
-
-        return ;
-    }
-    geraNEG(){
-
-        return ;
-    }
-    geraCME(){
-
-        return ;
-    }
-    geraCMA(){
-
-        return ;
-    }
-    geraCEQ(){
-
-        return ;
-    }
-    geraCDIF(){
-
-        return ;
-    }
-    geraCMEQ(){
-
-        return ;
-    }
-    geraCMAQ(){
-
-        return ;
-    }
 }
 
 module.exports = {Generator}
