@@ -70,11 +70,7 @@ ipcMain.on('salvar-file', async (event,data) =>{
 ipcMain.on('exec', async () => {
     try{
         if(await this.program){
-            let lexic = lexicModel;
-            lexic.reset();
-            lexic.setProgram(this.program);
-            let syntatic = new syntaticModel.Syntatic()
-            syntatic.main()
+            console.log(this.program)
         }
     }catch(error){
         //console.error("Ocorreu na index.js na funcao 'exec': ")
