@@ -107,6 +107,7 @@ class Generator {
                     break;
             }
         }
+        this.codigo.push('\r\n');
     }
 
     getCodigo() {
@@ -114,8 +115,13 @@ class Generator {
     }
 
     generateCode() {
-        this.codigo = this.codigo.toString().split(",");
-        try { fs.writeFileSync('code.obj', this.codigo, 'utf-8'); }
+        let code = '';
+        var i;
+        for(i = 0; i < this.codigo.length; i++){
+            code += this.codigo[i];
+        }
+        console.log('arrumei o codigo sou foda');
+        try { fs.writeFileSync('code.obj', code, 'utf-8'); }
         catch (e) { alert('Impossivel salvar !'); }
     }
 

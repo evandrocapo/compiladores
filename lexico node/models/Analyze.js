@@ -29,7 +29,7 @@ class Analyze {
             throw new Error.Error('Error -> Variavel nao declarada', token.line).show()
         }
         else {
-
+            this.generator.gera('','STR',variable.memPos,'');
         }
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -658,16 +658,17 @@ class Analyze {
                     this.generator.gera('', 'NEG', '', '')
                     break;
                 case 'verdadeiro':
-                    this.generator.gera('', 'V3RD4D31R0', '', '')
+                    this.generator.gera('', 'LDC', '1', '')
                     break;
                 case 'falso':
-                    this.generator.gera('', 'F4LS0', '', '')
+                    this.generator.gera('', 'LDC', '0', '')
                     break;
                 default:
                     if (Number.isInteger(Number(expression[i]))) this.generator.gera('', 'LDC', expression[i], '');
                     else {
                         var variable = this.symbolTable.pesquisar(expression[i], this.scope);
-                        this.generator.gera('', 'LDV', variable.memPos, '');
+                        if(variable instanceof SymbolVar.SymbolVar) this.generator.gera('', 'LDV', variable.memPos, '');
+                        else this.generator.gera('', 'CALL', variable.label, '');
                     }
                     break;
             }
