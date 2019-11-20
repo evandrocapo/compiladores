@@ -4,6 +4,7 @@ const Lexic = require('../models/Lexic');
 const Analyze = require('../models/Analyze');
 const SymbolTable = require('../models/SymbolTable');
 const Semantic = require('../models/Semantic');
+const Generator = require('../models/Generator');
 
 class Syntatic {
 
@@ -11,6 +12,7 @@ class Syntatic {
         this.lexic = Lexic;
         this.semantic = Semantic;
         this.symbolTable = new SymbolTable.SymbolTable();
+        this.generator = new Generator.Generator();
         this.token = null;
         this.pilha = [];
     }
