@@ -1,9 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fileModel = require('./models/File');
+const AssemblyReader = require(AssemblyReader);
 const index = '/app/index.html'
 const about = '/app/about.html'
 
 let file = new fileModel.File()
+let reader = new AssemblyReader.AssemblyReader();
 
 let mainWindow = null;
 app.on('ready', () =>{
@@ -50,6 +52,7 @@ ipcMain.on('abrir-arquivo', async (event,data) =>{
         await file.open(data, 'utf-8');
         this.program = null;
         this.program = await file.read(data);
+        this.program = this.program.split('\r\n');
     }
     catch(error){
         console.error("Erro na index.js na função 'abrir-arquivo':")
@@ -71,6 +74,8 @@ ipcMain.on('exec', async () => {
     try{
         if(await this.program){
             console.log(this.program)
+            
+            while(this.program.length > 0 ) reader.verify(this.program.pop())
         }
     }catch(error){
         //console.error("Ocorreu na index.js na funcao 'exec': ")

@@ -5,7 +5,7 @@ const SymbolVar = require('../models/SymbolVar');
 const Semantic = require('../models/Semantic');
 
 class Analyze {
-    constructor(symbolTable) {
+    constructor(symbolTable, label, generator) {
         this.lexic = Lexic;
         this.scope = 'programa';
         this.symbolTable = symbolTable;
@@ -15,8 +15,10 @@ class Analyze {
         this.actualFunction = {
             lexem : null,
             returned : false,
-
         }
+        this.label = label;
+        this.generator = generator;
+        this.memory = 0;
     }
 
 
@@ -244,7 +246,7 @@ class Analyze {
             this.scope = token.lexem;
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
                 this.actualFunction.lexem = token.lexem;
-                this.symbolTable.inserir('proc', token.lexem, this.scope)
+                this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) // add rotulo
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sdoispontos') {
                     token = this.lexic.doLexic()
@@ -274,7 +276,7 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de funcao existente",token.line).show() 
             }
-            this.symbolTable.desempilhar()
+            this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
         if(this.actualFunction.returned === false)
@@ -329,7 +331,9 @@ class Analyze {
             this.scope = token.lexem;
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
 
-                this.symbolTable.inserir('proc', token.lexem, this.scope)
+                this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) //add rotulo
+                this.generator.gera(this.label, NULL, '', '');
+                this.label += 1;
 
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
@@ -344,7 +348,7 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de procedimento existente",token.line).show() 
             }
-            this.symbolTable.desempilhar()
+            this.memory = this.symbolTable.desempilhar(this.memory);
         }
         return token
     }
@@ -463,7 +467,8 @@ class Analyze {
         do {
             if (token.symbol === 'sidentificador') {
                 if (!this.symbolTable.pesquisarDupli(token.lexem)) {
-                    this.symbolTable.inserir('var', token.lexem, this.scope)
+                    this.symbolTable.inserir('var', token.lexem, this.scope, this.memory)
+                    this.memory += 1;
                     token = this.lexic.doLexic()
                     if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                         if (token.symbol === 'svirgula') {
@@ -492,8 +497,12 @@ class Analyze {
 
     analyzeSubRotine(token) {
         if (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
-            //codigo vermelho
+            let auxrot, flag; // semantico
             while (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
+                auxrot = this.label;
+                this.generator.gera('', 'JMP', this.label, '');
+                this.label += 1;
+                flag = 1;
                 if (token.symbol === 'sprocedimento') {
                     token = this.analyzeProcDeclaration(token)
 
@@ -508,6 +517,8 @@ class Analyze {
                     throw new Error.Error("Erro -> Esperava ;",token.line).show() 
                 }
             }
+            
+            if(flag == 1) this.generator.gera(auxrot, NULL, '', ''); // generator
         }
 
         return token
@@ -536,6 +547,9 @@ class Analyze {
     }
 
     analyzeWhile(token) {
+        let auxrot1 = this.label,auxrot2; // semantico
+        this.generator.gera(auxrot1, NULL, '', '') // generator semantico
+        this.label += 1; // semantico
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
@@ -552,8 +566,13 @@ class Analyze {
             throw new Error.Error('Error -> Esperava expressao booleana',token.line).show() 
         }
         if (token.symbol === 'sfaca') {
+            auxrot2 = this.label; // semantico
+            this.generator.gera('','JMPF',this.label,'') // generator
+            this.label += 1; // semantico
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)
+            this.generator.gera('','JMP',auxrot1,'') // generator
+            this.generator.gera(auxrot2,NULL,'','') // generator
         }
         else {
             throw new Error.Error("Erro -> esperava faca",token.line).show() 

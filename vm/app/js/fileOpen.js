@@ -8,7 +8,7 @@ btn.onclick = function () {
     dialog.showOpenDialog({
         title: 'Select File',
         properties: ['openFile'],
-        filters: [{name: 'Files', extensions: ['txt', 'css', 'html', 'js', 'vue', 'json', 'py', 'c']}]
+        filters: [{name: 'Files', extensions: ['txt', 'css', 'html', 'js', 'vue', 'json', 'py', 'c', 'obj']}]
         },
 
         async function (fileNames) {

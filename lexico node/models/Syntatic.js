@@ -15,10 +15,12 @@ class Syntatic {
         this.generator = new Generator.Generator();
         this.token = null;
         this.pilha = [];
+        this.rotulo = 0;
     }
 
     main() {
-        let analyzer = new Analyze.Analyze(this.symbolTable);
+        this.rotulo += 1; // semantico
+        let analyzer = new Analyze.Analyze(this.symbolTable, this.rotulo, this.generator);
         this.token = this.lexic.doLexic()
         if (this.token.symbol === 'sprograma') {
             this.token = this.lexic.doLexic()

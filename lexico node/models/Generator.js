@@ -9,7 +9,7 @@ class Generator {
     gera(label, command, param1, param2) {
 
         if (label) {
-            this.codigo.push("L" + label);
+            this.codigo.push("L" + label + " " + "NULL");
         }
         else {
             switch (command) {
@@ -25,10 +25,10 @@ class Generator {
                     this.codigo.push(command)
                     break;
                 case 'ALLOC':
-                    this.codigo.push(command + " " + param1); // ALLOC m
+                    this.codigo.push(command + " " + param1 + "," + param2); // ALLOC m n
                     break;
                 case 'DALLOC':
-                    this.codigo.push(command + " " + param1); // DALLOC m
+                    this.codigo.push(command + " " + param1 + "," + param2); // DALLOC m n
                     break;
                 case 'CALL':
                     this.codigo.push(command + " " + param1); // CALL p
@@ -37,7 +37,10 @@ class Generator {
                     this.codigo.push(command); // RETURN
                     break;
                 case 'RETURNF':
-                    this.codigo.push(command); // RETURNF
+                    this.codigo.push(command + " " + param1); // RETURNF
+                    break;
+                case 'STR':
+                    this.codigo.push(command + " " + param1); // STR A
                     break;
                 case 'RD':
                     this.codigo.push(command + " " + param1); // RD não tem parametros porém precisamos ler do teclado algo.

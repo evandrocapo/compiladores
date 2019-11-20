@@ -8,10 +8,10 @@ class SymbolTable{
         this.stack = [];
     }
 
-    inserir(tipo, lexem, scope){
-        if(tipo === "var") this.stack.push(new SymbolVar.SymbolVar(lexem, scope));
-        else if(tipo === "proc") this.stack.push(new SymbolProc.SymbolProc(lexem, scope));
-        else if(tipo === "func") this.stack.push(new SymbolProc.SymbolProc(lexem, scope));
+    inserir(tipo, lexem, scope, labeloumem){
+        if(tipo === "var") this.stack.push(new SymbolVar.SymbolVar(lexem, scope, labeloumem));
+        else if(tipo === "proc") this.stack.push(new SymbolProc.SymbolProc(lexem, scope, labeloumem));
+        else if(tipo === "func") this.stack.push(new SymbolProc.SymbolProc(lexem, scope, labeloumem));
         else if(tipo === "program") this.stack.push(new SymbolProgram.SymbolProgram(lexem, scope));
         else throw "SymbolTable error";
     }
@@ -33,11 +33,12 @@ class SymbolTable{
         }while(stackTipo.length > 0)
     }
 
-    desempilhar(){
+    desempilhar(memory){
         var a;
         while((a = this.stack.pop()) instanceof SymbolVar.SymbolVar){}
         this.stack.push(a)
-        return ;
+        memory -= 1;
+        return memory;
     }
 
     pesquisarDupli(lexem,scope){

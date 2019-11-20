@@ -1,13 +1,110 @@
 class AssemblyReader {
     constructor (){
-
+        this.i = 0; // linha do codigo
+        this.s = 0; // posicao da pilha
+        this.m = []; // pilha
     }
 
-    readSTART(s){
+    verify(program){
+        program = program.split(" ");
+        
+        switch (program) {
+            case 'JMP':
+                this.readCALL()
+                break;
+            case 'JMPF':
+                
+                break;
+            case 'START':
+                
+                break;
+            case 'ALLOC':
+                
+                break;
+            case 'DALLOC':
+                
+                break;
+            case 'CALL':
+                 // CALL p
+                break;
+            case 'RETURN':
+                 // RETURN
+                break;
+            case 'RETURNF':
+                 // RETURNF
+                break;
+            case 'STR':
+                 // STR A
+                break;
+            case 'RD':
+                 // RD não tem parametros porém precisamos ler do teclado algo.
+                break;
+            case 'PRN':
+                 // PRN
+                break;
+            case 'HLT':
+                 // HLT
+                break;
+            case 'LDC':
+                 // LDC k
+                break;
+            case 'LDV':
+                 // LDV n
+                break;
+            case 'ADD':
+                 // ADD
+                break;
+            case 'SUB':
+                 // SUB
+                break;
+            case 'MULT':
+                 // MULT
+                break;
+            case 'DIVI':
+                 // DIVI
+                break;
+            case 'INV':
+                 // INV
+                break;
+            case 'AND':
+                 
+                break;
+            case 'OR':
+                 
+                break;
+            case 'NEG':
+                    
+                break;
+            case 'CME':
+                    
+                break;
+            case 'CMA':
+                    
+                break;
+            case 'CEQ':
+                    
+                break;
+            case 'CDIF':
+                    
+                break;
+            case 'CMEQ':
+                    
+                break;
+            case 'CMAQ':
+                    
+                break;
+            default:
+                //label;
+                break;
+        }
+    }
+
+
+    readSTART(){
         s = - 1;
     }
 
-    readALLOC(s, m, n, o){
+    readALLOC(n, o){
         var k = 0;
         while(k < n){
             s = s + 1;
@@ -15,7 +112,7 @@ class AssemblyReader {
         }
     }
 
-    readDALLOC(s, m, n, o){
+    readDALLOC(n, o){
         var k = n-1;
 
         while(k => 0){
@@ -25,13 +122,13 @@ class AssemblyReader {
 
     }
 
-    readCALL(s, m, i, p){
+    readCALL(p){
         s = s + 1;
         m[s] = i + 1;
         i = p;
     }
 
-    readRETURN(s, m, i){
+    readRETURN(){
         i = m[s]; //nao tenho certeza desse I pagina 99
         s = s - 1;
     }
@@ -40,12 +137,17 @@ class AssemblyReader {
         // implementar o RETURNF
     }
 
-    readRD(s, m, k){
+    readSTR(n) {
+        m[n] = m[s];
+        s = s - 1;
+    }
+
+    readRD(k){
         s = s + 1;
         m[s] = k; // arrumar, precisa ler do teclado.
     }
 
-    readPRN(s, m){
+    readPRN(){
         print(m[s]);//imprimir m[s]
         s = s - 1;
     }
@@ -54,41 +156,41 @@ class AssemblyReader {
         //parar;
     }
 
-    readLDC(s, m, k){
+    readLDC(k){
         s = s + 1;
         m[s] = k;
     }
 
-    readLDV(s, m, n){
+    readLDV(n){
         s = s + 1;
         m[s] = m[n];
     }
 
-    readADD(s, m){
+    readADD(){
         m[s-1] = m[s-1] + m[s];
         s = s - 1;
     }
 
-    readSUB(s, m){
+    readSUB(){
         m[s-1] = m[s-1] - m[s];
         s = s - 1;
     }
 
-    readMULT(s, m){
+    readMULT(){
         m[s-1] = m[s-1] * m[s];
         s = s - 1;
     }
 
-    readDIVI(s, m){
+    readDIVI(){
         m[s-1] = m[s-1] / m[s];
         s = s - 1;
     }
 
-    readINV(m){
+    readINV(){
         m[s] = -(m[s])
     }
 
-    readAND(s, m){
+    readAND(){
         if(m[s-1] == 1 && m[s] == 1){
             m[s-1] = 1;
         }
@@ -99,7 +201,7 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readOR(s, m){
+    readOR(){
         if(m[s-1] == 1 || m[s] == 1){
             m[s-1] = 1;
         }
@@ -110,11 +212,11 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readNEG(s, m){
+    readNEG(){
         m[s] = 1 - m[s];
     }
 
-    readCME(s, m){
+    readCME(){
         if(m[s-1] < m[s]){
             m[s-1] = 1
         }
@@ -125,7 +227,7 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readCMA(s, m){
+    readCMA(){
         if(m[s-1] > m[s]){
             m[s-1] = 1
         }
@@ -136,7 +238,7 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readCEQ(s, m){
+    readCEQ(){
         if(m[s-1] == m[s]){
             m[s-1] = 1;
         }
@@ -147,7 +249,7 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readCDIF(s, m){
+    readCDIF(){
         if(m[s-1] != m[s]){
             m[s-1] = 1;
         }
@@ -158,7 +260,7 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readCMEQ(s, m){
+    readCMEQ(){
         if(m[s-1] <= m[s]){
             m[s-1] = 1;
         }
@@ -169,7 +271,7 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readCMAQ(s, m){
+    readCMAQ(){
         if(m[s-1] >= m[s]){
             m[s-1] = 1;
         }
@@ -180,11 +282,11 @@ class AssemblyReader {
         s = s - 1;
     }
 
-    readJMP(i, p){
+    readJMP(p){
         i = p;
     }
 
-    readJMPF(s, m, i, p){
+    readJMPF(p){
         if(m[s] == 0){
             i = p;
         }

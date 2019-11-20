@@ -5,6 +5,7 @@ const fileModel = require('../models/File');
 // Open Dialog function
 var btn = document.getElementById('link-open');
 btn.onclick = function () {
+    console.log("aaaa")
     dialog.showOpenDialog({
         title: 'Select File',
         properties: ['openFile'],

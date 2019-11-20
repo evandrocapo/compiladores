@@ -1,37 +1,37 @@
 const Symbol = require('../models/Symbol');
 
-class SymbolVar{
+class SymbolVar {
 
-    constructor(lexam,scope){
+    constructor(lexam, scope, memory) {
         this.type = null;
         this.value = null;
-        this.memPos = null;
-        this.symbol = new Symbol.Symbol(lexam,scope);
+        this.memPos = memory;
+        this.symbol = new Symbol.Symbol(lexam, scope);
     }
 
-    getType(){
+    getType() {
         return this.type;
     }
 
-    setType(type){
+    setType(type) {
         this.type = type;
     }
 
-    getValue(){
+    getValue() {
         return this.value;
     }
 
-    setValue(value){
+    setValue(value) {
         this.value = value;
     }
-    
-    getMemPos(){
+
+    getMemPos() {
         return this.memPos;
     }
 
-    setMemPos(memPos){
+    setMemPos(memPos) {
         this.memPos = memPos;
     }
 }
 
-module.exports = {SymbolVar}
+module.exports = { SymbolVar }
