@@ -120,7 +120,6 @@ class Generator {
         for(i = 0; i < this.codigo.length; i++){
             code += this.codigo[i];
         }
-        console.log('arrumei o codigo sou foda');
         try { fs.writeFileSync('code.obj', code, 'utf-8'); }
         catch (e) { alert('Impossivel salvar !'); }
     }

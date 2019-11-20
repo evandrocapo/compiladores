@@ -29,7 +29,7 @@ class Analyze {
             throw new Error.Error('Error -> Variavel nao declarada', token.line).show()
         }
         else {
-            this.generator.gera('','STR',variable.memPos,'');
+            
         }
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -57,6 +57,7 @@ class Analyze {
         this.symbolTable.pesquisar(token.lexem, this.scope)
 
         this.geraExpress(this.expression);
+        this.generator.gera('','STR',variable.memPos,'');
 
         return token
     }
