@@ -309,15 +309,23 @@ class Analyze {
 
         this.geraExpress(this.expression)
 
+        let label = this.label;
+        this.label += 2;
+        this.generator.gera('','JMPF',label,'')
+
         if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
 
             token = this.analyzeSimpleCommand(token)
 
+            this.generator.gera('','JMP',label+1,'')
+            this.generator.gera(label,null,'','')
+
             if (token.symbol === 'ssenao') {
                 token = this.lexic.doLexic()
                 token = this.analyzeSimpleCommand(token)
             }
+            this.generator.gera(label+1,null,'','')
         }
         else {
             throw new Error.Error('Erro -> Esperava então', token.line).show()
