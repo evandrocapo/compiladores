@@ -9,6 +9,11 @@ class Generator {
     gera(label, command, param1, param2) {
         var label_;
 
+        console.log({label: label,
+                    command: command,
+                    param1: param1,
+                    param2: param2})
+
         if (label) {
             this.codigo.push("L" + label + " " + "NULL");
         }
@@ -26,10 +31,10 @@ class Generator {
                     this.codigo.push(command)
                     break;
                 case 'ALLOC':
-                    this.codigo.push(command + " " + param1 + "," + param2); // ALLOC m n
+                    this.codigo.push(command + " " + param1/*+ " " + param2*/); // ALLOC m n
                     break;
                 case 'DALLOC':
-                    this.codigo.push(command + " " + param1 + "," + param2); // DALLOC m n
+                    this.codigo.push(command + " " + param1/*+ " " + param2*/); // DALLOC m n
                     break;
                 case 'CALL':
                     this.codigo.push(command + " " + param1); // CALL p

@@ -579,7 +579,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                var variable = this.symbolTable.pesquisar(token.lexem);
+                var variable = this.symbolTable.pesquisar(token.lexem, this.scope);
                 this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
                 this.generator.gera('', 'PRN', '', ''); // Generator
                 if (variable) {
@@ -669,7 +669,7 @@ class Analyze {
                         var variable = this.symbolTable.pesquisar(expression[i], this.scope);
                         this.generator.gera('', 'LDV', variable.memPos, '');
                     }
-                    return null;
+                    break;
             }
         }
 

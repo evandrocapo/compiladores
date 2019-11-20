@@ -37,7 +37,7 @@ class SymbolTable{
         var a;
         while((a = this.stack.pop()) instanceof SymbolVar.SymbolVar){}
         this.stack.push(a)
-        memory -= 1;
+        // memory -= 1;
         return memory;
     }
 

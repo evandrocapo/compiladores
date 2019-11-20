@@ -49,6 +49,7 @@ inicio
 fim;
 
 inicio
+  b:= a+(b div 9 - 3) * c;
     analisa1;
     analisa2;
 	d:= verdadeiro;
