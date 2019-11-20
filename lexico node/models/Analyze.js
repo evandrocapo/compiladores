@@ -78,7 +78,7 @@ class Analyze {
                 }
                 else {
 
-                    token = this.analyzeCallProc(token)
+                    token = this.analyzeCallProc(token, variable)
                 }
             }
         }
@@ -89,15 +89,15 @@ class Analyze {
         return token
     }
     analyzeBlock(token) {
-        let i ;
+        let symbolTableL = this.symbolTable.tam();
+
         token = this.lexic.doLexic()
         token = this.analyzeStepVariables(token)
         token = this.analyzeSubRotine(token)
         token = this.analyzeCommands(token)
 
-        do{
-            this.generator.gera('','DALLOC',this.quant.pop(),'')
-        } while(this.quant.length > 0);
+        if(this.symbolTable.tam() !== symbolTableL) this.generator.gera('','DALLOC',this.quant.pop(),'')
+
 
         return token;
     }
@@ -113,14 +113,16 @@ class Analyze {
         return token
     }
 
-    analyzeCallProc(token)////////////////////////////////////////////////////
+    analyzeCallProc(token,variable)////////////////////////////////////////////////////
     {
+        //if(this.symbolTable.pesquisar(variable.symbol.lexem,this.scope))
+        this.generator.gera('', 'CALL', variable.label, '');
+        //else throw new Error.Error("Erro -> Procedimento nao declarado",token.line).show()
         return token
     }
 
     analyzeCommands(token) {
-        console.log('cheguei com')
-        console.log(token)
+
         if (token.symbol === 'sinicio') {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)
@@ -156,11 +158,10 @@ class Analyze {
             token = this.analyzeSimpleExpression(token)
         }
         if (this.doPosFixa === 0) {
-            console.log(this.expression)
+            //console.log(this.expression)
             this.expression = new Semantic.Semantic().posFixa(this.expression)
-            console.log(this.expression)
+            //console.log(this.expression)
 
-            //this.expression = new Array()
         }
 
         return token;
@@ -327,7 +328,6 @@ class Analyze {
         if (token.symbol === 'sidentificador') {
             this.scope = token.lexem;
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
-
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) //add rotulo
                 this.generator.gera(this.label, null, '', '');
                 this.label += 1;
@@ -346,7 +346,9 @@ class Analyze {
                 throw new Error.Error("Erro -> Nome de procedimento existente", token.line).show()
             }
             this.memory = this.symbolTable.desempilhar(this.memory);
+            this.generator.gera('', 'RETURN', '', '');
         }
+        
         return token
     }
 

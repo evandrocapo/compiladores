@@ -37,7 +37,8 @@ class Generator {
                     this.codigo.push(command + " " + param1/*+ " " + param2*/); // DALLOC m n
                     break;
                 case 'CALL':
-                    this.codigo.push(command + " " + param1); // CALL p
+                    label_ = "L" + param1;
+                    this.codigo.push(command + " " + label_); // CALL p
                     break;
                 case 'RETURN':
                     this.codigo.push(command); // RETURN

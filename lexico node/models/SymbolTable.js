@@ -71,6 +71,11 @@ class SymbolTable{
 
         return null;
     }
+
+    tam()
+    {
+        return this.stack.length
+    }
 }
 
 module.exports = {SymbolTable}

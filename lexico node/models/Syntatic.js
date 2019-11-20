@@ -37,6 +37,8 @@ class Syntatic {
                         if(this.lexic.isFileEnd)
                         {
                             //success
+                            this.generator.gera('','HLT','','');
+                            this.generator.generateCode();
                             console.log('compilou')
                         }
                         else
@@ -62,8 +64,6 @@ class Syntatic {
         {
             throw "Error -> Esperava programa"
         }
-        this.generator.gera('','HLT','','');
-        this.generator.generateCode();
     }
 }
 
