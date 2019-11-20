@@ -14,7 +14,6 @@ class Syntatic {
         this.symbolTable = new SymbolTable.SymbolTable();
         this.generator = new Generator.Generator();
         this.token = null;
-        this.pilha = [];
         this.rotulo = 0;
     }
 
@@ -29,6 +28,7 @@ class Syntatic {
                 this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {
+                    this.generator.gera('','START','','');
                     this.token = analyzer.analyzeBlock(this.token)
                     
                     if(this.token.symbol === 'sponto')

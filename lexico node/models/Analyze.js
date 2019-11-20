@@ -13,54 +13,50 @@ class Analyze {
         this.expressionType = '';
         this.doPosFixa = 0;
         this.actualFunction = {
-            lexem : null,
-            returned : false,
+            lexem: null,
+            returned: false,
         }
         this.label = label;
         this.generator = generator;
         this.memory = 0;
+        this.pilha = [];
     }
 
 
-    analyzeAssignment(token,variable)///////////////////////////////
+    analyzeAssignment(token, variable)///////////////////////////////
     {
-        if(variable === null)
-        {
-            throw new Error.Error('Error -> Variavel nao declarada',token.line).show()
+        if (variable === null) {
+            throw new Error.Error('Error -> Variavel nao declarada', token.line).show()
         }
-        else
-        {
+        else {
 
         }
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
-        try{
-            this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
-        }catch(error)
-        {
+        try {
+            this.expressionType = new Semantic.Semantic().verifyType(this.expression, this.symbolTable)
+        } catch (error) {
             error.setLine(token.line);
             throw error.show();
         }
-        
 
-        if(variable)
-        if(variable.type === 'inteiro')
-        {
-            if(this.expressionType.pop() !== 'I')
-            {
-                throw new Error.Error('Error -> Variavel do tipo inteiro',token.line).show() 
-            }
-        }
-        else
-        {
-            if(this.expressionType.pop() !== 'B')
-            {
-                throw new Error.Error('Error -> Variavel do tipo booleano',token.line).show() 
-            }
-        }
 
-        this.symbolTable.pesquisar(token.lexem,this.scope)
+        if (variable)
+            if (variable.type === 'inteiro') {
+                if (this.expressionType.pop() !== 'I') {
+                    throw new Error.Error('Error -> Variavel do tipo inteiro', token.line).show()
+                }
+            }
+            else {
+                if (this.expressionType.pop() !== 'B') {
+                    throw new Error.Error('Error -> Variavel do tipo booleano', token.line).show()
+                }
+            }
+
+        this.symbolTable.pesquisar(token.lexem, this.scope)
+
+        this.geraExpress(this.expression);
 
         return token
     }
@@ -69,25 +65,23 @@ class Analyze {
         if (variable !== null) {
             var tokenAux = token;
             token = this.analyzeReturnF(token)
-            if(tokenAux === token)
-            {
-            token = this.lexic.doLexic()
+            if (tokenAux === token) {
+                token = this.lexic.doLexic()
                 if (token.symbol === 'satribuicao') {
-                    if (!(variable instanceof SymbolVar.SymbolVar))
-                    {
-                        throw new Error.Error('Error -> Esperava variavel',token.line).show() 
+                    if (!(variable instanceof SymbolVar.SymbolVar)) {
+                        throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
-                    token = this.analyzeAssignment(token,variable)
-                
+                    token = this.analyzeAssignment(token, variable)
+
                 }
                 else {
-                
+
                     token = this.analyzeCallProc(token)
                 }
             }
         }
         else {
-            throw new Error.Error('Error -> Declaracao nao existente',token.line).show() 
+            throw new Error.Error('Error -> Declaracao nao existente', token.line).show()
         }
 
         return token
@@ -105,7 +99,7 @@ class Analyze {
             console.log('analyzeCallFunc');
         }
         else {
-            throw new Error.Error("Erro -> Chamada de funcao",token.line).show() 
+            throw new Error.Error("Erro -> Chamada de funcao", token.line).show()
         }
         token = this.lexic.doLexic()
         return token
@@ -130,13 +124,13 @@ class Analyze {
                     }
                 }
                 else {
-                    throw new Error.Error("Erro -> Esperava ;",token.line).show() 
+                    throw new Error.Error("Erro -> Esperava ;", token.line).show()
                 }
             }
             token = this.lexic.doLexic()
         }
         else {
-            throw new Error.Error("Erro -> Esperava inicio",token.line).show() 
+            throw new Error.Error("Erro -> Esperava inicio", token.line).show()
         }
 
         return token
@@ -144,21 +138,20 @@ class Analyze {
 
     analyzeExpression(token) {
 
-        
+
         token = this.analyzeSimpleExpression(token)
-        
+
         if (token.symbol === 'smaior' || token.symbol === 'sig' || token.symbol === 'smenor' || token.symbol === 'smenorig' || token.symbol === 'sdif' || token.symbol === 'smaiorig') {
             this.lexic = this.lexic;
             this.expression.push(token.lexem)
             token = this.lexic.doLexic()
             token = this.analyzeSimpleExpression(token)
         }
-        if(this.doPosFixa === 0)
-        {
+        if (this.doPosFixa === 0) {
             console.log(this.expression)
             this.expression = new Semantic.Semantic().posFixa(this.expression)
             console.log(this.expression)
-    
+
             //this.expression = new Array()
         }
 
@@ -183,7 +176,7 @@ class Analyze {
                 }
             }
             else {
-                throw new Error.Error("Erro -> Fator nao declarado",token.line).show() 
+                throw new Error.Error("Erro -> Fator nao declarado", token.line).show()
             }
         }
         else if (token.symbol === 'snumero') {
@@ -197,7 +190,7 @@ class Analyze {
             token = this.lexic.doLexic()
             this.doPosFixa++;
             token = this.analyzeExpression(token)
-            
+
             if (token.symbol === 'sfecha_parenteses') {
                 this.expression.push(token.lexem)
                 this.doPosFixa--;
@@ -211,35 +204,31 @@ class Analyze {
             token = this.lexic.doLexic()
         }
         else {
-            throw new Error.Error("Erro -> Esperava um fator",token.line).show() 
+            throw new Error.Error("Erro -> Esperava um fator", token.line).show()
         }
 
         return token
 
     }
 
-    analyzeReturnF(token)
-    {
-        if(this.actualFunction.returned !== true)
-        {
+    analyzeReturnF(token) {
+        if (this.actualFunction.returned !== true) {
             var variable = this.symbolTable.pesquisar(this.actualFunction.lexem, this.scope)
-            if(this.actualFunction)
-            {
-                if(token.lexem === this.actualFunction.lexem)
-                {
+            if (this.actualFunction) {
+                if (token.lexem === this.actualFunction.lexem) {
                     token = this.lexic.doLexic()
                     token = this.analyzeAssignment(token, variable)
-                    this.actualFunction.returned=true;
+                    this.actualFunction.returned = true;
                 }
             }
         }
-        
-        
+
+
         return token;
     }
 
     analyzeFuncDeclaration(token) {
-        
+
         token = this.lexic.doLexic()
 
         if (token.symbol === 'sidentificador') {
@@ -260,32 +249,31 @@ class Analyze {
                         token = this.lexic.doLexic()
                         if (token.symbol === 'sponto_virgula') {
                             token = this.analyzeBlock(token)
-                            
+
                         }
                     }
                     else {
-                        throw new Error.Error("Erro -> Erro no tipo",token.line).show() 
+                        throw new Error.Error("Erro -> Erro no tipo", token.line).show()
                     }
 
                 }
                 else {
-                    throw new Error.Error("Erro -> Esperava :",token.line).show() 
+                    throw new Error.Error("Erro -> Esperava :", token.line).show()
                 }
 
             }
             else {
-                throw new Error.Error("Erro -> Nome de funcao existente",token.line).show() 
+                throw new Error.Error("Erro -> Nome de funcao existente", token.line).show()
             }
             this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
-        if(this.actualFunction.returned === false)
-        {
-            throw new Error.Error('Error -> Funcao sem retorno',token.line).show() 
+        if (this.actualFunction.returned === false) {
+            throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
         }
         this.actualFunction = {
-            lexem : null,
-            returned : false
+            lexem: null,
+            returned: false
         };
 
         return token
@@ -295,18 +283,16 @@ class Analyze {
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
-        try{
-            this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
+        try {
+            this.expressionType = new Semantic.Semantic().verifyType(this.expression, this.symbolTable)
         }
-        catch(error)
-        {
+        catch (error) {
             error.setLine(token.line);
             throw error.show();
         }
 
-        if ( this.expressionType.pop() !== 'B')
-        {
-            throw new Error.Error('Error -> Esperava expressao booleana',token.line).show() 
+        if (this.expressionType.pop() !== 'B') {
+            throw new Error.Error('Error -> Esperava expressao booleana', token.line).show()
         }
         if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
@@ -319,7 +305,7 @@ class Analyze {
             }
         }
         else {
-            throw new Error.Error('Erro -> Esperava então',token.line).show() 
+            throw new Error.Error('Erro -> Esperava então', token.line).show()
         }
         return token
     }
@@ -342,11 +328,11 @@ class Analyze {
 
                 }
                 else {
-                    throw new Error.Error("Erro -> Esperava ;",token.line).show() 
+                    throw new Error.Error("Erro -> Esperava ;", token.line).show()
                 }
             }
             else {
-                throw new Error.Error("Erro -> Nome de procedimento existente",token.line).show() 
+                throw new Error.Error("Erro -> Nome de procedimento existente", token.line).show()
             }
             this.memory = this.symbolTable.desempilhar(this.memory);
         }
@@ -359,28 +345,29 @@ class Analyze {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
                 var variable = this.symbolTable.pesquisar(token.lexem);
+                this.generator.gera('', 'RD', '', ''); // Generator
+                this.generator.gera('', 'STR', variable.memPos, ''); // Generator
                 if (variable) {
-                    if(!(variable instanceof SymbolVar.SymbolVar))
-                    {
-                        throw new Error.Error('Error -> Esperava variavel',token.line).show() 
+                    if (!(variable instanceof SymbolVar.SymbolVar)) {
+                        throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
                     }
                     else {
-                        throw new Error.Error("Erro -> Esperava )",token.line).show() 
+                        throw new Error.Error("Erro -> Esperava )", token.line).show()
                     }
                 }
                 else {
-                    throw new Error.Error("Erro -> Variavel nao declarada",token.line).show() 
+                    throw new Error.Error("Erro -> Variavel nao declarada", token.line).show()
                 }
             } else {
-                throw new Error.Error("Erro -> Esperava identificador",token.line).show() 
+                throw new Error.Error("Erro -> Esperava identificador", token.line).show()
             }
         }
         else {
-            throw new Error.Error("Erro -> Esperava (",token.line).show() 
+            throw new Error.Error("Erro -> Esperava (", token.line).show()
         }
 
         return token
@@ -412,28 +399,26 @@ class Analyze {
     }
 
     analyzeSimpleExpression(token) {
-        
+
         if (token.symbol === 'smais' || token.symbol === 'smenos') {
-            
-            if(token.symbol === 'smais')
-            {
+
+            if (token.symbol === 'smais') {
                 token.lexem = '+u'
             }
-            else
-            {
+            else {
                 token.lexem = '-u'
             }
             this.expression.push(token.lexem)
             token = this.lexic.doLexic()
         }
         token = this.analyzeTerm(token)
-        
-        
+
+
         while (token.symbol === 'smais' || token.symbol === 'smenos' || token.symbol === 'sou') {
             this.expression.push(token.lexem)
             token = this.lexic.doLexic()
             token = this.analyzeTerm(token)
-            
+
         }
 
         return token
@@ -449,13 +434,13 @@ class Analyze {
                         token = this.lexic.doLexic()
                     }
                     else {
-                        throw new Error.Error("Erro -> Esperava ;",token.line).show() 
+                        throw new Error.Error("Erro -> Esperava ;", token.line).show()
                     }
 
                 }
             }
             else {
-                throw new Error.Error("Erro -> Esperava identificador",token.line).show() 
+                throw new Error.Error("Erro -> Esperava identificador", token.line).show()
             }
         }
 
@@ -464,33 +449,37 @@ class Analyze {
     }
 
     analyzeVariables(token) {
+        let quant = 0;
         do {
             if (token.symbol === 'sidentificador') {
                 if (!this.symbolTable.pesquisarDupli(token.lexem)) {
                     this.symbolTable.inserir('var', token.lexem, this.scope, this.memory)
+                    quant += 1; // quantidade de alloc;
                     this.memory += 1;
                     token = this.lexic.doLexic()
                     if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                         if (token.symbol === 'svirgula') {
                             token = this.lexic.doLexic()
                             if (token.symbol === 'sdoispontos') {
-                                throw new Error.Error("Erro -> : nao esperado",token.line).show() 
+                                throw new Error.Error("Erro -> : nao esperado", token.line).show()
                             }
                         }
                     }
                     else {
-                        throw new Error.Error("Erro -> Esperava , ou :",token.line).show() 
+                        throw new Error.Error("Erro -> Esperava , ou :", token.line).show()
                     }
                 }
                 else {
-                    throw new Error.Error("Erro -> Variavel com nome existente",token.line).show() 
+                    throw new Error.Error("Erro -> Variavel com nome existente", token.line).show()
                 }
             }
             else {
-                throw new Error.Error("Erro -> Esperava identificador",token.line).show() 
+                throw new Error.Error("Erro -> Esperava identificador", token.line).show()
             }
         }
         while (token.symbol !== 'sdoispontos')
+
+        this.generator.gera('', 'ALLOC', quant, '');
         token = this.lexic.doLexic()
         return this.analyzeType(token)
     }
@@ -514,18 +503,18 @@ class Analyze {
                     token = this.lexic.doLexic()
                 }
                 else {
-                    throw new Error.Error("Erro -> Esperava ;",token.line).show() 
+                    throw new Error.Error("Erro -> Esperava ;", token.line).show()
                 }
             }
-            
-            if(flag == 1) this.generator.gera(auxrot, NULL, '', ''); // generator
+
+            if (flag == 1) this.generator.gera(auxrot, NULL, '', ''); // generator
         }
 
         return token
     }
 
     analyzeTerm(token) {
-        
+
         token = this.analyzeFactor(token)
 
         while (token.symbol === 'smult' || token.symbol === 'sdiv' || token.symbol === 'se') {
@@ -538,7 +527,7 @@ class Analyze {
 
     analyzeType(token) {
         if (token.symbol !== 'sinteiro' && token.symbol !== 'sbooleano') {
-            throw new Error.Error("Erro -> Esperava tipos",token.line).show() 
+            throw new Error.Error("Erro -> Esperava tipos", token.line).show()
         }
         else {
             this.symbolTable.inserirTipo(token.lexem)
@@ -547,35 +536,33 @@ class Analyze {
     }
 
     analyzeWhile(token) {
-        let auxrot1 = this.label,auxrot2; // semantico
+        let auxrot1 = this.label, auxrot2; // semantico
         this.generator.gera(auxrot1, NULL, '', '') // generator semantico
         this.label += 1; // semantico
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
-        try{
-            this.expressionType = new Semantic.Semantic().verifyType(this.expression,this.symbolTable)
+        try {
+            this.expressionType = new Semantic.Semantic().verifyType(this.expression, this.symbolTable)
         }
-        catch(error)
-        {
+        catch (error) {
             error.setLine(token.line);
             throw error.show();
         }
-        if ( this.expressionType.pop() !== 'B')
-        {
-            throw new Error.Error('Error -> Esperava expressao booleana',token.line).show() 
+        if (this.expressionType.pop() !== 'B') {
+            throw new Error.Error('Error -> Esperava expressao booleana', token.line).show()
         }
         if (token.symbol === 'sfaca') {
             auxrot2 = this.label; // semantico
-            this.generator.gera('','JMPF',this.label,'') // generator
+            this.generator.gera('', 'JMPF', this.label, '') // generator
             this.label += 1; // semantico
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)
-            this.generator.gera('','JMP',auxrot1,'') // generator
-            this.generator.gera(auxrot2,NULL,'','') // generator
+            this.generator.gera('', 'JMP', auxrot1, '') // generator
+            this.generator.gera(auxrot2, NULL, '', '') // generator
         }
         else {
-            throw new Error.Error("Erro -> esperava faca",token.line).show() 
+            throw new Error.Error("Erro -> esperava faca", token.line).show()
         }
 
         return token
@@ -587,31 +574,82 @@ class Analyze {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
                 var variable = this.symbolTable.pesquisar(token.lexem);
+                this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
+                this.generator.gera('', 'PRN', '', ''); // Generator
                 if (variable) {
-                    if(!(variable instanceof SymbolVar.SymbolVar))
-                    {
-                        throw new Error.Error('Error -> Esperava variavel',token.line).show() 
+                    if (!(variable instanceof SymbolVar.SymbolVar)) {
+                        throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
                     token = this.lexic.doLexic()
                     if (token.symbol === 'sfecha_parenteses') {
                         token = this.lexic.doLexic()
                     }
                     else {
-                        throw new Error.Error("Erro -> Esperava )",token.line).show() 
+                        throw new Error.Error("Erro -> Esperava )", token.line).show()
                     }
                 }
                 else {
-                    throw new Error.Error("Erro -> Variavel nao declarada",token.line).show() 
+                    throw new Error.Error("Erro -> Variavel nao declarada", token.line).show()
                 }
             } else {
-                throw new Error.Error("Erro -> Esperava identificador",token.line).show() 
+                throw new Error.Error("Erro -> Esperava identificador", token.line).show()
             }
         }
         else {
-            throw new Error.Error("Erro -> Esperava (",token.line).show()
+            throw new Error.Error("Erro -> Esperava (", token.line).show()
         }
 
         return token
     }
+
+    geraExpress(expression) {
+        let generateExpress = [];
+        for (i = 0; i < expression.length; i++) {
+            switch (expression[i]) {
+                case '-u':
+                    return 1;
+                case '+u':
+                    return 1;
+                case 'div':
+                    this.generator.gera('', 'DIVI', '', '')
+                    break;
+                case '*':
+                    this.generator.gera('', 'MULT', '', '')
+                    break;
+                case '+':
+                    this.generator.gera('', 'ADD', '', '')
+                    break;
+                case '-':
+                    this.generator.gera('', 'SUB', '', '')
+                    break;
+                case '>':
+                    return 4;
+                case '<':
+                    return 4;
+                case '>=':
+                    return 4;
+                case '<=':
+                    return 4;
+                case '=':
+                    return 4;
+                case '!=':
+                    return 4;
+                case 'e':
+                    return 5;
+                case 'ou':
+                    return 6;
+                default:
+                    if(Number.isInteger(Number(expression[i]))) this.generator.gera('','LDC',expression[i],'');
+                    else {
+                        var variable = this.symbolTable.pesquisar(expression[i],this.scope);
+                        this.generator.gera('','LDV',variable.memPos,'');
+                    }
+                    return null;
+            }
+        }
+
+        return generateExpress;
+    }
 }
+
 module.exports = { Analyze }

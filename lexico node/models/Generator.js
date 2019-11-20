@@ -73,31 +73,31 @@ class Generator {
                     this.codigo.push(command); // INV
                     break;
                 case 'AND':
-                    this.codigo.push(command); 
+                    this.codigo.push(command);
                     break;
                 case 'OR':
-                    this.codigo.push(command); 
+                    this.codigo.push(command);
                     break;
                 case 'NEG':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
                 case 'CME':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
                 case 'CMA':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
                 case 'CEQ':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
                 case 'CDIF':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
                 case 'CMEQ':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
                 case 'CMAQ':
-                        this.codigo.push(command);
+                    this.codigo.push(command);
                     break;
             }
         }
@@ -107,9 +107,9 @@ class Generator {
         return this.codigo;
     }
 
-    generateCode(){
+    generateCode() {
         try { fs.writeFileSync('code.obj', this.codigo, 'utf-8'); }
-        catch(e) { alert('Impossivel salvar !'); }
+        catch (e) { alert('Impossivel salvar !'); }
     }
 
 }
