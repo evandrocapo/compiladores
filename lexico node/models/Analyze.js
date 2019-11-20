@@ -20,6 +20,7 @@ class Analyze {
         this.generator = generator;
         this.memory = 0;
         this.pilha = [];
+        this.quant = [];
     }
 
 
@@ -88,10 +89,16 @@ class Analyze {
         return token
     }
     analyzeBlock(token) {
+        let i ;
         token = this.lexic.doLexic()
         token = this.analyzeStepVariables(token)
         token = this.analyzeSubRotine(token)
         token = this.analyzeCommands(token)
+
+        do{
+            this.generator.gera('','DALLOC',this.quant.pop(),'')
+        } while(this.quant.length > 0);
+
         return token;
     }
     analyzeCallFunc(token)/////////////////////////////////////////////////
@@ -484,6 +491,7 @@ class Analyze {
         while (token.symbol !== 'sdoispontos')
 
         this.generator.gera('', 'ALLOC', quant, '');
+        this.quant.push(quant)
         token = this.lexic.doLexic()
         return this.analyzeType(token)
     }
