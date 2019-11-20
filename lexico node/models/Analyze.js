@@ -294,6 +294,9 @@ class Analyze {
         if (this.expressionType.pop() !== 'B') {
             throw new Error.Error('Error -> Esperava expressao booleana', token.line).show()
         }
+
+        this.geraExpress(this.expression)
+
         if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
 
@@ -318,7 +321,7 @@ class Analyze {
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
 
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) //add rotulo
-                this.generator.gera(this.label, NULL, '', '');
+                this.generator.gera(this.label, null, '', '');
                 this.label += 1;
 
                 token = this.lexic.doLexic()
@@ -507,7 +510,7 @@ class Analyze {
                 }
             }
 
-            if (flag == 1) this.generator.gera(auxrot, NULL, '', ''); // generator
+            if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
         }
 
         return token
@@ -537,7 +540,7 @@ class Analyze {
 
     analyzeWhile(token) {
         let auxrot1 = this.label, auxrot2; // semantico
-        this.generator.gera(auxrot1, NULL, '', '') // generator semantico
+        this.generator.gera(auxrot1, null, '', '') // generator semantico
         this.label += 1; // semantico
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -552,6 +555,9 @@ class Analyze {
         if (this.expressionType.pop() !== 'B') {
             throw new Error.Error('Error -> Esperava expressao booleana', token.line).show()
         }
+
+        this.geraExpress(this.expression)
+
         if (token.symbol === 'sfaca') {
             auxrot2 = this.label; // semantico
             this.generator.gera('', 'JMPF', this.label, '') // generator
@@ -559,7 +565,7 @@ class Analyze {
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token)
             this.generator.gera('', 'JMP', auxrot1, '') // generator
-            this.generator.gera(auxrot2, NULL, '', '') // generator
+            this.generator.gera(auxrot2, null, '', '') // generator
         }
         else {
             throw new Error.Error("Erro -> esperava faca", token.line).show()
@@ -604,12 +610,14 @@ class Analyze {
 
     geraExpress(expression) {
         let generateExpress = [];
+        let i;
         for (i = 0; i < expression.length; i++) {
             switch (expression[i]) {
                 case '-u':
-                    return 1;
+                    this.generator.gera('', 'INV', '', '')
+                    break;
                 case '+u':
-                    return 1;
+                    break;
                 case 'div':
                     this.generator.gera('', 'DIVI', '', '')
                     break;
@@ -623,26 +631,43 @@ class Analyze {
                     this.generator.gera('', 'SUB', '', '')
                     break;
                 case '>':
-                    return 4;
+                    this.generator.gera('', 'CMA', '', '')
+                    break;
                 case '<':
-                    return 4;
+                    this.generator.gera('', 'CME', '', '')
+                    break;
                 case '>=':
-                    return 4;
+                    this.generator.gera('', 'CMAQ', '', '')
+                    break;
                 case '<=':
-                    return 4;
+                    this.generator.gera('', 'CMEQ', '', '')
+                    break;
                 case '=':
-                    return 4;
+                    this.generator.gera('', 'CEQ', '', '')
+                    break;
                 case '!=':
-                    return 4;
+                    this.generator.gera('', 'CDIF', '', '')
+                    break;
                 case 'e':
-                    return 5;
+                    this.generator.gera('', 'AND', '', '')
+                    break;
                 case 'ou':
-                    return 6;
+                    this.generator.gera('', 'OR', '', '')
+                    break;
+                case 'nao':
+                    this.generator.gera('', 'NEG', '', '')
+                    break;
+                case 'verdadeiro':
+                    this.generator.gera('', 'V3RD4D31R0', '', '')
+                    break;
+                case 'falso':
+                    this.generator.gera('', 'F4LS0', '', '')
+                    break;
                 default:
-                    if(Number.isInteger(Number(expression[i]))) this.generator.gera('','LDC',expression[i],'');
+                    if (Number.isInteger(Number(expression[i]))) this.generator.gera('', 'LDC', expression[i], '');
                     else {
-                        var variable = this.symbolTable.pesquisar(expression[i],this.scope);
-                        this.generator.gera('','LDV',variable.memPos,'');
+                        var variable = this.symbolTable.pesquisar(expression[i], this.scope);
+                        this.generator.gera('', 'LDV', variable.memPos, '');
                     }
                     return null;
             }

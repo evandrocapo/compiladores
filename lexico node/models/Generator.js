@@ -7,6 +7,7 @@ class Generator {
     }
 
     gera(label, command, param1, param2) {
+        var label_;
 
         if (label) {
             this.codigo.push("L" + label + " " + "NULL");
@@ -108,6 +109,7 @@ class Generator {
     }
 
     generateCode() {
+        this.codigo = this.codigo.toString().split(",");
         try { fs.writeFileSync('code.obj', this.codigo, 'utf-8'); }
         catch (e) { alert('Impossivel salvar !'); }
     }
