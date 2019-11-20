@@ -5,7 +5,7 @@ const SymbolVar = require('../models/SymbolVar');
 const Semantic = require('../models/Semantic');
 
 class Analyze {
-    constructor(symbolTable, label, generator) {
+    constructor(symbolTable, label, generator, alloc) {
         this.lexic = Lexic;
         this.scope = 'programa';
         this.symbolTable = symbolTable;
@@ -21,6 +21,7 @@ class Analyze {
         this.memory = 0;
         this.pilha = [];
         this.quant = [];
+        this.alloc = alloc = [];
     }
 
 
@@ -104,7 +105,8 @@ class Analyze {
     analyzeCallFunc(token)/////////////////////////////////////////////////
     {
         if (token.symbol === 'sidentificador') {
-            console.log('analyzeCallFunc');
+            let variable = this.symbolTable.pesquisar(token.lexem,this.scope);
+            this.generator.gera('', 'CALL', variable.label, '');
         }
         else {
             throw new Error.Error("Erro -> Chamada de funcao", token.line).show()
@@ -245,6 +247,7 @@ class Analyze {
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
                 this.actualFunction.lexem = token.lexem;
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) // add rotulo
+                this.generator.gera(this.label, null, '', '');
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sdoispontos') {
                     token = this.lexic.doLexic()

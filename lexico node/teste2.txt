@@ -52,6 +52,7 @@ inicio
   b:= a+(b div 9 - 3) * c;
     analisa1;
     analisa2;
+analisa3;
 	d:= verdadeiro;
 	a := analisa3 * 4 div 5 + analisa3;
     se 1 > (c+ a*a)
