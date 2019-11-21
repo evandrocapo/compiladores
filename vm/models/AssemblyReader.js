@@ -1,97 +1,115 @@
 class AssemblyReader {
-    constructor (){
+    constructor() {
         this.i = 0; // linha do codigo
         this.s = 0; // posicao da pilha
-        this.m = []; // pilha
+        this.m = []; // pilha de memoria
     }
 
-    verify(program){
-        program = program.split(" ");
-        
+    verify(program) {
+        console.log(program);
+        var params = program.split(' ');
+        if(params.length > 1){
+            params = params[1].replace(' ', '');
+            params = params.split(',')
+        }
         switch (program) {
             case 'JMP':
-                this.readCALL()
+                this.readJMP(params[1])
                 break;
             case 'JMPF':
-                
+                this.readJMPF(params[1])
                 break;
             case 'START':
-                
+                this.readSTART();
                 break;
             case 'ALLOC':
-                
+                this.readALLOC(params[1],params[2]);
                 break;
             case 'DALLOC':
-                
+                this.readDALLOC(params[1],params[2]);
                 break;
             case 'CALL':
-                 // CALL p
+                this.readCALL(params[1]);
+                // CALL p
                 break;
             case 'RETURN':
-                 // RETURN
+                this.readRETURN();
+                // RETURN
                 break;
             case 'RETURNF':
-                 // RETURNF
+                this.readRETURNF(params[1]);
+                // RETURNF
                 break;
             case 'STR':
-                 // STR A
+                this.readSTR(params[1]);
+                // STR A
                 break;
             case 'RD':
-                 // RD não tem parametros porém precisamos ler do teclado algo.
+                this.readRD(params[1]);
+                // RD não tem parametros porém precisamos ler do teclado algo.
                 break;
             case 'PRN':
-                 // PRN
+                this.readPRN();
+                // PRN
                 break;
             case 'HLT':
-                 // HLT
+                this.readHLT();
+                // HLT
                 break;
             case 'LDC':
-                 // LDC k
+                this.readLDC(params[1]);
+                // LDC k
                 break;
             case 'LDV':
-                 // LDV n
+                this.readLDV(params[1]);
+                // LDV n
                 break;
             case 'ADD':
-                 // ADD
+                this.readADD();
+                // ADD
                 break;
             case 'SUB':
-                 // SUB
+                this.readSUB();
+                // SUB
                 break;
             case 'MULT':
-                 // MULT
+                this.readMULT();
+                // MULT
                 break;
             case 'DIVI':
-                 // DIVI
+                this.readDIVI();
+                // DIVI
                 break;
             case 'INV':
-                 // INV
+                this.readINV();
+                // INV
                 break;
             case 'AND':
-                 
+                this.readAND();
                 break;
             case 'OR':
-                 
+                this.readOR();
                 break;
             case 'NEG':
-                    
+                this.readNEG();
                 break;
             case 'CME':
-                    
+                this.readCME();
                 break;
             case 'CMA':
-                    
+                this.readCMA();
                 break;
             case 'CEQ':
-                    
+                this.readCEQ();
                 break;
             case 'CDIF':
-                    
+                this.readCDIF();
                 break;
             case 'CMEQ':
-                    
+                this.readCMEQ();
                 break;
             case 'CMAQ':
-                    
+                this.readCMAQ();
                 break;
             default:
                 //label;
@@ -99,207 +117,210 @@ class AssemblyReader {
         }
     }
 
-
-    readSTART(){
-        s = - 1;
+    readSTART() {
+        this.s = - 1;
     }
 
-    readALLOC(n, o){
+    readALLOC(n, o) {
         var k = 0;
-        while(k < n){
-            s = s + 1;
-            m[s] = m[o+k]
+        while (k < n) {
+            this.s = this.s + 1;
+            this.m[this.s] = this.m[o + k]
         }
     }
 
-    readDALLOC(n, o){
-        var k = n-1;
+    readDALLOC(n, o) {
+        var k = n - 1;
 
-        while(k => 0){
-            m[o+k] = m[s];
-            s = s - 1;
+        while (k => 0) {
+            this.m[o + k] = this.m[this.s];
+            this.s = this.s - 1;
         }
 
     }
 
-    readCALL(p){
-        s = s + 1;
-        m[s] = i + 1;
-        i = p;
+    readCALL(p) {
+        this.s = this.s + 1;
+        this.m[this.s] = this.i + 1;
+        this.i = p;
     }
 
-    readRETURN(){
-        i = m[s]; //nao tenho certeza desse I pagina 99
-        s = s - 1;
+    readRETURN() {
+        this.i = this.m[this.s]; //nao tenho certeza dethis.sthis.se I pagina 99
+        this.s = this.s - 1;
     }
 
-    readRETURNF(){
-        // implementar o RETURNF
+    readRETURNF() {
+        // ithis.mplethis.mentar o RETURNF
     }
 
     readSTR(n) {
-        m[n] = m[s];
-        s = s - 1;
+        this.m[n] = this.m[this.s];
+        this.s = this.s - 1;
     }
 
-    readRD(k){
-        s = s + 1;
-        m[s] = k; // arrumar, precisa ler do teclado.
+    readRD(k) {
+        this.s = this.s + 1;
+        this.m[this.s] = k; // arruthis.mar, precithis.sa ler do teclado.
     }
 
-    readPRN(){
-        print(m[s]);//imprimir m[s]
-        s = s - 1;
+    readPRN() {
+        // console.log(this.m[this.s]);//ithis.mprithis.mir this.m[this.s]
+        this.s = this.s - 1;
     }
 
-    readHLT(){
+    readHLT() {
         //parar;
     }
 
-    readLDC(k){
-        s = s + 1;
-        m[s] = k;
+    readLDC(k) {
+        this.s = this.s + 1;
+        this.m[this.s] = k;
     }
 
-    readLDV(n){
-        s = s + 1;
-        m[s] = m[n];
+    readLDV(n) {
+        this.s = this.s + 1;
+        this.m[this.s] = this.m[n];
     }
 
-    readADD(){
-        m[s-1] = m[s-1] + m[s];
-        s = s - 1;
+    readADD() {
+        this.m[this.s - 1] = this.m[this.s - 1] + this.m[this.s];
+        this.s = this.s - 1;
     }
 
-    readSUB(){
-        m[s-1] = m[s-1] - m[s];
-        s = s - 1;
+    readSUB() {
+        this.m[this.s - 1] = this.m[this.s - 1] - this.m[this.s];
+        this.s = this.s - 1;
     }
 
-    readMULT(){
-        m[s-1] = m[s-1] * m[s];
-        s = s - 1;
+    readMULT() {
+        this.m[this.s - 1] = this.m[this.s - 1] * this.m[this.s];
+        this.s = this.s - 1;
     }
 
-    readDIVI(){
-        m[s-1] = m[s-1] / m[s];
-        s = s - 1;
+    readDIVI() {
+        this.m[this.s - 1] = this.m[this.s - 1] / this.m[this.s];
+        this.s = this.s - 1;
     }
 
-    readINV(){
-        m[s] = -(m[s])
+    readINV() {
+        this.m[this.s] = -(this.m[this.s])
     }
 
-    readAND(){
-        if(m[s-1] == 1 && m[s] == 1){
-            m[s-1] = 1;
+    readAND() {
+        if (this.m[this.s - 1] == 1 && this.m[this.s] == 1) {
+            this.m[this.s - 1] = 1;
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readOR(){
-        if(m[s-1] == 1 || m[s] == 1){
-            m[s-1] = 1;
+    readOR() {
+        if (this.m[this.s - 1] == 1 || this.m[this.s] == 1) {
+            this.m[this.s - 1] = 1;
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readNEG(){
-        m[s] = 1 - m[s];
+    readNEG() {
+        this.m[this.s] = 1 - this.m[this.s];
     }
 
-    readCME(){
-        if(m[s-1] < m[s]){
-            m[s-1] = 1
+    readCME() {
+        if (this.m[this.s - 1] < this.m[this.s]) {
+            this.m[this.s - 1] = 1
         }
-        else{
-            m[s-1] = 0
+        else {
+            this.m[this.s - 1] = 0
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readCMA(){
-        if(m[s-1] > m[s]){
-            m[s-1] = 1
+    readCMA() {
+        if (this.m[this.s - 1] > this.m[this.s]) {
+            this.m[this.s - 1] = 1
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readCEQ(){
-        if(m[s-1] == m[s]){
-            m[s-1] = 1;
+    readCEQ() {
+        if (this.m[this.s - 1] == this.m[this.s]) {
+            this.m[this.s - 1] = 1;
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readCDIF(){
-        if(m[s-1] != m[s]){
-            m[s-1] = 1;
+    readCDIF() {
+        if (this.m[this.s - 1] != this.m[this.s]) {
+            this.m[this.s - 1] = 1;
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readCMEQ(){
-        if(m[s-1] <= m[s]){
-            m[s-1] = 1;
+    readCMEQ() {
+        if (this.m[this.s - 1] <= this.m[this.s]) {
+            this.m[this.s - 1] = 1;
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readCMAQ(){
-        if(m[s-1] >= m[s]){
-            m[s-1] = 1;
+    readCMAQ() {
+        if (this.m[this.s - 1] >= this.m[this.s]) {
+            this.m[this.s - 1] = 1;
         }
-        else{
-            m[s-1] = 0;
+        else {
+            this.m[this.s - 1] = 0;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readJMP(p){
-        i = p;
+    readJMP(p) {
+        this.i = p;
     }
 
-    readJMPF(p){
-        if(m[s] == 0){
-            i = p;
+    readJMPF(p) {
+        if (this.m[this.s] == 0) {
+            this.i = p;
         }
-        else{
-            i = i + 1;
+        else {
+            this.i = this.i + 1;
         }
 
-        s = s - 1;
+        this.s = this.s - 1;
     }
 
-    readNULL(){
-
+    atualizar() {
+        console.log("-----------------------------");
+        console.log("i = " + this.i);
+        console.log("s = " + this.s);
+        console.log("Memoria = " + this.m);
+        console.log("-----------------------------");
     }
 }
 
-module.exports = {AssemblyReader}
+module.exports = { AssemblyReader }

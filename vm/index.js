@@ -1,16 +1,17 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fileModel = require('./models/File');
-const AssemblyReader = require(AssemblyReader);
+const AssemblyReader = require('./models/AssemblyReader');
 const index = '/app/index.html'
 const about = '/app/about.html'
 
 let file = new fileModel.File()
 let reader = new AssemblyReader.AssemblyReader();
+let breakpoint; // vetor / sempre pegar a primeira posição.
 
 let mainWindow = null;
 app.on('ready', () =>{
     let mainWindow = new BrowserWindow({
-        width: 800,
+        width: 805,
         height: 600,
         webPreferences: {
             nodeIntegration: true
@@ -73,12 +74,14 @@ ipcMain.on('salvar-file', async (event,data) =>{
 ipcMain.on('exec', async () => {
     try{
         if(await this.program){
+            this.program.reverse();
             console.log(this.program)
-            
-            while(this.program.length > 0 ) reader.verify(this.program.pop())
+            while(this.program.length > 0 && this.program.length != breakpoint){
+                 reader.verify(this.program.pop())
+                 reader.atualizar();
+            }
         }
     }catch(error){
-        //console.error("Ocorreu na index.js na funcao 'exec': ")
         console.error(error);
     }
 })
