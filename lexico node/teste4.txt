@@ -1,0 +1,19 @@
+
+{Teste 1 - OK}
+programa test1;
+
+var a,b,c: inteiro;
+d:booleano;
+
+inicio
+	a := 1 * 1;
+    c := 2;
+    b := 10;
+    se b > (c+ a*a)
+    entao inicio
+        escreva(b);
+        se b > (c+ a*a)
+        entao b := 1;
+    fim
+    senao escreva(c)
+fim.
