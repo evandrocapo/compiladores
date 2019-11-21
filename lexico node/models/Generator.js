@@ -31,10 +31,10 @@ class Generator {
                     this.codigo.push(command)
                     break;
                 case 'ALLOC':
-                    this.codigo.push(command + " " + param1/*+ " " + param2*/); // ALLOC m n
+                    this.codigo.push(command + " " + param1 + "," + param2); // ALLOC m n
                     break;
                 case 'DALLOC':
-                    this.codigo.push(command + " " + param1/*+ " " + param2*/); // DALLOC m n
+                    this.codigo.push(command + " " + param1 + "," + param2); // DALLOC m n
                     break;
                 case 'CALL':
                     label_ = "L" + param1;

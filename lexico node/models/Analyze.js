@@ -5,9 +5,9 @@ const SymbolVar = require('../models/SymbolVar');
 const Semantic = require('../models/Semantic');
 
 class Analyze {
-    constructor(symbolTable, label, generator, alloc) {
+    constructor(symbolTable, label, generator, alloc, scope) {
         this.lexic = Lexic;
-        this.scope = 'programa';
+        this.scope = '';
         this.symbolTable = symbolTable;
         this.expression = new Array();
         this.expressionType = '';
@@ -22,6 +22,11 @@ class Analyze {
         this.pilha = [];
         this.quant = [];
         this.alloc = alloc = [];
+    }
+
+    setScope(scope)
+    {
+        this.scope = scope;
     }
 
 
@@ -97,7 +102,23 @@ class Analyze {
         token = this.analyzeSubRotine(token)
         token = this.analyzeCommands(token)
 
-        if(this.symbolTable.tam() !== symbolTableL) this.generator.gera('','DALLOC',this.quant.pop(),'')
+        if(this.symbolTable.tam() !== symbolTableL)
+        {
+            let dalloc = this.alloc.pop()
+            
+            let param2 = dalloc[1];
+            let param1 = dalloc[0];
+            for(let i = this.alloc.length-1 ; i >= 0; i--)
+            {
+                
+                if(this.alloc[i][2] === this.scope)
+                {
+                    param2 += this.alloc.pop()[1]
+                }
+                
+            }
+            this.generator.gera('','DALLOC',param1,param2,'')
+        } 
 
 
         return token;
@@ -277,7 +298,11 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de funcao existente", token.line).show()
             }
-            this.memory = this.symbolTable.desempilhar(this.memory);
+
+            let scope = this.symbolTable.desempilhar();
+            if(scope)
+            this.scope = scope;
+            //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
         if (this.actualFunction.returned === false) {
@@ -356,7 +381,10 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de procedimento existente", token.line).show()
             }
-            this.memory = this.symbolTable.desempilhar(this.memory);
+            let scope = this.symbolTable.desempilhar();
+            if(scope)
+            this.scope = scope;
+            //this.memory = this.symbolTable.desempilhar(this.memory);
             this.generator.gera('', 'RETURN', '', '');
         }
         
@@ -503,7 +531,14 @@ class Analyze {
         }
         while (token.symbol !== 'sdoispontos')
 
-        this.generator.gera('', 'ALLOC', quant, '');
+        let quantAux = 0;
+        for(let i=0;i<this.quant.length;i++)
+        {
+            quantAux += this.quant[i];
+        }
+
+        this.generator.gera('', 'ALLOC', quantAux, quant);
+        this.alloc.push([quantAux, quant,this.scope])
         this.quant.push(quant)
         token = this.lexic.doLexic()
         return this.analyzeType(token)

@@ -26,6 +26,7 @@ class Syntatic {
             this.token = this.lexic.doLexic()
             if(this.token.symbol === 'sidentificador'){
                 this.symbolTable.inserir("program", this.token.lexem, this.token.lexem);
+                analyzer.setScope(this.token.lexem); // Passando scopo pra classe analyzer
                 this.token = this.lexic.doLexic()
                 if(this.token.symbol === 'sponto_virgula')
                 {

@@ -33,12 +33,22 @@ class SymbolTable{
         }while(stackTipo.length > 0)
     }
 
-    desempilhar(memory){
+    desempilhar(){
         var a;
+        
         while((a = this.stack.pop()) instanceof SymbolVar.SymbolVar){}
         this.stack.push(a)
+
+        for(let i = this.stack.length-2; i>=0; i--)
+        {
+            if(this.stack[i] !== undefined){
+            if(!(this.stack[i] instanceof SymbolVar.SymbolVar))
+            return this.stack[i].symbol.lexem
+            }
+        }
+        return null;
         // memory -= 1;
-        return memory;
+        //return memory;
     }
 
     pesquisarDupli(lexem,scope){
