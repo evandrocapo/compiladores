@@ -44,7 +44,10 @@ class Generator {
                     this.codigo.push(command); // RETURN
                     break;
                 case 'RETURNF':
-                    this.codigo.push(command + " " + param1); // RETURNF
+                    if(param2 !== null)
+                    this.codigo.push(command + " " + param1 + "," + param2); 
+                    else
+                    this.codigo.push(command); // RETURNF
                     break;
                 case 'STR':
                     this.codigo.push(command + " " + param1); // STR A

@@ -64,6 +64,7 @@ class Analyze {
         this.symbolTable.pesquisar(token.lexem, this.scope)
 
         this.geraExpress(this.expression);
+        if(variable instanceof SymbolVar.SymbolVar)
         this.generator.gera('','STR',variable.memPos,'');
 
         return token
@@ -95,30 +96,12 @@ class Analyze {
         return token
     }
     analyzeBlock(token) {
-        let symbolTableL = this.symbolTable.tam();
+        
 
         token = this.lexic.doLexic()
         token = this.analyzeStepVariables(token)
         token = this.analyzeSubRotine(token)
         token = this.analyzeCommands(token)
-
-        if(this.symbolTable.tam() !== symbolTableL)
-        {
-            let dalloc = this.alloc.pop()
-            
-            let param2 = dalloc[1];
-            let param1 = dalloc[0];
-            for(let i = this.alloc.length-1 ; i >= 0; i--)
-            {
-                
-                if(this.alloc[i][2] === this.scope)
-                {
-                    param2 += this.alloc.pop()[1]
-                }
-                
-            }
-            this.generator.gera('','DALLOC',param1,param2,'')
-        } 
 
 
         return token;
@@ -251,6 +234,23 @@ class Analyze {
                     token = this.lexic.doLexic()
                     token = this.analyzeAssignment(token, variable)
                     this.actualFunction.returned = true;
+
+                        let param2 = 0;
+                        let param1 = 0;
+                        for(let i = this.alloc.length-1 ; i >= 0; i--)
+                        {
+                            
+                            if(this.alloc[i][2] === this.scope)
+                            {
+                                param2 += this.alloc.pop()[1]
+                            }
+                            
+                        }
+                        if(param2 > 0)
+                        this.generator.gera('','RETURNF',param1,param2)
+                        else
+                        this.generator.gera('','RETURNF',null,null)
+                    
                 }
             }
         }
@@ -370,8 +370,27 @@ class Analyze {
 
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
-
+                    let symbolTableL = this.symbolTable.tam();
+                    
                     token = this.analyzeBlock(token)
+                    
+                    if(this.symbolTable.tam() !== symbolTableL)
+                    {
+                        let param2 = 0;
+                        let param1 = 0;
+                        for(let i = this.alloc.length-1 ; i >= 0; i--)
+                        {
+                            
+                            if(this.alloc[i][2] === this.scope)
+                            {
+                                param2 += this.alloc.pop()[1]
+                            }
+                            
+                        }
+                        if(param2>0)
+                        this.generator.gera('','DALLOC',param1,param2)
+                    } 
+
 
                 }
                 else {

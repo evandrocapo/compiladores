@@ -13,7 +13,16 @@ inicio
     entao inicio
         escreva(b);
         se b > (c+ a*a)
-        entao b := 1;
+        entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao se b > (c+ a*a)
+		entao escreva(c)
+		senao leia(c)
     fim
     senao escreva(c)
 fim.

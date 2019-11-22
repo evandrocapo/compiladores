@@ -86,6 +86,18 @@ class SymbolTable{
     {
         return this.stack.length
     }
+
+    varQtd()
+    {
+        let qtd = 0;
+
+        for(let i = 0 ; i < this.stack.length ; i++)
+        {
+            if(this.stack[i] instanceof SymbolVar.SymbolVar)
+            qtd++;
+        }
+        return qtd;
+    }
 }
 
 module.exports = {SymbolTable}

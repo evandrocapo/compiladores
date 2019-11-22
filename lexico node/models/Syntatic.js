@@ -15,7 +15,7 @@ class Syntatic {
         this.generator = new Generator.Generator();
         this.token = null;
         this.rotulo = 0;
-        this.alloc=0;
+        this.alloc = [];
     }
 
     main() {
@@ -32,6 +32,11 @@ class Syntatic {
                 {
                     this.generator.gera('','START','','');
                     this.token = analyzer.analyzeBlock(this.token)
+
+                    let varQtd = this.symbolTable.varQtd();
+                    if(varQtd>0)
+                    this.generator.gera('','DALLOC',0,varQtd)
+                    
                     
                     if(this.token.symbol === 'sponto')
                     {
