@@ -8,28 +8,30 @@ class AssemblyReader {
     verify(program) {
         console.log(program);
         var params = program.split(' ');
+        program = params[0]
         if(params.length > 1){
             params = params[1].replace(' ', '');
             params = params.split(',')
         }
+        console.log(params[0], params[1])
         switch (program) {
             case 'JMP':
-                this.readJMP(params[1])
+                this.readJMP(params[0])
                 break;
             case 'JMPF':
-                this.readJMPF(params[1])
+                this.readJMPF(params[0])
                 break;
             case 'START':
                 this.readSTART();
                 break;
             case 'ALLOC':
-                this.readALLOC(params[1],params[2]);
+                this.readALLOC(params[0],params[1]);
                 break;
             case 'DALLOC':
-                this.readDALLOC(params[1],params[2]);
+                this.readDALLOC(params[0],params[1]);
                 break;
             case 'CALL':
-                this.readCALL(params[1]);
+                this.readCALL(params[0]);
                 // CALL p
                 break;
             case 'RETURN':
@@ -37,15 +39,15 @@ class AssemblyReader {
                 // RETURN
                 break;
             case 'RETURNF':
-                this.readRETURNF(params[1]);
+                this.readRETURNF(params[0]);
                 // RETURNF
                 break;
             case 'STR':
-                this.readSTR(params[1]);
+                this.readSTR(params[0]);
                 // STR A
                 break;
             case 'RD':
-                this.readRD(params[1]);
+                this.readRD(params[0]);
                 // RD não tem parametros porém precisamos ler do teclado algo.
                 break;
             case 'PRN':
@@ -57,11 +59,11 @@ class AssemblyReader {
                 // HLT
                 break;
             case 'LDC':
-                this.readLDC(params[1]);
+                this.readLDC(params[0]);
                 // LDC k
                 break;
             case 'LDV':
-                this.readLDV(params[1]);
+                this.readLDV(params[0]);
                 // LDV n
                 break;
             case 'ADD':
@@ -115,17 +117,21 @@ class AssemblyReader {
                 //label;
                 break;
         }
+        this.i = this.i + 1;
     }
 
     readSTART() {
         this.s = - 1;
     }
 
-    readALLOC(n, o) {
+    readALLOC(o, n) {
+        console.log("n: " + n)
+        console.log("o: " + o)
         var k = 0;
         while (k < n) {
             this.s = this.s + 1;
             this.m[this.s] = this.m[o + k]
+            k++;
         }
     }
 
@@ -135,6 +141,7 @@ class AssemblyReader {
         while (k => 0) {
             this.m[o + k] = this.m[this.s];
             this.s = this.s - 1;
+            k--;
         }
 
     }
