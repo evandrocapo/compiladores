@@ -7,6 +7,7 @@ const about = '/app/about.html'
 let file = new fileModel.File()
 let reader = new AssemblyReader.AssemblyReader();
 let breakpoint; // vetor / sempre pegar a primeira posição.
+let posI = 0;
 
 let mainWindow = null;
 app.on('ready', () =>{
@@ -74,11 +75,22 @@ ipcMain.on('salvar-file', async (event,data) =>{
 ipcMain.on('exec', async () => {
     try{
         if(await this.program){
-            this.program.reverse();
+            reader.createListLabel(this.program); // criar lista de Labels
+            // this.program.reverse();
             console.log(this.program)
-            while(this.program.length > 0 && this.program.length != breakpoint){
-                 reader.verify(this.program.pop())
-                 reader.atualizar();
+            // while(this.program.length > 0 && this.program.length != breakpoint){
+            //      reader.verify(this.program.pop())
+            //      reader.atualizar();
+            // }
+            while(this.program.length > posI && this.program.length != breakpoint){
+                reader.verify(this.program[posI]) // verificar ações
+                reader.atualizar(); // console.log
+                posI = reader.i; // pega o valor do I lido
+            }
+
+            if(this.program[posI]){ // arrumando pro breakpoint
+                this.program.reverse(); // reverte o program
+                this.program.splice(0,posI+1); // elimina as linhas lidas
             }
         }
     }catch(error){
