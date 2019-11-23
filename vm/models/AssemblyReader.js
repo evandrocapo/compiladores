@@ -190,13 +190,13 @@ class AssemblyReader {
     }
 
     readADD() {
-        this.m[this.s - 1] = this.m[this.s - 1] + this.m[this.s];
+        this.m[this.s - 1] = parseInt(this.m[this.s - 1]) + parseInt(this.m[this.s]);
         this.s = this.s - 1;
         this.m.pop()
     }
 
     readSUB() {
-        this.m[this.s - 1] = this.m[this.s - 1] - this.m[this.s];
+        this.m[this.s - 1] = parseInt(this.m[this.s - 1]) - parseInt(this.m[this.s]);
         this.s = this.s - 1;
         this.m.pop() // retirando da pilha, porem não é necessario
         // é so pra ficar mais facil pra ler
@@ -204,14 +204,14 @@ class AssemblyReader {
     }
 
     readMULT() {
-        this.m[this.s - 1] = this.m[this.s - 1] * this.m[this.s];
+        this.m[this.s - 1] = parseInt(this.m[this.s - 1]) * parseInt(this.m[this.s]);
         this.s = this.s - 1;
         this.m.pop(); // retira um da pilha, pq o valor ta com s-1
         // nao posso dar outro pop por causa que o resultado do valor vai estar lá
     }
 
     readDIVI() {
-        this.m[this.s - 1] = this.m[this.s - 1] / this.m[this.s];
+        this.m[this.s - 1] = parseInt(this.m[this.s - 1]) / parseInt(this.m[this.s]);
         this.s = this.s - 1;
         this.m.pop()
     }
@@ -266,6 +266,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCEQ() {
