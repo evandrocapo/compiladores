@@ -322,7 +322,9 @@ class AssemblyReader {
             this.i = p;
         }
         else {
-            this.i = this.i + 1;
+            //this.i = this.i + 1; // comentei por causa de:
+            //i iria ficar errado.
+            //pq o i ta sendo adicionado na main()
         }
 
         this.s = this.s - 1;
