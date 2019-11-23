@@ -1,8 +1,28 @@
+let Labels = require('./Labels');
+
 class AssemblyReader {
     constructor() {
         this.i = 0; // linha do codigo
         this.s = 0; // posicao da pilha
         this.m = []; // pilha de memoria
+        this.labels = []; // lista de objetos de jmps
+    }
+
+    createListLabel(program){
+        var aux;
+        for(var i = 0; i < program.length; i++){
+            aux = program[i].split(' ');
+            // console.log(aux)
+            if(aux[1] == "NULL"){
+                this.labels.push(new Labels.Labels(aux[0], i + 1))
+            }
+        }
+    }
+
+    findLabel(label){
+        var label_ = this.labels.find(element => element.labels === label);
+        var line = label_.line;
+        return line;
     }
 
     verify(program) {
@@ -17,9 +37,11 @@ class AssemblyReader {
         switch (program) {
             case 'JMP':
                 this.readJMP(params[0])
+                return this.i;
                 break;
             case 'JMPF':
                 this.readJMPF(params[0])
+                return this.i;
                 break;
             case 'START':
                 this.readSTART();
@@ -118,6 +140,7 @@ class AssemblyReader {
                 break;
         }
         this.i = this.i + 1;
+        return this.i;
     }
 
     readSTART() {
@@ -314,19 +337,20 @@ class AssemblyReader {
     }
 
     readJMP(p) {
-        this.i = p;
+        this.i = this.findLabel(p); // procurar no codigo onde ta o LX
     }
 
     readJMPF(p) {
         if (this.m[this.s] == 0) {
-            this.i = p;
+            this.i = this.findLabel(p); // procurar no codigo onde ta o LX
         }
         else {
+            this.i = this.i + 1;
             //this.i = this.i + 1; // comentei por causa de:
             //i iria ficar errado.
             //pq o i ta sendo adicionado na main()
         }
-
+        this.m.pop(); // pode dar bug, qualquer coisa remover
         this.s = this.s - 1;
     }
 
