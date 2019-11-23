@@ -13,7 +13,7 @@ class AssemblyReader {
             params = params[1].replace(' ', '');
             params = params.split(',')
         }
-        console.log(params[0], params[1])
+        // console.log(params[0], params[1])
         switch (program) {
             case 'JMP':
                 this.readJMP(params[0])
@@ -124,13 +124,12 @@ class AssemblyReader {
         this.s = - 1;
     }
 
-    readALLOC(o, n) {
-        console.log("n: " + n)
-        console.log("o: " + o)
+    readALLOC(m, n) {
         var k = 0;
         while (k < n) {
-            this.s = this.s + 1;
-            this.m[this.s] = this.m[o + k]
+            this.s = this.s + 1; // anda uma pos
+            // this.m[this.s] = this.m[m + k] // m[]
+            this.m[this.s] = "?";
             k++;
         }
     }
@@ -203,6 +202,8 @@ class AssemblyReader {
     readMULT() {
         this.m[this.s - 1] = this.m[this.s - 1] * this.m[this.s];
         this.s = this.s - 1;
+        this.m.pop(); // retira um da pilha, pq o valor ta com s-1
+        // nao posso dar outro pop por causa que o resultado do valor vai estar lá
     }
 
     readDIVI() {
