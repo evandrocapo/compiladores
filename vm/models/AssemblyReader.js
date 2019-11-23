@@ -192,11 +192,15 @@ class AssemblyReader {
     readADD() {
         this.m[this.s - 1] = this.m[this.s - 1] + this.m[this.s];
         this.s = this.s - 1;
+        this.m.pop()
     }
 
     readSUB() {
         this.m[this.s - 1] = this.m[this.s - 1] - this.m[this.s];
         this.s = this.s - 1;
+        this.m.pop() // retirando da pilha, porem não é necessario
+        // é so pra ficar mais facil pra ler
+        // pode tirar todos esses pop se quiser
     }
 
     readMULT() {
@@ -209,6 +213,7 @@ class AssemblyReader {
     readDIVI() {
         this.m[this.s - 1] = this.m[this.s - 1] / this.m[this.s];
         this.s = this.s - 1;
+        this.m.pop()
     }
 
     readINV() {
