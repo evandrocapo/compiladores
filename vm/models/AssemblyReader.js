@@ -64,7 +64,8 @@ class AssemblyReader {
                 // RETURN
                 break;
             case 'RETURNF':
-                this.readRETURNF(params[0]);
+                if(params) this.readRETURNF(params[0]);
+                else this.readRETURNF_noparams();
                 // RETURNF
                 break;
             case 'STR':
@@ -184,14 +185,30 @@ class AssemblyReader {
         this.program_reg = this.program_reg - 1;
     }
 
-    readRETURNF(o, n) {
+    readRETURNF(m, n) {
         var k = n - 1;
+        var aux = this.m.pop();
 
         while(k => 0){
-            this.m[o + k] = this.m[this.s]
+            this.m[m + k] = this.m[this.s]
             this.s = this.s - 1;
             k--;
         }
+
+        readRETURN();
+        this.m.push(aux)
+    }
+
+    readRETURNF_noparams(){
+        var k = n - 1;
+
+        while(k => 0){
+            this.m[m + k] = this.m[this.s]
+            this.s = this.s - 1;
+            k--;
+        }
+
+        readRETURN();
     }
 
     readSTR(n) {
@@ -206,7 +223,7 @@ class AssemblyReader {
     }
 
     readPRN() {
-        // console.log(this.m[this.s]);//ithis.mprithis.mir this.m[this.s]
+        console.log("PRN -> " + this.m[this.s]);
         this.s = this.s - 1;
     }
 
