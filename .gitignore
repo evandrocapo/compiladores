@@ -92,3 +92,6 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+
+testeAssembly-1.obj
+testeAssembly-2.obj

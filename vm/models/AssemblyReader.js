@@ -5,6 +5,8 @@ class AssemblyReader {
         this.i = 0; // linha do codigo
         this.s = 0; // posicao da pilha
         this.m = []; // pilha de memoria
+        this.program_reg = 0;
+        this.program_m = []
         this.labels = []; // lista de objetos de jmps
     }
 
@@ -54,6 +56,7 @@ class AssemblyReader {
                 break;
             case 'CALL':
                 this.readCALL(params[0]);
+                return 0;
                 // CALL p
                 break;
             case 'RETURN':
@@ -78,6 +81,7 @@ class AssemblyReader {
                 break;
             case 'HLT':
                 this.readHLT();
+                return 1;
                 // HLT
                 break;
             case 'LDC':
@@ -140,7 +144,7 @@ class AssemblyReader {
                 break;
         }
         this.i = this.i + 1;
-        return this.i;
+        return 0;
     }
 
     readSTART() {
@@ -157,35 +161,43 @@ class AssemblyReader {
         }
     }
 
-    readDALLOC(n, o) {
-        var k = n - 1;
+    readDALLOC(m, n) { //
+        let k = parseInt(n) - 1;
 
-        while (k => 0) {
-            this.m[o + k] = this.m[this.s];
-            this.s = this.s - 1;
-            k--;
+        while (k >= 0) {
+            this.m[parseInt(m) + parseInt(k)] = this.m[this.s];
+            this.s = parseInt(this.s) - 1;
+            this.m.pop()
+            k = parseInt(k) - 1;
         }
 
     }
 
     readCALL(p) {
-        this.s = this.s + 1;
-        this.m[this.s] = this.i + 1;
-        this.i = p;
+        this.program_reg = this.program_reg + 1; // program_s == this.s so que da pilha de call
+        this.program_m[this.program_reg] = this.i + 1; // program_m == pilha de return do call
+        this.i = this.findLabel(p);
     }
 
     readRETURN() {
-        this.i = this.m[this.s]; //nao tenho certeza dethis.sthis.se I pagina 99
-        this.s = this.s - 1;
+        this.i = this.program_m[this.program_reg]; //nao tenho certeza dethis.sthis.se I pagina 99
+        this.program_reg = this.program_reg - 1;
     }
 
-    readRETURNF() {
-        // ithis.mplethis.mentar o RETURNF
+    readRETURNF(o, n) {
+        var k = n - 1;
+
+        while(k => 0){
+            this.m[o + k] = this.m[this.s]
+            this.s = this.s - 1;
+            k--;
+        }
     }
 
     readSTR(n) {
         this.m[n] = this.m[this.s];
         this.s = this.s - 1;
+        this.m.pop();
     }
 
     readRD(k) {
@@ -199,6 +211,7 @@ class AssemblyReader {
     }
 
     readHLT() {
+        this.i = this.i + 1;
         //parar;
     }
 

@@ -6,8 +6,9 @@ const about = '/app/about.html'
 
 let file = new fileModel.File()
 let reader = new AssemblyReader.AssemblyReader();
-let breakpoint; // vetor / sempre pegar a primeira posição.
+let breakpoint = []; // vetor / sempre pegar a primeira posição.
 let posI = 0;
+let hlt = 0;
 
 let mainWindow = null;
 app.on('ready', () =>{
@@ -50,6 +51,12 @@ ipcMain.on('fechar-janela-sobre', () => {
 });
 
 ipcMain.on('abrir-arquivo', async (event,data) =>{
+    // resetar as variaveis
+    reader = new AssemblyReader.AssemblyReader();
+    breakpoint = []; // vetor / sempre pegar a primeira posição.
+    posI = 0;
+    hlt = 0;
+
     try{
         await file.open(data, 'utf-8');
         this.program = null;
@@ -82,9 +89,13 @@ ipcMain.on('exec', async () => {
             //      reader.verify(this.program.pop())
             //      reader.atualizar();
             // }
-            while(this.program.length > posI && this.program.length != breakpoint){
-                reader.verify(this.program[posI]) // verificar ações
-                reader.atualizar(); // console.log
+            while(this.program.length > posI && this.program.length != breakpoint ){
+                hlt = reader.verify(this.program[posI]) // verificar ações
+
+                if(hlt == 0){
+                    reader.atualizar(); // console.log
+                }
+
                 posI = reader.i; // pega o valor do I lido
             }
 
