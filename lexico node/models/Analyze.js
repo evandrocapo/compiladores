@@ -237,6 +237,9 @@ class Analyze {
 
                         let param2 = 0;
                         let param1 = 0;
+
+                        if(this.alloc[this.alloc.length-1][2]=== this.scope)
+                        param1 = this.alloc[this.alloc.length-1][0];
                         for(let i = this.alloc.length-1 ; i >= 0; i--)
                         {
                             
@@ -370,14 +373,16 @@ class Analyze {
 
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
-                    let symbolTableL = this.symbolTable.tam();
                     
                     token = this.analyzeBlock(token)
                     
-                    if(this.symbolTable.tam() !== symbolTableL)
-                    {
+
                         let param2 = 0;
                         let param1 = 0;
+
+                        if(this.alloc[this.alloc.length-1][2] === this.scope)
+                        param1 = this.alloc[this.alloc.length-1][0];
+
                         for(let i = this.alloc.length-1 ; i >= 0; i--)
                         {
                             
@@ -389,7 +394,7 @@ class Analyze {
                         }
                         if(param2>0)
                         this.generator.gera('','DALLOC',param1,param2)
-                    } 
+                     
 
 
                 }
