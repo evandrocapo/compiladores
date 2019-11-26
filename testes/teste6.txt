@@ -1,0 +1,14 @@
+programa teste; {ERRO expressão nao booleanoa}
+var x,a,b,c,z:inteiro;
+           
+inicio
+ x:=1;
+ a:=2;
+ b:=3;
+ c:=7;
+ z:=1;
+ enquanto (x)          {ERRO expressão nao booleanoa}
+ faca inicio
+      escreva(x)
+    fim
+fim.

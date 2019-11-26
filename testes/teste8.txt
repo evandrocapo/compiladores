@@ -1,0 +1,42 @@
+programa testefinal; {ERRO variavel nao declarada}
+
+var opcao,x,y:inteiro;
+
+
+procedimento numeros;
+var x,y: inteiro;
+
+procedimento dobro;
+var media: inteiro;
+inicio
+  media:=(x+y)*2;
+  escreva(media)
+fim;
+
+inicio
+  leia(x);
+  leia(y);
+  total:= x+y;         {ERRO variavel nao declarada}
+  escreva(total);  {soma dos numeros lidos}  
+  dobro            {Calcula a media aritmetica dos numeros lidos}
+fim;
+
+procedimento p;               {calcula fatouial de um numero lido}
+var total,z: inteiro;
+inicio
+  z:= x; x:=x-1;
+  se  z>1 entao p  {recursivo} 
+  senao  y:=1;
+  y:=y*z               
+fim { p };
+
+inicio
+  leia(opcao);
+  se opcao = 1
+  entao numeros
+  senao inicio
+         leia(x);
+         p;
+         escreva(y)
+       fim
+fim.         

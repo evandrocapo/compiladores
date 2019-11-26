@@ -1,0 +1,12 @@
+programa teste; {ERRO atribuindo inteiros a booleano}
+var x,a,b,c,z:booleano;
+inicio
+ x:=1;           {ERRO atribuindo inteiros a booleano}
+ a:=2;
+ b:=3;
+ c:=7;
+ z:=1;
+ se (x+a*b)ou((b+c)div z)  {ERRO inteiros e ou}
+ entao escreva(x)
+ senao escreva(a)
+fim.

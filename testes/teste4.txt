@@ -1,0 +1,12 @@
+programa teste; {ERRO - variavel nao booleana}
+var x,a,b,c:inteiro;
+    z: booleano;
+inicio
+ x:=1;
+ a:=2;
+ b:=3;
+ c:=7;
+ se (x+a*b)<=((b+c)div z) {ERRO - variavel nao booleana} 
+ entao escreva(x)
+ senao escreva(a)
+fim.
