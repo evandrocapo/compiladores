@@ -35,9 +35,17 @@ leia(z);
 leia(z);
 leia(z);
 se verdadeiro
-entao analisa3:= 1+2 + analisa3;
+entao
+inicio
+se verdadeiro
+entao analisa3:= 1+2
+fim
+senao analisa3:= 1+2;
+
+
+
  {loop infinito intencional}
-a:= 1+3
+
 
 fim;
 
