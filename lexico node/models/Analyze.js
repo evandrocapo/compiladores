@@ -14,7 +14,7 @@ class Analyze {
         this.doPosFixa = 0;
         this.actualFunction = {
             lexem: null,
-            returned: false,
+            returned: -1,
         }
         this.label = label;
         this.generator = generator;
@@ -22,10 +22,11 @@ class Analyze {
         this.pilha = [];
         this.quant = [];
         this.alloc = alloc = [];
+        this.returnIfStack = new Array();
+        this.returnF = 0;
     }
 
-    setScope(scope)
-    {
+    setScope(scope) {
         this.scope = scope;
     }
 
@@ -36,7 +37,7 @@ class Analyze {
             throw new Error.Error('Error -> Variavel nao declarada', token.line).show()
         }
         else {
-            
+
         }
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -64,20 +65,23 @@ class Analyze {
         this.symbolTable.pesquisar(token.lexem, this.scope)
 
         this.geraExpress(this.expression);
-        if(variable instanceof SymbolVar.SymbolVar)
-        this.generator.gera('','STR',variable.memPos,'');
+        if (variable instanceof SymbolVar.SymbolVar)
+            this.generator.gera('', 'STR', variable.memPos, '');
 
         return token
     }
-    analyzeAtribCallProc(token) {
+    analyzeAtribCallProc(token, isIf) {
         var variable = this.symbolTable.pesquisar(token.lexem, this.scope)
         if (variable !== null) {
             var tokenAux = token;
-            token = this.analyzeReturnF(token)
+            token = this.analyzeReturnF(token, isIf)
             if (tokenAux === token) {
                 token = this.lexic.doLexic()
                 if (token.symbol === 'satribuicao') {
                     if (!(variable instanceof SymbolVar.SymbolVar)) {
+                        console.log('aaa')
+                        console.log(variable)
+                        console.log(token)
                         throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
                     token = this.analyzeAssignment(token, variable)
@@ -96,7 +100,7 @@ class Analyze {
         return token
     }
     analyzeBlock(token) {
-        
+
 
         token = this.lexic.doLexic()
         token = this.analyzeStepVariables(token)
@@ -109,7 +113,7 @@ class Analyze {
     analyzeCallFunc(token)/////////////////////////////////////////////////
     {
         if (token.symbol === 'sidentificador') {
-            let variable = this.symbolTable.pesquisar(token.lexem,this.scope);
+            let variable = this.symbolTable.pesquisar(token.lexem, this.scope);
             this.generator.gera('', 'CALL', variable.label, '');
         }
         else {
@@ -119,7 +123,7 @@ class Analyze {
         return token
     }
 
-    analyzeCallProc(token,variable)////////////////////////////////////////////////////
+    analyzeCallProc(token, variable)////////////////////////////////////////////////////
     {
         //if(this.symbolTable.pesquisar(variable.symbol.lexem,this.scope))
         this.generator.gera('', 'CALL', variable.label, '');
@@ -131,12 +135,12 @@ class Analyze {
 
         if (token.symbol === 'sinicio') {
             token = this.lexic.doLexic()
-            token = this.analyzeSimpleCommand(token)
+            token = this.analyzeSimpleCommand(token, false)
             while (token.symbol !== 'sfim') {
                 if (token.symbol === 'sponto_virgula') {
                     token = this.lexic.doLexic()
                     if (token.symbol !== 'sfim') {
-                        token = this.analyzeSimpleCommand(token)
+                        token = this.analyzeSimpleCommand(token, false)
                     }
                 }
                 else {
@@ -226,34 +230,41 @@ class Analyze {
 
     }
 
-    analyzeReturnF(token) {
+    analyzeReturnF(token, isIf) {
         if (this.actualFunction.returned !== true) {
             var variable = this.symbolTable.pesquisar(this.actualFunction.lexem, this.scope)
             if (this.actualFunction) {
                 if (token.lexem === this.actualFunction.lexem) {
                     token = this.lexic.doLexic()
                     token = this.analyzeAssignment(token, variable)
-                    this.actualFunction.returned = true;
+                    if (isIf) {
+                        if (this.actualFunction.returned !== 0)
+                            this.actualFunction.returned = 1;
+                    }
+                    else
+                        this.actualFunction.returned = 0;
 
-                        let param2 = 0;
-                        let param1 = 0;
+                    let param2 = 0;
+                    let param1 = 0;
+                    if (this.returnF === 0) {
+                        
+                        if (this.alloc[this.alloc.length - 1][2] === this.scope)
+                            param1 = this.alloc[this.alloc.length - 1][0];
+                        for (let i = this.alloc.length - 1; i >= 0; i--) {
 
-                        if(this.alloc[this.alloc.length-1][2]=== this.scope)
-                        param1 = this.alloc[this.alloc.length-1][0];
-                        for(let i = this.alloc.length-1 ; i >= 0; i--)
-                        {
-                            
-                            if(this.alloc[i][2] === this.scope)
-                            {
-                                param2 += this.alloc.pop()[1]
+                            if (this.alloc[i][2] === this.scope) {
+                                param2 += this.alloc[this.alloc.length - 1][1]
+                                this.returnF++
                             }
-                            
+
                         }
-                        if(param2 > 0)
-                        this.generator.gera('','RETURNF',param1,param2)
+                        if (param2 > 0)
+                            this.generator.gera('', 'RETURNF', param1, param2)
                         else
-                        this.generator.gera('','RETURNF',null,null)
-                    
+                            this.generator.gera('', 'RETURNF', null, null)
+                    }
+
+
                 }
             }
         }
@@ -303,23 +314,39 @@ class Analyze {
             }
 
             let scope = this.symbolTable.desempilhar();
-            if(scope)
-            this.scope = scope;
+            if (scope)
+                this.scope = scope;
             //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
-        if (this.actualFunction.returned === false) {
+        if (this.actualFunction.returned !== 0 && this.returnIfStack.length > 0) {
             throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
         }
+        /*
+        if (this.returnIfStack.length === 0 && this.actualFunction.returned !== 0) {
+            throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
+        }*/
+
+
+
         this.actualFunction = {
             lexem: null,
-            returned: false
+            returned: -1
         };
+
+
+        for (let a = 0; a < this.returnF; a++) {
+            this.alloc.pop()
+        }
+
+        this.returnF = 0;
 
         return token
     }
 
     analyzeIf(token) {
+        var analyzeReturn = this.actualFunction.returned;
+
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
@@ -339,21 +366,59 @@ class Analyze {
 
         let label = this.label;
         this.label += 2;
-        this.generator.gera('','JMPF',label,'')
+        this.generator.gera('', 'JMPF', label, '')
 
         if (token.symbol === 'sentao') {
             token = this.lexic.doLexic()
 
-            token = this.analyzeSimpleCommand(token)
 
-            this.generator.gera('','JMP',label+1,'')
-            this.generator.gera(label,null,'','')
+            token = this.analyzeSimpleCommand(token, true)
+
+            console.log('cheguei no if')
+            console.log(this.actualFunction.returned)
+            if (analyzeReturn === -1) {
+                if (this.actualFunction.returned === 1) {
+
+                    this.returnIfStack.push('returned')
+                }
+                else {
+                    this.returnIfStack.push('notReturned')
+                }
+                this.actualFunction.returned = -1;
+            }
+
+            this.generator.gera('', 'JMP', label + 1, '')
+            this.generator.gera(label, null, '', '')
 
             if (token.symbol === 'ssenao') {
                 token = this.lexic.doLexic()
-                token = this.analyzeSimpleCommand(token)
+
+
+                token = this.analyzeSimpleCommand(token, true)
+
+                console.log('cheguei no else')
+                console.log(this.actualFunction.returned)
+                if (analyzeReturn === -1) {
+                    if (this.actualFunction.returned === 1) {
+                        var result = this.returnIfStack.pop()
+                        console.log(result)
+                        if (result !== 'returned')
+                            this.returnIfStack.push('erro')
+                    }
+                    else {
+                        var result = this.returnIfStack.pop()
+                        if (result !== 'notReturned')
+                            this.returnIfStack.push('erro')
+                    }
+                    this.actualFunction.returned = -1;
+                }
+
             }
-            this.generator.gera(label+1,null,'','')
+            else {
+                if (analyzeReturn === -1)
+                    this.returnIfStack.pop()
+            }
+            this.generator.gera(label + 1, null, '', '')
         }
         else {
             throw new Error.Error('Erro -> Esperava então', token.line).show()
@@ -373,28 +438,26 @@ class Analyze {
 
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sponto_virgula') {
-                    
+
                     token = this.analyzeBlock(token)
-                    
 
-                        let param2 = 0;
-                        let param1 = 0;
 
-                        if(this.alloc[this.alloc.length-1][2] === this.scope)
-                        param1 = this.alloc[this.alloc.length-1][0];
+                    let param2 = 0;
+                    let param1 = 0;
 
-                        for(let i = this.alloc.length-1 ; i >= 0; i--)
-                        {
-                            
-                            if(this.alloc[i][2] === this.scope)
-                            {
-                                param2 += this.alloc.pop()[1]
-                            }
-                            
+                    if (this.alloc[this.alloc.length - 1][2] === this.scope)
+                        param1 = this.alloc[this.alloc.length - 1][0];
+
+                    for (let i = this.alloc.length - 1; i >= 0; i--) {
+
+                        if (this.alloc[i][2] === this.scope) {
+                            param2 += this.alloc.pop()[1]
                         }
-                        if(param2>0)
-                        this.generator.gera('','DALLOC',param1,param2)
-                     
+
+                    }
+                    if (param2 > 0)
+                        this.generator.gera('', 'DALLOC', param1, param2)
+
 
 
                 }
@@ -406,12 +469,12 @@ class Analyze {
                 throw new Error.Error("Erro -> Nome de procedimento existente", token.line).show()
             }
             let scope = this.symbolTable.desempilhar();
-            if(scope)
-            this.scope = scope;
+            if (scope)
+                this.scope = scope;
             //this.memory = this.symbolTable.desempilhar(this.memory);
             this.generator.gera('', 'RETURN', '', '');
         }
-        
+
         return token
     }
 
@@ -449,10 +512,11 @@ class Analyze {
         return token
     }
 
-    analyzeSimpleCommand(token) {
+
+    analyzeSimpleCommand(token, isIf) {
         switch (token.symbol) {
             case 'sidentificador':
-                token = this.analyzeAtribCallProc(token)
+                token = this.analyzeAtribCallProc(token, isIf)
                 break;
             case 'sse':
                 token = this.analyzeIf(token)
@@ -556,13 +620,12 @@ class Analyze {
         while (token.symbol !== 'sdoispontos')
 
         let quantAux = 0;
-        for(let i=0;i<this.quant.length;i++)
-        {
+        for (let i = 0; i < this.quant.length; i++) {
             quantAux += this.quant[i];
         }
 
         this.generator.gera('', 'ALLOC', quantAux, quant);
-        this.alloc.push([quantAux, quant,this.scope])
+        this.alloc.push([quantAux, quant, this.scope])
         this.quant.push(quant)
         token = this.lexic.doLexic()
         return this.analyzeType(token)
@@ -644,7 +707,7 @@ class Analyze {
             this.generator.gera('', 'JMPF', this.label, '') // generator
             this.label += 1; // semantico
             token = this.lexic.doLexic()
-            token = this.analyzeSimpleCommand(token)
+            token = this.analyzeSimpleCommand(token, false)
             this.generator.gera('', 'JMP', auxrot1, '') // generator
             this.generator.gera(auxrot2, null, '', '') // generator
         }
@@ -748,7 +811,7 @@ class Analyze {
                     if (Number.isInteger(Number(expression[i]))) this.generator.gera('', 'LDC', expression[i], '');
                     else {
                         var variable = this.symbolTable.pesquisar(expression[i], this.scope);
-                        if(variable instanceof SymbolVar.SymbolVar) this.generator.gera('', 'LDV', variable.memPos, '');
+                        if (variable instanceof SymbolVar.SymbolVar) this.generator.gera('', 'LDV', variable.memPos, '');
                         else this.generator.gera('', 'CALL', variable.label, '');
                     }
                     break;
