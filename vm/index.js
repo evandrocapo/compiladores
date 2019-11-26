@@ -51,12 +51,16 @@ ipcMain.on('fechar-janela-sobre', () => {
 });
 
 ipcMain.on('rd', (event, arg) => {
-    console.log("RD VALUE: " + arg)
+    console.log("RD VALUE: " + arg);
     if(hlt == 2){
         reader.m[reader.s] = arg
         hlt = 0;
         reader.i = reader.i + 1;
         posI = reader.i;
+        console.log("Valor inserido com sucesso, continuar exec");
+    }
+    else{
+        console.log("Não está na hora de inserir um valor");
     }
 })
 
@@ -83,6 +87,7 @@ ipcMain.on('abrir-arquivo', async (event,data) =>{
         this.program = await file.read(data);
         this.program = this.program.split('\r\n');
         reader.createListLabel(this.program); // criar lista de Labels
+        console.log(this.program)
     }
     catch(error){
         console.error("Erro na index.js na função 'abrir-arquivo':")
@@ -102,8 +107,10 @@ ipcMain.on('salvar-file', async (event,data) =>{
 
 ipcMain.on('exec', async () => {
     try{
+        if(hlt == 1) console.log("O programa terminou !");
+        if(hlt == 2) console.log("Esperando um valor para RD");
+
         if(await this.program){
-            console.log(this.program)
             while(this.program.length > posI && this.program.length != breakpoint[0] && hlt != 2){
                 hlt = reader.verify(this.program[posI]) // verificar ações
 
