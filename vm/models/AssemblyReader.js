@@ -290,6 +290,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readOR() {
@@ -301,10 +302,12 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readNEG() {
         this.m[this.s] = 1 - this.m[this.s];
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCME() {
@@ -316,6 +319,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCMA() {
@@ -339,6 +343,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCDIF() {
@@ -350,6 +355,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCMEQ() {
@@ -361,6 +367,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCMAQ() {
@@ -372,6 +379,7 @@ class AssemblyReader {
         }
 
         this.s = this.s - 1;
+        this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readJMP(p) {
