@@ -5,6 +5,8 @@ class AssemblyReader {
         this.i = 0; // linha do codigo
         this.s = 0; // posicao da pilha
         this.m = []; // pilha de memoria
+        this.entrada = [];
+        this.saida = [];
         this.program_reg = 0;
         this.program_m = []
         this.labels = []; // lista de objetos de jmps
@@ -229,6 +231,7 @@ class AssemblyReader {
 
     readPRN() {
         console.log("PRN -> " + this.m[this.s]);
+        this.saida.push(this.m[this.s])
         this.s = this.s - 1;
     }
 
