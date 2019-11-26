@@ -32,7 +32,7 @@
 
     <div>
         <div>
-            <table style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:490px;">
+            <table id="table-instr" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:490px;">
                 <thead>
                     <tr>
                         <th colspan="5">Instruções a serem executadas pela MV</th>
@@ -52,47 +52,11 @@
                         <td>Z</td>
                         <td>I</td>
                         <td>J</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>Z</td>
-                        <td>I</td>
-                        <td>J</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>Z</td>
-                        <td>I</td>
-                        <td>J</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>Z</td>
-                        <td>I</td>
-                        <td>J</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>Z</td>
-                        <td>I</td>
-                        <td>J</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>Z</td>
-                        <td>I</td>
-                        <td>J</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                        <td>Z</td>
-                        <td>I</td>
-                        <td>J</td>
                     </tr>
                 </tfoot>
             </table>
 
-            <table style="margin-top:10px; border:2px solid black; margin-left: 10px;float:left; min-width:260px;">
+            <table id="table-pilha" style="margin-top:10px; border:2px solid black; margin-left: 10px;float:left; min-width:260px;">
                 <thead>
                     <tr>
                         <th colspan="2">Conteúdo da Pilha</th>
@@ -107,43 +71,6 @@
                         <td>X</td>
                         <td>Y</td>
                     </tr>
-                    <tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr><tr>
-                        <td>X</td>
-                        <td>Y</td>
-                    </tr>
                 </tfoot>
             </table>
         </div>
@@ -151,7 +78,7 @@
 
     <div style="margin-bottom: 100px;">
         <div>
-            <table style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:250px;">
+            <table id="table-entrada" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:250px;">
                 <thead>
                     <tr>
                         <th colspan="2">Conteúdo de Entrada</th>
@@ -178,7 +105,7 @@
                 </tfoot>
             </table>
 
-            <table style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:250px;">
+            <table id="table-saida" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:250px;">
                 <thead>
                     <tr>
                         <th colspan="2">Conteúdo de Saida</th>
@@ -205,7 +132,7 @@
                 </tfoot>
             </table>
 
-            <table style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:240px;">
+            <table id="table-break" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:240px;">
                 <thead>
                     <tr>
                         <th colspan="2">Breakpoints</th>
@@ -239,6 +166,7 @@
     <script src="js/exec.js"></script>
     <script src="js/rd.js"></script>
     <script src="js/breakpoints.js"></script>
+    <script src="js/attTable.js"></script>
 </body>
 
 </html>

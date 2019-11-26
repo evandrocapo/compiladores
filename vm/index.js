@@ -13,7 +13,7 @@ let breakpointStopped = 0;
 
 let mainWindow = null;
 app.on('ready', () =>{
-    let mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 805,
         height: 600,
         webPreferences: {
@@ -133,10 +133,13 @@ ipcMain.on('exec', async () => {
 
         let content = {
             program: this.program,
-            reader: this.reader.i
+            pilha: reader.m,
+            entrada: reader.entrada,
+            saida: reader.saida,
+            breakpoint: breakpoint
         }
 
-        mainwindow.webContents.send('att-tables', reader); //enviar o reader para main
+        await mainWindow.webContents.send('att-tables', await content); //enviar o reader para main
 
     }catch(error){
         console.error(error);
