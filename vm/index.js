@@ -55,10 +55,11 @@ ipcMain.on('rd', (event, arg) => {
     console.log("RD VALUE: " + arg);
     if(hlt == 2){
         reader.m[reader.s] = arg
+        reader.entrada.push(arg)
         hlt = 0;
         reader.i = reader.i + 1;
         posI = reader.i;
-        console.log("Valor inserido com sucesso, continuar exec");
+        console.log("Valor inserido com sucesso. Para continuar, clique em executar novamente.");
     }
     else{
         console.log("Não está na hora de inserir um valor");
@@ -128,16 +129,14 @@ ipcMain.on('exec', async () => {
 
                 posI = reader.i; // pega o valor do I lido
             }
-
-            // hlt === 2 então preciso enviar um numero no frontend
-            // frontend envia o valor pra memoria M
-            // definir hlt === 0
-
-            // if(this.program[posI]){ // arrumando pro breakpoint
-            //     this.program.reverse(); // reverte o program
-            //     this.program.splice(0,posI+1); // elimina as linhas lidas
-            // }
         }
+
+        let content = {
+            program: this.program,
+            reader: this.reader.i
+        }
+
+        mainwindow.webContents.send('att-tables', reader); //enviar o reader para main
 
     }catch(error){
         console.error(error);
