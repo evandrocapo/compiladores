@@ -224,7 +224,7 @@ class AssemblyReader {
 
     readRD(k) {
         this.s = this.s + 1;
-        this.m[this.s] = k; // arruthis.mar, precithis.sa ler do teclado.
+        // this.m[this.s] = k; // arruthis.mar, precithis.sa ler do teclado.
     }
 
     readPRN() {
