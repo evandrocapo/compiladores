@@ -9,6 +9,7 @@ let reader = new AssemblyReader.AssemblyReader();
 let breakpoint = []; // vetor / sempre pegar a primeira posição.
 let posI = 0;
 let hlt = 0;
+let breakpointStopped = 0;
 
 let mainWindow = null;
 app.on('ready', () =>{
@@ -64,9 +65,15 @@ ipcMain.on('rd', (event, arg) => {
     }
 })
 
+function compararNumeros(a,b){
+    return a - b;
+}
+
 ipcMain.on('break-add', (event, arg) => {
-    breakpoint.push(args);
-    console.log("add bk: " + breakpoint);
+    breakpoint.push(arg);
+    breakpoint = breakpoint.sort(compararNumeros)
+    console.log("add bk: " + arg);
+    console.log("lista break: " + breakpoint);
 })
 
 ipcMain.on('break-reset', (event, arg) => {
@@ -80,6 +87,7 @@ ipcMain.on('abrir-arquivo', async (event,data) =>{
     breakpoint = []; // vetor / sempre pegar a primeira posição.
     posI = 0;
     hlt = 0;
+    breakpointStopped = 0;
 
     try{
         await file.open(data, 'utf-8');
@@ -111,7 +119,7 @@ ipcMain.on('exec', async () => {
         if(hlt == 2) console.log("Esperando um valor para RD");
 
         if(await this.program){
-            while(this.program.length > posI && this.program.length != breakpoint[0] && hlt != 2){
+            while(this.program.length > posI && breakpointStop() && hlt != 2){ //reader.i != breakpoint[0]
                 hlt = reader.verify(this.program[posI]) // verificar ações
 
                 if(hlt == 0){
@@ -130,7 +138,22 @@ ipcMain.on('exec', async () => {
             //     this.program.splice(0,posI+1); // elimina as linhas lidas
             // }
         }
+
     }catch(error){
         console.error(error);
     }
 })
+
+function breakpointStop(){
+    let i;
+    
+    for(i=0;i < breakpoint.length; i++) {
+        if(reader.i == breakpoint[i] && breakpointStopped == 0){
+            breakpointStopped = 1;
+            return false;  
+        } 
+    }
+
+    breakpointStopped = 0;
+    return true;
+}
