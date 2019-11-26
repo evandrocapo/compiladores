@@ -61,6 +61,7 @@ class AssemblyReader {
                 break;
             case 'RETURN':
                 this.readRETURN();
+                return;
                 // RETURN
                 break;
             case 'RETURNF':
@@ -154,35 +155,44 @@ class AssemblyReader {
 
     readALLOC(m, n) {
         var k = 0;
+        let aux = this.m.splice(0,m);
+        let entr = [];
+        let aux2 = this.m;
+
         while (k < n) {
             this.s = this.s + 1; // anda uma pos
-            // this.m[this.s] = this.m[m + k] // m[]
-            this.m[this.s] = "?";
+
+            entr.push('?');
             k++;
         }
+
+        aux.push(...entr);
+        aux.push(...aux2);
+
+        this.m = aux;
     }
 
     readDALLOC(m, n) { //
         let k = parseInt(n) - 1;
 
         while (k >= 0) {
-            this.m[parseInt(m) + parseInt(k)] = this.m[this.s];
+            // this.m[parseInt(m) + parseInt(k)] = this.m[this.s];
+            this.m.splice((parseInt(m) + parseInt(k)) ,1)
             this.s = parseInt(this.s) - 1;
-            this.m.pop()
             k = parseInt(k) - 1;
         }
 
     }
 
     readCALL(p) {
-        this.program_reg = this.program_reg + 1; // program_s == this.s so que da pilha de call
-        this.program_m[this.program_reg] = this.i + 1; // program_m == pilha de return do call
+        this.s = this.s + 1; // program_s == this.s so que da pilha de call
+        this.m[this.s] = this.i + 1; // program_m == pilha de return do call
         this.i = this.findLabel(p);
     }
 
     readRETURN() {
-        this.i = this.program_m[this.program_reg]; //nao tenho certeza dethis.sthis.se I pagina 99
-        this.program_reg = this.program_reg - 1;
+        this.i = this.m[this.s]; //nao tenho certeza dethis.sthis.se I pagina 99
+        this.s = this.s - 1;
     }
 
     readRETURNF(m, n) {
@@ -200,15 +210,9 @@ class AssemblyReader {
     }
 
     readRETURNF_noparams(){
-        var k = n - 1;
-
-        while(k => 0){
-            this.m[m + k] = this.m[this.s]
-            this.s = this.s - 1;
-            k--;
-        }
-
+        let aux = this.m.pop()
         readRETURN();
+        this.m.push(aux);
     }
 
     readSTR(n) {
