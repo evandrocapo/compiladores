@@ -75,6 +75,7 @@ class AssemblyReader {
                 break;
             case 'RD':
                 this.readRD(params[0]);
+                return 2;
                 // RD não tem parametros porém precisamos ler do teclado algo.
                 break;
             case 'PRN':

@@ -50,6 +50,23 @@ ipcMain.on('fechar-janela-sobre', () => {
     aboutWindow.close()
 });
 
+ipcMain.on('rd', (event, arg) => {
+    if(hlt == 2){
+        this.m.push(arg);
+        hlt = 0;
+    }
+})
+
+ipcMain.on('break-add', (event, arg) => {
+    breakpoint.push(args);
+    console.log("add bk: " + breakpoint);
+})
+
+ipcMain.on('break-reset', (event, arg) => {
+    breakpoint = [];
+    console.log("reset bk: " + breakpoint);
+})
+
 ipcMain.on('abrir-arquivo', async (event,data) =>{
     // resetar as variaveis
     reader = new AssemblyReader.AssemblyReader();
@@ -83,13 +100,8 @@ ipcMain.on('exec', async () => {
     try{
         if(await this.program){
             reader.createListLabel(this.program); // criar lista de Labels
-            // this.program.reverse();
             console.log(this.program)
-            // while(this.program.length > 0 && this.program.length != breakpoint){
-            //      reader.verify(this.program.pop())
-            //      reader.atualizar();
-            // }
-            while(this.program.length > posI && this.program.length != breakpoint ){
+            while(this.program.length > posI && this.program.length != breakpoint[0] && hlt != 2){
                 hlt = reader.verify(this.program[posI]) // verificar ações
 
                 if(hlt == 0){
@@ -99,10 +111,14 @@ ipcMain.on('exec', async () => {
                 posI = reader.i; // pega o valor do I lido
             }
 
-            if(this.program[posI]){ // arrumando pro breakpoint
-                this.program.reverse(); // reverte o program
-                this.program.splice(0,posI+1); // elimina as linhas lidas
-            }
+            // hlt === 2 então preciso enviar um numero no frontend
+            // frontend envia o valor pra memoria M
+            // definir hlt === 0
+
+            // if(this.program[posI]){ // arrumando pro breakpoint
+            //     this.program.reverse(); // reverte o program
+            //     this.program.splice(0,posI+1); // elimina as linhas lidas
+            // }
         }
     }catch(error){
         console.error(error);
