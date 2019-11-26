@@ -1,0 +1,19 @@
+programa teste;
+
+var a,b: inteiro;
+    x, y: booleano;
+
+inicio
+
+  leia (a);
+  leia(b);
+  x:= verdadeiro;
+  se ((-a-b) <= 10) e (x)
+  entao y:= x
+  senao y:= falso;
+  se y
+  entao escreva (a)
+  senao escreva(b)
+
+fim.
+  

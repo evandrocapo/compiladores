@@ -31,16 +31,14 @@ leia(z);
 leia(z);
 leia(z);
 leia(z);
+
 leia(z);
 leia(z);
 leia(z);
-se verdadeiro
-entao
-inicio
-se verdadeiro
-entao analisa3:= 1+2
-fim
+se (verdadeiro)
+entao leia(a)
 senao analisa3:= 1+2;
+
 
 
 
@@ -60,6 +58,7 @@ inicio
   b:= a+(b div 9 - 3) * c;
     analisa1;
     analisa2;
+	escreva(analisa3);
 analisa3;
 	d:= verdadeiro;
 	a := analisa3 * 4 div 5 + analisa3;
