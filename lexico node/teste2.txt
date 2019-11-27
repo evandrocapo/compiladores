@@ -37,7 +37,9 @@ leia(z);
 leia(z);
 se (verdadeiro)
 entao analisa3:= 1+2
+senao leia(a);
 
+analisa3:= 1+2;
 
 
 fim;
