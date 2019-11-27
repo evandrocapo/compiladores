@@ -11,7 +11,10 @@ inicio
     b := 10;
     se b > (c+ a*a)
     entao inicio
-        escreva(b)
+        escreva(b);
+		se (b > (c+ a*a))
+		entao escreva(b)
+		senao leia(b);
     fim
-	senao leia(b)
+
 fim.
