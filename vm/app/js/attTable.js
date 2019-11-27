@@ -87,7 +87,7 @@ function entradaCreate(entrada){
 function pilhaCreate(pilha){
     let i;
 
-    tPilha.innerHTML = `<table id="table-pilha" style="margin-top:10px; border:2px solid black; margin-left: 10px;float:left; min-width:260px;">
+    tPilha.innerHTML = `<table class="hk-message--generic shadow-5" id="table-pilha" style="margin-top:10px; border:2px solid black; margin-left: 10px;float:left; min-width:260px;">
                         <thead>
                             <tr>
                                 <th colspan="2">Conteúdo da Pilha</th>
@@ -112,7 +112,8 @@ function instrCreate(program) {
     let i;
     let params;
     let program_;
-    tInstr.innerHTML = `<thead>
+    tInstr.innerHTML = `<table class="hk-message--generic shadow-5" id="table-instr" style="margin-top:10px; border:2px solid black; margin-left: 10px;float:left; min-width:260px;">
+                        <thead>
                         <tr>
                             <th colspan="5">Instruções a serem executadas pela MV</th>
                         </tr>
