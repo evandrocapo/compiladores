@@ -41,8 +41,10 @@ entao 	inicio
 			entao 	inicio
 						analisa3:= 1+2
 					fim
-			senao leia(z);
+			senao analisa3:= 1+2;
+			
 		fim
+senao analisa3:= 1+2;
 
 fim;
 
