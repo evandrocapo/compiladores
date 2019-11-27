@@ -14,7 +14,7 @@ class Analyze {
         this.doPosFixa = 0;
         this.actualFunction = {
             lexem: null,
-            returned: -1,
+            returned: -2,
         }
         this.label = label;
         this.generator = generator;
@@ -231,7 +231,6 @@ class Analyze {
     }
 
     analyzeReturnF(token, isIf) {
-        if (this.actualFunction.returned !== true) {
             var variable = this.symbolTable.pesquisar(this.actualFunction.lexem, this.scope)
             if (this.actualFunction) {
                 if (token.lexem === this.actualFunction.lexem) {
@@ -267,13 +266,18 @@ class Analyze {
 
                 }
             }
-        }
+        
 
 
         return token;
     }
 
     analyzeFuncDeclaration(token) {
+
+        this.actualFunction = {
+            lexem: null,
+            returned: -1
+        };
 
         token = this.lexic.doLexic()
 
@@ -319,19 +323,23 @@ class Analyze {
             //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
+        console.log('valor do returned' +this.actualFunction.returned)
+        console.log('tamanho da pilha ' +this.returnIfStack.length)
+        
+
         if (this.actualFunction.returned !== 0 && this.returnIfStack.length > 0) {
             throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
         }
-        /*
-        if (this.returnIfStack.length === 0 && this.actualFunction.returned !== 0) {
+        
+        if (this.actualFunction.returned === -1) {
             throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
-        }*/
+        }
 
 
 
         this.actualFunction = {
             lexem: null,
-            returned: -1
+            returned: -2
         };
 
 
@@ -346,6 +354,28 @@ class Analyze {
 
     analyzeIf(token) {
         var analyzeReturn = this.actualFunction.returned;
+        
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log(analyzeReturn)
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+        console.log('o problema')//-1
+
 
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -384,7 +414,8 @@ class Analyze {
                 else {
                     this.returnIfStack.push('notReturned')
                 }
-                this.actualFunction.returned = -1;
+                if(this.actualFunction.returned!==0)
+                this.actualFunction.returned = 2;
             }
 
             this.generator.gera('', 'JMP', label + 1, '')
@@ -410,12 +441,13 @@ class Analyze {
                         if (result !== 'notReturned')
                             this.returnIfStack.push('erro')
                     }
-                    this.actualFunction.returned = -1;
+                    if(this.actualFunction.returned!==0)
+                    this.actualFunction.returned = 2;
                 }
 
             }
             else {
-                if (analyzeReturn === -1)
+                if (analyzeReturn !== -1)
                     this.returnIfStack.pop()
             }
             this.generator.gera(label + 1, null, '', '')
@@ -484,9 +516,10 @@ class Analyze {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
                 var variable = this.symbolTable.pesquisar(token.lexem);
-                this.generator.gera('', 'RD', '', ''); // Generator
-                this.generator.gera('', 'STR', variable.memPos, ''); // Generator
                 if (variable) {
+                    this.generator.gera('', 'RD', '', ''); // Generator
+                    this.generator.gera('', 'STR', variable.memPos, ''); // Generator
+                
                     if (!(variable instanceof SymbolVar.SymbolVar)) {
                         throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
@@ -724,10 +757,18 @@ class Analyze {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
                 var variable = this.symbolTable.pesquisar(token.lexem, this.scope);
-                this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
-                this.generator.gera('', 'PRN', '', ''); // Generator
                 if (variable) {
-                    if (!(variable instanceof SymbolVar.SymbolVar)) {
+                    this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
+                    this.generator.gera('', 'PRN', '', ''); // Generator
+                
+                    console.log(variable.symbol.lexem)
+                    console.log(variable.type)
+                    if(variable instanceof SymbolProc.SymbolProc)
+                    {
+                        if(variable.type !== 'inteiro' && variable.type !== 'booleano')
+                        throw new Error.Error('Error -> Esperava funcao', token.line).show()
+                    }
+                    if (!(variable instanceof SymbolVar.SymbolVar) && !(variable instanceof SymbolProc.SymbolProc)) {
                         throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
                     token = this.lexic.doLexic()

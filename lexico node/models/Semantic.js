@@ -27,11 +27,12 @@ class Semantic{
                 aux = this.pilha.pop();
                 if(exp[i] === ')')
                 {
-                    do
+                    while(aux !== '(')
                     {
                         result.push(aux);
                         aux = this.pilha.pop();
-                    }while(aux !== '(')
+                        
+                    }
                             
                 }
                 else
@@ -83,6 +84,8 @@ class Semantic{
                 return 0;
             case ')':
                 return 0;
+            case 'nao':
+                return 1;
             case '-u':
                 return 1;
             case '+u':
