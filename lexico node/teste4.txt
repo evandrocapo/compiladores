@@ -11,18 +11,7 @@ inicio
     b := 10;
     se b > (c+ a*a)
     entao inicio
-        escreva(b);
-        se b > (c+ a*a)
-        entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao se b > (c+ a*a)
-		entao escreva(c)
-		senao leia(c)
+        escreva(b)
     fim
-    senao escreva(c)
+	senao leia(b)
 fim.
