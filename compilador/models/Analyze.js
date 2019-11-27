@@ -79,9 +79,7 @@ class Analyze {
                 token = this.lexic.doLexic()
                 if (token.symbol === 'satribuicao') {
                     if (!(variable instanceof SymbolVar.SymbolVar)) {
-                        console.log('aaa')
-                        console.log(variable)
-                        console.log(token)
+    
                         throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
                     token = this.analyzeAssignment(token, variable)
@@ -241,10 +239,7 @@ class Analyze {
                             this.actualFunction.returned = 1;
                     }
                     else
-                    {
                         this.actualFunction.returned = 0;
-                    }
-
 
                     let param2 = 0;
                     let param1 = 0;
@@ -326,9 +321,7 @@ class Analyze {
             //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
-        console.log('valor do returned ' +this.actualFunction.returned)
-        console.log('tamanho da pilha ' +this.returnIfStack.length)
-        console.log(this.returnIfStack)
+
         
 
         if (this.actualFunction.returned !== 0 && this.returnIfStack.length > 0) {
@@ -356,11 +349,9 @@ class Analyze {
         return token
     }
 
-    analyzeIf(token, isIf) {
+    analyzeIf(token) {
         var analyzeReturn = this.actualFunction.returned;
-
-        var localStack = new Array();
-
+        
         token = this.lexic.doLexic()
         this.expression = new Array();
         token = this.analyzeExpression(token)
@@ -388,19 +379,15 @@ class Analyze {
 
             token = this.analyzeSimpleCommand(token, true)
 
-            console.log('cheguei no if')
-            console.log(this.actualFunction.returned)
-            if (analyzeReturn === -1 || analyzeReturn === 2) {
+
+
+            if (analyzeReturn === -1) {
                 if (this.actualFunction.returned === 1) {
 
-                    //this.returnIfStack.push('returned')
-                    localStack.push('returned')
-                    console.log('coloquei returned')
+                    this.returnIfStack.push('returned')
                 }
                 else {
-                    //this.returnIfStack.push('notReturned')
-                    localStack.push('notReturned')
-                    console.log('coloquei notReturned')
+                    this.returnIfStack.push('notReturned')
                 }
                 if(this.actualFunction.returned!==0)
                 this.actualFunction.returned = 2;
@@ -419,28 +406,16 @@ class Analyze {
 
                 token = this.analyzeSimpleCommand(token, true)
 
-                console.log('cheguei no else')
-                console.log(this.actualFunction.returned)
-                if (analyzeReturn === -1 || analyzeReturn === 2) {
+                if (analyzeReturn === -1) {
                     if (this.actualFunction.returned === 1) {
-                        //var result = this.returnIfStack.pop()
-                        var result = localStack.pop()
-                        console.log(result)
+                        var result = this.returnIfStack.pop()
                         if (result !== 'returned')
-                        {
-                            //this.returnIfStack.push('erro')
-                            localStack.push('erro')
-                        }
-                           
+                            this.returnIfStack.push('erro')
                     }
                     else {
-                        //var result = this.returnIfStack.pop()
-                        var result = localStack.pop()
+                        var result = this.returnIfStack.pop()
                         if (result !== 'notReturned')
-                        {
-                            //this.returnIfStack.push('erro')
-                            localStack.push('erro')
-                        }
+                            this.returnIfStack.push('erro')
                     }
                     if(this.actualFunction.returned!==0)
                     this.actualFunction.returned = 2;
@@ -448,12 +423,8 @@ class Analyze {
 
             }
             else {
-                if (analyzeReturn !== -1 || analyzeReturn === 2)
-                {
-                    //this.returnIfStack.pop()
-                    localStack.pop()
-                }
-
+                if (analyzeReturn !== -1)
+                    this.returnIfStack.pop()
             }
             if(this.label !== labelAux)
             this.generator.gera(labelAux, null, '', '')
@@ -462,27 +433,6 @@ class Analyze {
         }
         else {
             throw new Error.Error('Erro -> Esperava então', token.line).show()
-        }
-/*
-        for(var b = 0; b < this.returnIfStack.length; b++)
-        {
-            if(this.returnIfStack.pop() === 'erro')
-            {
-                this.returnIfStack.push('erro')
-            }
-        }*/
-
-        for(var b = 0; b < localStack.length; b++)
-        {
-            if(localStack.pop() === 'erro')
-            {
-                localStack.push('erro')
-            }
-        }
-
-        if(localStack.length>0)
-        {
-            this.returnIfStack.push('erro')
         }
         return token
     }
@@ -581,10 +531,10 @@ class Analyze {
                 token = this.analyzeAtribCallProc(token, isIf)
                 break;
             case 'sse':
-                token = this.analyzeIf(token, isIf)
+                token = this.analyzeIf(token)
                 break;
             case 'senquanto':
-                token = this.analyzeWhile(token)
+                token = this.analyzeWhile(token, isIf)
                 break;
             case 'sleia':
                 token = this.analyzeRead(token)
@@ -593,7 +543,7 @@ class Analyze {
                 token = this.analyzeWrite(token)
                 break;
             default:
-                token = this.analyzeCommands(token,isIf)
+                token = this.analyzeCommands(token, isIf)
                 break;
         }
 
@@ -790,8 +740,6 @@ class Analyze {
                     this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
                     this.generator.gera('', 'PRN', '', ''); // Generator
                 
-                    console.log(variable.symbol.lexem)
-                    console.log(variable.type)
                     if(variable instanceof SymbolProc.SymbolProc)
                     {
                         if(variable.type !== 'inteiro' && variable.type !== 'booleano')
