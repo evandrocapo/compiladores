@@ -62,9 +62,10 @@ class SymbolTable{
         this.stack = this.stack.concat(stackDupli.reverse()); // voltou a pilha
         stackDupli.reverse(); // reverta de novo
 
+        if(stackDupli.length>0)
         do{
-            if(stackDupli == lexem) return true
-            stackDupli.pop()
+            if(stackDupli.pop().symbol.lexem == lexem) return true
+            
         }while(stackDupli.length > 0);
         return false;
     }
