@@ -14,7 +14,7 @@ let breakpointStopped = 0;
 let mainWindow = null;
 app.on('ready', () =>{
     mainWindow = new BrowserWindow({
-        width: 805,
+        width: 800,
         height: 600,
         webPreferences: {
             nodeIntegration: true

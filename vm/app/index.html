@@ -3,36 +3,38 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     <title>Maquina Virtual</title>
+    <link rel="stylesheet" href="https://www.herokucdn.com/purple3/latest/purple3.min.css">
 </head>
 
-<body>
-    <div>
-        <h1>Maquina Virtual</h1>
+<body class="fill-washed-red">
+    <div class="fill-washed-red" style="padding-left: 10px;">
+        <h1 class="serif b dark-gray">Maquina Virtual</h1>
         <label id="label"></label>
-        <button id="link-about">Sobre</button>
-        <button id="link-open">Open</button>
-        <button id="link-exec">Executar</button>
+        <button id="link-about" class="hk-button--secondary">Sobre</button>
+        <button id="link-open" class="hk-button--secondary">Open</button>
+        <button id="link-exec" class="hk-button--secondary">Executar</button>
     </div>
 
-    <div style="padding-top: 10px;">
-        <h3>Inputs</h3> 
+    <div style="padding-top: 10px;padding-left: 10px;">
+        <h2 class="serif b dark-gray">Inputs</h2> 
         <div>
-            <input type="text" id="input-break" style="margin-left: 10px;"></input>
-            <button id="add-break">ADD Breakpoints</button>
-            <button id="reset-break">RESET Breakpoints</button>
+            <input type="text" id="input-break" style="margin-left: 10px;" class="hk-input"></input>
+            <button id="add-break" class="hk-button--secondary">ADD Breakpoints</button>
+            <button id="reset-break" class="hk-button--secondary">RESET Breakpoints</button>
         </div>
         <div style="margin-top: 10px;">
-            <input type="text" id="input-rd" style="margin-left: 10px;"/>
-            <button id="link-rd">ADD RD</button>
+            <input type="text" id="input-rd" style="margin-left: 10px;" class="hk-input"/>
+            <button id="link-rd" class="hk-button--secondary">ADD RD</button>
         </div>
     </div>
 
-    <div>
+    <div style="padding-top: 10px">
         <div>
-            <table id="table-instr" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:490px;">
+            <table class="hk-message--generic shadow-5 bg-lightest-blue" id="table-instr" style="margin-top:10px; margin-left: 10px; float:left; min-width:250px;" > 
+                <!-- style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:490px;" -->
                 <thead>
                     <tr>
                         <th colspan="5">Instruções a serem executadas pela MV</th>
@@ -56,7 +58,7 @@
                 </tfoot>
             </table>
 
-            <table id="table-pilha" style="margin-top:10px; border:2px solid black; margin-left: 10px;float:left; min-width:260px;">
+            <table class="hk-message--generic shadow-5 bg-lightest-blue" id="table-pilha" style="margin-top:10px; margin-left: 10px; float:left; min-width:250px;">
                 <thead>
                     <tr>
                         <th colspan="2">Conteúdo da Pilha</th>
@@ -78,7 +80,7 @@
 
     <div style="margin-bottom: 100px;">
         <div>
-            <table id="table-entrada" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:250px;">
+            <table class="hk-message--generic shadow-5 bg-lightest-blue" id="table-entrada" style="margin-top:10px; margin-left: 10px; float:left; min-width:250px;">
                 <thead>
                     <tr>
                         <th colspan="2">Conteúdo de Entrada</th>
@@ -105,7 +107,7 @@
                 </tfoot>
             </table>
 
-            <table id="table-saida" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:250px;">
+            <table class="hk-message--generic shadow-5 bg-lightest-blue" id="table-saida" style="margin-top:10px; margin-left: 10px; float:left; min-width:250px;">
                 <thead>
                     <tr>
                         <th colspan="2">Conteúdo de Saida</th>
@@ -132,7 +134,7 @@
                 </tfoot>
             </table>
 
-            <table id="table-break" style="margin-top:10px; border:2px solid black; margin-left: 10px; float:left; min-width:240px;">
+            <table class="hk-message--generic shadow-5 bg-lightest-blue" id="table-break" style="margin-top:10px; margin-left: 10px; float:left; min-width:250px;">
                 <thead>
                     <tr>
                         <th colspan="2">Breakpoints</th>
