@@ -131,16 +131,16 @@ class Analyze {
         return token
     }
 
-    analyzeCommands(token) {
+    analyzeCommands(token, isIf) {
 
         if (token.symbol === 'sinicio') {
             token = this.lexic.doLexic()
-            token = this.analyzeSimpleCommand(token, false)
+            token = this.analyzeSimpleCommand(token, isIf)
             while (token.symbol !== 'sfim') {
                 if (token.symbol === 'sponto_virgula') {
                     token = this.lexic.doLexic()
                     if (token.symbol !== 'sfim') {
-                        token = this.analyzeSimpleCommand(token, false)
+                        token = this.analyzeSimpleCommand(token, isIf)
                     }
                 }
                 else {
@@ -241,7 +241,10 @@ class Analyze {
                             this.actualFunction.returned = 1;
                     }
                     else
+                    {
                         this.actualFunction.returned = 0;
+                    }
+
 
                     let param2 = 0;
                     let param1 = 0;
@@ -323,8 +326,9 @@ class Analyze {
             //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
-        console.log('valor do returned' +this.actualFunction.returned)
+        console.log('valor do returned ' +this.actualFunction.returned)
         console.log('tamanho da pilha ' +this.returnIfStack.length)
+        console.log(this.returnIfStack)
         
 
         if (this.actualFunction.returned !== 0 && this.returnIfStack.length > 0) {
@@ -352,30 +356,10 @@ class Analyze {
         return token
     }
 
-    analyzeIf(token) {
+    analyzeIf(token, isIf) {
         var analyzeReturn = this.actualFunction.returned;
-        
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log(analyzeReturn)
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
-        console.log('o problema')//-1
 
+        var localStack = new Array();
 
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -406,13 +390,17 @@ class Analyze {
 
             console.log('cheguei no if')
             console.log(this.actualFunction.returned)
-            if (analyzeReturn === -1) {
+            if (analyzeReturn === -1 || analyzeReturn === 2) {
                 if (this.actualFunction.returned === 1) {
 
-                    this.returnIfStack.push('returned')
+                    //this.returnIfStack.push('returned')
+                    localStack.push('returned')
+                    console.log('coloquei returned')
                 }
                 else {
-                    this.returnIfStack.push('notReturned')
+                    //this.returnIfStack.push('notReturned')
+                    localStack.push('notReturned')
+                    console.log('coloquei notReturned')
                 }
                 if(this.actualFunction.returned!==0)
                 this.actualFunction.returned = 2;
@@ -433,17 +421,26 @@ class Analyze {
 
                 console.log('cheguei no else')
                 console.log(this.actualFunction.returned)
-                if (analyzeReturn === -1) {
+                if (analyzeReturn === -1 || analyzeReturn === 2) {
                     if (this.actualFunction.returned === 1) {
-                        var result = this.returnIfStack.pop()
+                        //var result = this.returnIfStack.pop()
+                        var result = localStack.pop()
                         console.log(result)
                         if (result !== 'returned')
-                            this.returnIfStack.push('erro')
+                        {
+                            //this.returnIfStack.push('erro')
+                            localStack.push('erro')
+                        }
+                           
                     }
                     else {
-                        var result = this.returnIfStack.pop()
+                        //var result = this.returnIfStack.pop()
+                        var result = localStack.pop()
                         if (result !== 'notReturned')
-                            this.returnIfStack.push('erro')
+                        {
+                            //this.returnIfStack.push('erro')
+                            localStack.push('erro')
+                        }
                     }
                     if(this.actualFunction.returned!==0)
                     this.actualFunction.returned = 2;
@@ -451,8 +448,12 @@ class Analyze {
 
             }
             else {
-                if (analyzeReturn !== -1)
-                    this.returnIfStack.pop()
+                if (analyzeReturn !== -1 || analyzeReturn === 2)
+                {
+                    //this.returnIfStack.pop()
+                    localStack.pop()
+                }
+
             }
             if(this.label !== labelAux)
             this.generator.gera(labelAux, null, '', '')
@@ -461,6 +462,27 @@ class Analyze {
         }
         else {
             throw new Error.Error('Erro -> Esperava então', token.line).show()
+        }
+/*
+        for(var b = 0; b < this.returnIfStack.length; b++)
+        {
+            if(this.returnIfStack.pop() === 'erro')
+            {
+                this.returnIfStack.push('erro')
+            }
+        }*/
+
+        for(var b = 0; b < localStack.length; b++)
+        {
+            if(localStack.pop() === 'erro')
+            {
+                localStack.push('erro')
+            }
+        }
+
+        if(localStack.length>0)
+        {
+            this.returnIfStack.push('erro')
         }
         return token
     }
@@ -559,7 +581,7 @@ class Analyze {
                 token = this.analyzeAtribCallProc(token, isIf)
                 break;
             case 'sse':
-                token = this.analyzeIf(token)
+                token = this.analyzeIf(token, isIf)
                 break;
             case 'senquanto':
                 token = this.analyzeWhile(token)
@@ -571,7 +593,7 @@ class Analyze {
                 token = this.analyzeWrite(token)
                 break;
             default:
-                token = this.analyzeCommands(token)
+                token = this.analyzeCommands(token,isIf)
                 break;
         }
 
@@ -722,7 +744,7 @@ class Analyze {
         }
     }
 
-    analyzeWhile(token) {
+    analyzeWhile(token, isIf) {
         let auxrot1 = this.label, auxrot2; // semantico
         this.generator.gera(auxrot1, null, '', '') // generator semantico
         this.label += 1; // semantico
@@ -747,7 +769,7 @@ class Analyze {
             this.generator.gera('', 'JMPF', this.label, '') // generator
             this.label += 1; // semantico
             token = this.lexic.doLexic()
-            token = this.analyzeSimpleCommand(token, false)
+            token = this.analyzeSimpleCommand(token, isIf)
             this.generator.gera('', 'JMP', auxrot1, '') // generator
             this.generator.gera(auxrot2, null, '', '') // generator
         }
