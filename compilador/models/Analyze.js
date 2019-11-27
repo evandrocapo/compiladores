@@ -664,9 +664,10 @@ class Analyze {
                 else {
                     throw new Error.Error("Erro -> Esperava ;", token.line).show()
                 }
+                if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
             }
 
-            if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
+            
         }
 
         return token
