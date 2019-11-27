@@ -34,15 +34,19 @@ leia(z);
 leia(z);
 leia(z);
 leia(z);
-
 se (verdadeiro)
-		entao 	inicio
-					analisa3:= 1+2
-				fim
-		senao analisa3:= 1+2;
+entao 	inicio
+
+			se (verdadeiro)
+			entao 	inicio
+						analisa3:= 1+2
+					fim
+			senao analisa3:= 1+2;
 			
+		fim
+senao analisa3:= 1+2;
 
-
+analisa3:= 1+2;
 
 fim;
 
