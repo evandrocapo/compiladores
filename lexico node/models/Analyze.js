@@ -395,7 +395,7 @@ class Analyze {
         this.geraExpress(this.expression)
 
         let label = this.label;
-        this.label += 2;
+        this.label += 1;
         this.generator.gera('', 'JMPF', label, '')
 
         if (token.symbol === 'sentao') {
@@ -418,12 +418,16 @@ class Analyze {
                 this.actualFunction.returned = 2;
             }
 
-            this.generator.gera('', 'JMP', label + 1, '')
-            this.generator.gera(label, null, '', '')
+            
+            let labelAux = this.label;
 
             if (token.symbol === 'ssenao') {
+                
+                this.generator.gera('', 'JMP', this.label, '')
+                this.generator.gera(label, null, '', '')
+                this.label++;
                 token = this.lexic.doLexic()
-
+                
 
                 token = this.analyzeSimpleCommand(token, true)
 
@@ -450,7 +454,10 @@ class Analyze {
                 if (analyzeReturn !== -1)
                     this.returnIfStack.pop()
             }
-            this.generator.gera(label + 1, null, '', '')
+            if(this.label !== labelAux)
+            this.generator.gera(labelAux, null, '', '')
+            else
+            this.generator.gera(label, null, '', '')
         }
         else {
             throw new Error.Error('Erro -> Esperava então', token.line).show()
