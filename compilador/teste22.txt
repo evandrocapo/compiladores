@@ -1,64 +1,33 @@
 
-{Teste 1 - OK}
-programa test1;
+programa test;
 
-var a,b,c: inteiro;
- d:booleano;
+var a,b: inteiro;
 
-{proc 1}
-procedimento analisa1;
-var a, x: inteiro;
-       z: booleano;
-inicio
-  se x>1  entao
-      x:= 0;
-  leia(z);
-  enquanto (a != -89) e (a<= 1000) e nao z ou (a>(a+x)) e nao z ou falso {condicao de parada}
-  faca inicio
-           a:= x+1;
-		   leia(a)
-       fim;
-  escreva(a)
+funcao soma: inteiro;
+var c,a: inteiro;
+
+  procedimento ler;
+  inicio
+     leia (c);
+     leia (a);
+	 a:= soma;
+     escreva (soma);
 fim;
 
-funcao analisa3 : inteiro;
-var a, x: inteiro;
-       z: booleano;
-inicio
-leia(z);
-leia(z);
-leia(z);
-leia(z);
-leia(z);
-leia(z);
-leia(z);
-leia(z);
-leia(z);
+  procedimento loop;
+  var x: inteiro;
+  inicio
+    leia (x);   {para parar digite um valor maior que 9 }
+    se x < 10
+    entao ler;
+  fim;
 
-enquanto verdadeiro
-faca inicio analisa3:= 1+2;
-fim;
-
-fim;
-
-
-procedimento analisa2;
-inicio
-  leia(a);
-  b:= a*a+(c div b) 
-fim;
+ inicio
+  loop;
+  soma:= c+a;
+ fim;
 
 inicio
-  b:= a+(b div 9 - 3) * c;
-    analisa1;
-    analisa2;
-	escreva(analisa3);
-analisa3;
-	d:= verdadeiro;
-	a := analisa3 * 4 div 5 + analisa3;
-    se 1 > (c+ a*a)
-    entao escreva(a)
-    senao escreva(b)
+  escreva(soma)
 fim.
-
-{fim}   
+ 
