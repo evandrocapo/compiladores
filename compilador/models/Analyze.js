@@ -705,11 +705,12 @@ class Analyze {
     analyzeSubRotine(token) {
         if (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
             let auxrot, flag; // semantico
+            auxrot = this.label;
+            this.generator.gera('', 'JMP', this.label, '');
+            this.label += 1;
+            flag = 1;
             while (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
-                auxrot = this.label;
-                this.generator.gera('', 'JMP', this.label, '');
-                this.label += 1;
-                flag = 1;
+
                 if (token.symbol === 'sprocedimento') {
                     token = this.analyzeProcDeclaration(token)
 
@@ -723,8 +724,9 @@ class Analyze {
                 else {
                     throw new Error.Error("Erro -> Esperava ;", token.line).show()
                 }
-                if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
+                
             }
+            if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
 
             
         }
