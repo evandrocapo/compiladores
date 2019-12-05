@@ -253,14 +253,16 @@ class Analyze {
                         
 
                         for (let i = this.alloc.length - 1; i >= 0; i--) {
-
-                            if (this.alloc[i][2] === this.scope) {
+                            
+                            if (this.alloc[i][2] ===  this.actualFunction.lexem) {
                                 param2 += this.alloc[i][1];
                                 param1 = this.alloc[i][0];
                                 this.returnF.push(i)
                             }
 
                         }
+
+                        console.log(this.symbolTable)
                         if (param2 > 0)
                             this.generator.gera('', 'RETURNF', param1, param2)
                         else
@@ -293,7 +295,7 @@ class Analyze {
                 this.scope = token.lexem; 
                 this.generator.gera(this.label, null, '', '');
                 this.label += 1;
-                
+
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sdoispontos') {
                     token = this.lexic.doLexic()
@@ -350,7 +352,7 @@ class Analyze {
 
 
         for (let a = 0; a < this.returnF.length; a++) {
-            this.alloc.slice(i,1);
+            this.alloc.slice(a,1);
         }
 
         this.returnF = new Array();
