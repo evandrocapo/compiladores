@@ -23,7 +23,7 @@ class Analyze {
         this.quant = [];
         this.alloc = alloc = [];
         this.returnIfStack = new Array();
-        this.returnF = 0;
+        this.returnF = new Array();
     }
 
     setScope(scope) {
@@ -74,7 +74,13 @@ class Analyze {
         var variable = this.symbolTable.pesquisar(token.lexem, this.scope)
         if (variable !== null) {
             var tokenAux = token;
+
+
+            
             token = this.analyzeReturnF(token, isIf)
+
+
+
             if (tokenAux === token) {
                 token = this.lexic.doLexic()
                 if (token.symbol === 'satribuicao') {
@@ -113,6 +119,28 @@ class Analyze {
         if (token.symbol === 'sidentificador') {
             let variable = this.symbolTable.pesquisar(token.lexem, this.scope);
             this.generator.gera('', 'CALL', variable.label, '');
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+            console.log('CALL' + variable.label)
+
         }
         else {
             throw new Error.Error("Erro -> Chamada de funcao", token.line).show()
@@ -179,11 +207,38 @@ class Analyze {
     {
         var tabela = null
 
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+        console.log(token.lexem)
+
         this.expression.push(token.lexem)
 
         if (token.symbol === 'sidentificador') {
             tabela = this.symbolTable.pesquisar(token.lexem, this.scope)
+
+            {
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+                console.log(token.lexem)
+
+            }
+            
             if (tabela) {
+
                 if (tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano' && (tabela instanceof SymbolProc.SymbolProc)) {
                     token = this.analyzeCallFunc(token)
                     token = this.lexic.doLexic()
@@ -243,15 +298,16 @@ class Analyze {
 
                     let param2 = 0;
                     let param1 = 0;
-                    if (this.returnF === 0) {
+                    //if (this.returnF === 0) {
+// RETIRAR DEPOIS
                         
-                        if (this.alloc[this.alloc.length - 1][2] === this.scope)
-                            param1 = this.alloc[this.alloc.length - 1][0];
+
                         for (let i = this.alloc.length - 1; i >= 0; i--) {
 
                             if (this.alloc[i][2] === this.scope) {
-                                param2 += this.alloc[this.alloc.length - 1][1]
-                                this.returnF++
+                                param2 += this.alloc[i][1];
+                                param1 = this.alloc[i][0];
+                                this.returnF.push(i)
                             }
 
                         }
@@ -259,7 +315,7 @@ class Analyze {
                             this.generator.gera('', 'RETURNF', param1, param2)
                         else
                             this.generator.gera('', 'RETURNF', null, null)
-                    }
+                //}
 
 
                 }
@@ -280,10 +336,11 @@ class Analyze {
         token = this.lexic.doLexic()
 
         if (token.symbol === 'sidentificador') {
-            this.scope = token.lexem;
+            
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
                 this.actualFunction.lexem = token.lexem;
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) // add rotulo
+                this.scope = token.lexem; 
                 this.generator.gera(this.label, null, '', '');
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sdoispontos') {
@@ -340,11 +397,11 @@ class Analyze {
         };
 
 
-        for (let a = 0; a < this.returnF; a++) {
-            this.alloc.pop()
+        for (let a = 0; a < this.returnF.length; a++) {
+            this.alloc.slice(i,1);
         }
 
-        this.returnF = 0;
+        this.returnF = new Array();
 
         return token
     }
@@ -441,9 +498,10 @@ class Analyze {
         token = this.lexic.doLexic()
 
         if (token.symbol === 'sidentificador') {
-            this.scope = token.lexem;
+            
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) //add rotulo
+                this.scope = token.lexem;
                 this.generator.gera(this.label, null, '', '');
                 this.label += 1;
 
@@ -456,13 +514,14 @@ class Analyze {
                     let param2 = 0;
                     let param1 = 0;
 
-                    if (this.alloc[this.alloc.length - 1][2] === this.scope)
-                        param1 = this.alloc[this.alloc.length - 1][0];
+                    
 
                     for (let i = this.alloc.length - 1; i >= 0; i--) {
 
                         if (this.alloc[i][2] === this.scope) {
-                            param2 += this.alloc.pop()[1]
+                            param1 = this.alloc[i][0];
+                            param2 += this.alloc[i][1];  
+                            this.alloc.slice(i,1);
                         }
 
                     }
