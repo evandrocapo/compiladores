@@ -119,28 +119,6 @@ class Analyze {
         if (token.symbol === 'sidentificador') {
             let variable = this.symbolTable.pesquisar(token.lexem, this.scope);
             this.generator.gera('', 'CALL', variable.label, '');
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-            console.log('CALL' + variable.label)
-
         }
         else {
             throw new Error.Error("Erro -> Chamada de funcao", token.line).show()
@@ -194,9 +172,7 @@ class Analyze {
             token = this.analyzeSimpleExpression(token)
         }
         if (this.doPosFixa === 0) {
-            //console.log(this.expression)
             this.expression = new Semantic.Semantic().posFixa(this.expression)
-            //console.log(this.expression)
 
         }
 
@@ -207,36 +183,10 @@ class Analyze {
     {
         var tabela = null
 
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-        console.log(token.lexem)
-
         this.expression.push(token.lexem)
 
         if (token.symbol === 'sidentificador') {
             tabela = this.symbolTable.pesquisar(token.lexem, this.scope)
-
-            {
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-                console.log(token.lexem)
-
-            }
-            
             if (tabela) {
 
                 if (tabela.symbol === 'sinteiro' || tabela.symbol === 'sbooleano' && (tabela instanceof SymbolProc.SymbolProc)) {
@@ -799,14 +749,19 @@ class Analyze {
             if (token.symbol === 'sidentificador') {
                 var variable = this.symbolTable.pesquisar(token.lexem, this.scope);
                 if (variable) {
-                    this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
-                    this.generator.gera('', 'PRN', '', ''); // Generator
-                
+                    
                     if(variable instanceof SymbolProc.SymbolProc)
                     {
+                        
                         if(variable.type !== 'inteiro' && variable.type !== 'booleano')
                         throw new Error.Error('Error -> Esperava funcao', token.line).show()
+                        this.generator.gera('', 'CALL', variable.label, ''); // Generator
                     }
+                    else
+                    {
+                        this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
+                    }
+                    this.generator.gera('', 'PRN', '', ''); // Generator
                     if (!(variable instanceof SymbolVar.SymbolVar) && !(variable instanceof SymbolProc.SymbolProc)) {
                         throw new Error.Error('Error -> Esperava variavel', token.line).show()
                     }
