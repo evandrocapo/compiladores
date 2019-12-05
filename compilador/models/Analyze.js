@@ -292,6 +292,8 @@ class Analyze {
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) // add rotulo
                 this.scope = token.lexem; 
                 this.generator.gera(this.label, null, '', '');
+                this.label += 1;
+                
                 token = this.lexic.doLexic()
                 if (token.symbol === 'sdoispontos') {
                     token = this.lexic.doLexic()
@@ -653,12 +655,17 @@ class Analyze {
     }
 
     analyzeSubRotine(token) {
+
+        let auxrot, flag; // semantico
+        flag = 0;
+
         if (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
-            let auxrot, flag; // semantico
+
             auxrot = this.label;
             this.generator.gera('', 'JMP', this.label, '');
             this.label += 1;
             flag = 1;
+        }
             while (token.symbol === 'sprocedimento' || token.symbol === 'sfuncao') {
 
                 if (token.symbol === 'sprocedimento') {
@@ -676,10 +683,9 @@ class Analyze {
                 }
                 
             }
-            if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
-
-            
-        }
+         
+        
+        if (flag == 1) this.generator.gera(auxrot, null, '', ''); // generator
 
         return token
     }
