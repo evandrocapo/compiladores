@@ -18,7 +18,7 @@ class Analyze {
         }
         this.label = label;
         this.generator = generator;
-        this.memory = 0;
+        this.memory = [0];
         this.pilha = [];
         this.quant = [];
         this.alloc = alloc = [];
@@ -253,7 +253,7 @@ class Analyze {
                         
 
                         for (let i = this.alloc.length - 1; i >= 0; i--) {
-                            
+
                             if (this.alloc[i][2] ===  this.actualFunction.lexem) {
                                 param2 += this.alloc[i][1];
                                 param1 = this.alloc[i][0];
@@ -262,7 +262,6 @@ class Analyze {
 
                         }
 
-                        console.log(this.symbolTable)
                         if (param2 > 0)
                             this.generator.gera('', 'RETURNF', param1, param2)
                         else
@@ -325,10 +324,13 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de funcao existente", token.line).show()
             }
-
-            let scope = this.symbolTable.desempilhar();
+            console.log('--------------func---------------')
+            console.log(this.symbolTable)
+            let scope = this.symbolTable.desempilhar(this.actualFunction.lexem,this.memory);
             if (scope)
                 this.scope = scope;
+
+                console.log(this.symbolTable)
             //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
@@ -353,6 +355,7 @@ class Analyze {
 
         for (let a = 0; a < this.returnF.length; a++) {
             this.alloc.slice(a,1);
+            this.quant.pop();
         }
 
         this.returnF = new Array();
@@ -476,6 +479,7 @@ class Analyze {
                             param1 = this.alloc[i][0];
                             param2 += this.alloc[i][1];  
                             this.alloc.slice(i,1);
+                            this.quant.pop();
                         }
 
                     }
@@ -492,11 +496,13 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de procedimento existente", token.line).show()
             }
-            let scope = this.symbolTable.desempilhar();
+            console.log(this.symbolTable)
+            let scope = this.symbolTable.desempilhar(this.scope,this.memory);
             if (scope)
                 this.scope = scope;
             //this.memory = this.symbolTable.desempilhar(this.memory);
             this.generator.gera('', 'RETURN', '', '');
+            console.log(this.symbolTable)
         }
 
         return token
@@ -507,7 +513,7 @@ class Analyze {
         if (token.symbol === 'sabre_parenteses') {
             token = this.lexic.doLexic()
             if (token.symbol === 'sidentificador') {
-                var variable = this.symbolTable.pesquisar(token.lexem);
+                var variable = this.symbolTable.pesquisar(token.lexem, this.scope);
                 if (variable) {
                     this.generator.gera('', 'RD', '', ''); // Generator
                     this.generator.gera('', 'STR', variable.memPos, ''); // Generator
@@ -618,9 +624,9 @@ class Analyze {
         do {
             if (token.symbol === 'sidentificador') {
                 if (!this.symbolTable.pesquisarDupli(token.lexem)) {
-                    this.symbolTable.inserir('var', token.lexem, this.scope, this.memory)
+                    this.symbolTable.inserir('var', token.lexem, this.scope, this.memory[0])
                     quant += 1; // quantidade de alloc;
-                    this.memory += 1;
+                    this.memory[0] += 1;
                     token = this.lexic.doLexic()
                     if (token.symbol === 'svirgula' || token.symbol === 'sdoispontos') {
                         if (token.symbol === 'svirgula') {

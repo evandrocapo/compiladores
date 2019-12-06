@@ -33,10 +33,12 @@ class SymbolTable{
         }while(stackTipo.length > 0)
     }
 
-    desempilhar(){
+    desempilhar(scope,memory){
         var a;
         
-        while((a = this.stack.pop()) instanceof SymbolVar.SymbolVar){}
+        while(((a = this.stack.pop()) instanceof SymbolVar.SymbolVar) || a.symbol.lexem !== scope){
+            memory[0]--;
+        }
         this.stack.push(a)
 
         for(let i = this.stack.length-2; i>=0; i--)
@@ -70,7 +72,7 @@ class SymbolTable{
         return false;
     }
 
-    pesquisar(lexem,scope){
+    pesquisar(lexem){
         
         var stackDuplic = this.stack.slice();
         var aux;

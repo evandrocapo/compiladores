@@ -26,6 +26,12 @@ fim;
   loop;
   soma:= c+a;
  fim;
+ 
+ procedimento teste;
+ var a:inteiro;
+ inicio
+ a:=10;
+fim;
 
 inicio
   escreva(soma)
