@@ -37,6 +37,7 @@ class SymbolTable{
         var a;
         
         while(((a = this.stack.pop()) instanceof SymbolVar.SymbolVar) || a.symbol.lexem !== scope){
+            if(a instanceof SymbolVar.SymbolVar)
             memory[0]--;
         }
         this.stack.push(a)
@@ -73,6 +74,8 @@ class SymbolTable{
     }
 
     pesquisar(lexem){
+        console.log('---------------')
+        console.log(this.stack)
         
         var stackDuplic = this.stack.slice();
         var aux;
