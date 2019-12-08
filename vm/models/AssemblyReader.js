@@ -167,6 +167,7 @@ class AssemblyReader {
 
             entr.push('?');
             k++;
+            console.log("aaaa")
         }
 
         aux.push(...entr);
@@ -209,13 +210,16 @@ class AssemblyReader {
         }
 
         readRETURN();
-        this.m.push(aux)
+        this.m[this.s] = aux;
+        // this.s++;
+        // this.m.push(aux)
     }
 
     readRETURNF_noparams(){
         let aux = this.m.pop()
         readRETURN();
-        this.m.push(aux);
+        this.m[this.s] = aux;
+        // this.m.push(aux);
     }
 
     readSTR(n) {
