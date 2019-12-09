@@ -67,7 +67,7 @@ class AssemblyReader {
                 // RETURN
                 break;
             case 'RETURNF':
-                if(params) this.readRETURNF(params[0]);
+                if(params) this.readRETURNF(params[0], params[1]);
                 else this.readRETURNF_noparams();
                 // RETURNF
                 break;
@@ -167,7 +167,6 @@ class AssemblyReader {
 
             entr.push('?');
             k++;
-            console.log("aaaa")
         }
 
         aux.push(...entr);
@@ -200,19 +199,18 @@ class AssemblyReader {
     }
 
     readRETURNF(m, n) {
-        var k = n - 1;
+        let k = parseInt(n) - 1;
         var aux = this.m.pop();
 
-        while(k => 0){
-            this.m[m + k] = this.m[this.s]
-            this.s = this.s - 1;
-            k--;
+        while (k >= 0) {
+            // this.m[parseInt(m) + parseInt(k)] = this.m[this.s];
+            this.m.splice((parseInt(m) + parseInt(k)) ,1)
+            this.s = parseInt(this.s) - 1;
+            k = parseInt(k) - 1;
         }
-
-        readRETURN();
+        // return
+        this.i = parseInt(this.m[this.s-1]) + 1; //nao tenho certeza dethis.sthis.se I pagina 99
         this.m[this.s] = aux;
-        // this.s++;
-        // this.m.push(aux)
     }
 
     readRETURNF_noparams(){
