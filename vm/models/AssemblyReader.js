@@ -313,7 +313,7 @@ class AssemblyReader {
 
     readNEG() {
         this.m[this.s] = 1 - parseInt(this.m[this.s]);
-        this.m.pop() // pra ficar mais facil de ler a variavel
+        // this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCME() {
