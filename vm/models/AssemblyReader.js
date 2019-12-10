@@ -280,11 +280,11 @@ class AssemblyReader {
     }
 
     readINV() {
-        this.m[this.s] = -(this.m[this.s])
+        this.m[this.s] = - parseInt((this.m[this.s]))
     }
 
     readAND() {
-        if (this.m[this.s - 1] == 1 && this.m[this.s] == 1) {
+        if (parseInt(this.m[this.s - 1]) == 1 && parseInt(this.m[this.s]) == 1) {
             this.m[this.s - 1] = 1;
         }
         else {
@@ -296,7 +296,7 @@ class AssemblyReader {
     }
 
     readOR() {
-        if (this.m[this.s - 1] == 1 || this.m[this.s] == 1) {
+        if (parseInt(this.m[this.s - 1]) == 1 || parseInt(this.m[this.s]) == 1) {
             this.m[this.s - 1] = 1;
         }
         else {
@@ -308,12 +308,12 @@ class AssemblyReader {
     }
 
     readNEG() {
-        this.m[this.s] = 1 - this.m[this.s];
+        this.m[this.s] = 1 - parseInt(this.m[this.s]);
         this.m.pop() // pra ficar mais facil de ler a variavel
     }
 
     readCME() {
-        if (this.m[this.s - 1] < this.m[this.s]) {
+        if (parseInt(this.m[this.s - 1]) < parseInt(this.m[this.s])) {
             this.m[this.s - 1] = 1
         }
         else {
@@ -325,7 +325,7 @@ class AssemblyReader {
     }
 
     readCMA() {
-        if (this.m[this.s - 1] > this.m[this.s]) {
+        if (parseInt(this.m[this.s - 1]) > parseInt(this.m[this.s])) {
             this.m[this.s - 1] = 1
         }
         else {
@@ -337,7 +337,7 @@ class AssemblyReader {
     }
 
     readCEQ() {
-        if (this.m[this.s - 1] == this.m[this.s]) {
+        if (parseInt(this.m[this.s - 1]) == parseInt(this.m[this.s])) {
             this.m[this.s - 1] = 1;
         }
         else {
@@ -349,7 +349,7 @@ class AssemblyReader {
     }
 
     readCDIF() {
-        if (this.m[this.s - 1] != this.m[this.s]) {
+        if (parseInt(this.m[this.s - 1]) != parseInt(this.m[this.s])) {
             this.m[this.s - 1] = 1;
         }
         else {
@@ -361,7 +361,7 @@ class AssemblyReader {
     }
 
     readCMEQ() {
-        if (this.m[this.s - 1] <= this.m[this.s]) {
+        if (parseInt(this.m[this.s - 1]) <= parseInt(this.m[this.s])) {
             this.m[this.s - 1] = 1;
         }
         else {
@@ -373,7 +373,7 @@ class AssemblyReader {
     }
 
     readCMAQ() {
-        if (this.m[this.s - 1] >= this.m[this.s]) {
+        if (parseInt(this.m[this.s - 1]) >= parseInt(this.m[this.s])) {
             this.m[this.s - 1] = 1;
         }
         else {
