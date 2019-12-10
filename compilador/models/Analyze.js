@@ -118,7 +118,7 @@ class Analyze {
     {
         if (token.symbol === 'sidentificador') {
             let variable = this.symbolTable.pesquisar(token.lexem, this.scope);
-            console.log("gerou CALL: " + variable.label)
+            // console.log("gerou CALL: " + variable.label)
             this.generator.gera('', 'CALL', variable.label, '');
         }
         else {
@@ -131,7 +131,7 @@ class Analyze {
     analyzeCallProc(token, variable)////////////////////////////////////////////////////
     {
         //if(this.symbolTable.pesquisar(variable.symbol.lexem,this.scope))
-        console.log("gerou CALL: " + variable.label)
+        // console.log("gerou CALL: " + variable.label)
         this.generator.gera('', 'CALL', variable.label, '');
         //else throw new Error.Error("Erro -> Procedimento nao declarado",token.line).show()
         return token
@@ -294,7 +294,7 @@ class Analyze {
                 this.actualFunction.lexem = token.lexem;
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) // add rotulo
                 this.scope = token.lexem; 
-                console.log("gerou sidentificador: " + this.label)
+                // console.log("gerou sidentificador: " + this.label)
                 this.generator.gera(this.label, null, '', '');
                 this.label += 1;
 
@@ -388,7 +388,7 @@ class Analyze {
 
         let label = this.label;
         this.label += 1;
-        console.log("gerou JMPF: " + label)
+        // console.log("gerou JMPF: " + label)
         this.generator.gera('', 'JMPF', label, '')
 
         if (token.symbol === 'sentao') {
@@ -416,7 +416,7 @@ class Analyze {
 
             if (token.symbol === 'ssenao') {
                 
-                console.log("gerou SENAO: ")
+                // console.log("gerou SENAO: ")
                 this.generator.gera('', 'JMP', this.label, '')
                 this.generator.gera(label, null, '', '')
                 this.label++;
@@ -727,7 +727,7 @@ class Analyze {
 
     analyzeWhile(token, isIf) {
         let auxrot1 = this.label, auxrot2; // semantico
-        console.log("gerou WHILE")
+        // console.log("gerou WHILE")
         this.generator.gera(auxrot1, null, '', '') // generator semantico
         this.label += 1; // semantico
         token = this.lexic.doLexic()
@@ -752,7 +752,7 @@ class Analyze {
             this.label += 1; // semantico
             token = this.lexic.doLexic()
             token = this.analyzeSimpleCommand(token, isIf)
-            console.log("gerou SFACA")
+            // console.log("gerou SFACA")
             this.generator.gera('', 'JMP', auxrot1, '') // generator
             this.generator.gera(auxrot2, null, '', '') // generator
         }
@@ -776,15 +776,15 @@ class Analyze {
                         
                         if(variable.type !== 'inteiro' && variable.type !== 'booleano')
                         throw new Error.Error('Error -> Esperava funcao', token.line).show()
-                        console.log("gerou CALL: " + variable.label)
+                        // console.log("gerou CALL: " + variable.label)
                         this.generator.gera('', 'CALL', variable.label, ''); // Generator
                     }
                     else
                     {
-                        console.log("gerou LDV: " + variable.memPos)
+                        // console.log("gerou LDV: " + variable.memPos)
                         this.generator.gera('', 'LDV', variable.memPos, ''); // Generator
                     }
-                    console.log("gerou PRN: ")
+                    // console.log("gerou PRN: ")
                     this.generator.gera('', 'PRN', '', ''); // Generator
                     if (!(variable instanceof SymbolVar.SymbolVar) && !(variable instanceof SymbolProc.SymbolProc)) {
                         throw new Error.Error('Error -> Esperava variavel', token.line).show()
@@ -870,7 +870,7 @@ class Analyze {
                     if (Number.isInteger(Number(expression[i]))) this.generator.gera('', 'LDC', expression[i], '');
                     else {
                         var variable = this.symbolTable.pesquisar(expression[i], this.scope);
-                        console.log("gerou LDV ou CALL: " + variable.mempos + " " + variable.label)
+                        // console.log("gerou LDV ou CALL: " + variable.mempos + " " + variable.label)
                         if (variable instanceof SymbolVar.SymbolVar) this.generator.gera('', 'LDV', variable.memPos, '');
                         else this.generator.gera('', 'CALL', variable.label, '');
                     }
