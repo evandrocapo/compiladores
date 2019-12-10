@@ -37,7 +37,8 @@ class AssemblyReader {
             params = params[1].replace(' ', '');
             params = params.split(',')
         }
-        // console.log(params[0], params[1])
+        // console.log("i = " + this.i)
+        // console.log(program + " " + params[0] + " " + params[1])
         switch (program) {
             case 'JMP':
                 this.readJMP(params[0])
@@ -70,6 +71,7 @@ class AssemblyReader {
                 if(params) this.readRETURNF(params[0], params[1]);
                 else this.readRETURNF_noparams();
                 // RETURNF
+                return;
                 break;
             case 'STR':
                 this.readSTR(params[0]);
@@ -209,7 +211,8 @@ class AssemblyReader {
             k = parseInt(k) - 1;
         }
         // return
-        this.i = parseInt(this.m[this.s-1]) + 1; //nao tenho certeza dethis.sthis.se I pagina 99
+        this.i = parseInt(this.m[this.s-1]); //nao tenho certeza dethis.sthis.se I pagina 99
+        this.s = parseInt(this.s) - 1;
         this.m[this.s] = aux;
     }
 
@@ -267,6 +270,7 @@ class AssemblyReader {
     }
 
     readMULT() {
+        console.log("eu funciono ?")
         this.m[this.s - 1] = parseInt(this.m[this.s - 1]) * parseInt(this.m[this.s]);
         this.s = this.s - 1;
         this.m.pop(); // retira um da pilha, pq o valor ta com s-1
