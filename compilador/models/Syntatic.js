@@ -37,7 +37,7 @@ class Syntatic {
                     if(varQtd>0)
                     this.generator.gera('','DALLOC',0,varQtd)
 
-                    console.log(this.symbolTable)
+                    //console.log(this.symbolTable)
                     
                     
                     if(this.token.symbol === 'sponto')

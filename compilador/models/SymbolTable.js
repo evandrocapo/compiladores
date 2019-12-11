@@ -74,8 +74,8 @@ class SymbolTable{
     }
 
     pesquisar(lexem){
-        console.log('---------------')
-        console.log(this.stack)
+        //console.log('---------------')
+        //console.log(this.stack)
         
         var stackDuplic = this.stack.slice();
         var aux;

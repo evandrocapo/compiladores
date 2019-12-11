@@ -12,10 +12,7 @@ class Analyze {
         this.expression = new Array();
         this.expressionType = '';
         this.doPosFixa = 0;
-        this.actualFunction = {
-            lexem: null,
-            returned: -2,
-        }
+        this.actualFunction = new Array();
         this.label = label;
         this.generator = generator;
         this.memory = [0];
@@ -75,18 +72,20 @@ class Analyze {
         if (variable !== null) {
             var tokenAux = token;
 
-
+            console.log('aaaa ' + token)
+            console.log(token)
             
             token = this.analyzeReturnF(token, isIf)
 
-
+            console.log('aaaa ' + token)
+            console.log(token)
 
             if (tokenAux === token) {
                 token = this.lexic.doLexic()
                 if (token.symbol === 'satribuicao') {
                     if (!(variable instanceof SymbolVar.SymbolVar)) {
     
-                        throw new Error.Error('Error -> Esperava variavel', token.line).show()
+                        throw new Error.Error('Error -> Esperava variavelllll', token.line).show()
                     }
                     token = this.analyzeAssignment(token, variable)
 
@@ -236,17 +235,22 @@ class Analyze {
     }
 
     analyzeReturnF(token, isIf) {
-            var variable = this.symbolTable.pesquisar(this.actualFunction.lexem, this.scope)
-            if (this.actualFunction) {
-                if (token.lexem === this.actualFunction.lexem) {
+            if(this.actualFunction[this.actualFunction.length-1])
+            var variable = this.symbolTable.pesquisar(this.actualFunction[this.actualFunction.length-1].lexem, this.scope)
+            else
+            var variable = null;
+            if (this.actualFunction[this.actualFunction.length-1]) {
+                console.log(this.actualFunction[this.actualFunction.length-1].lexem)
+                console.log(token.lexem)
+                if (token.lexem === this.actualFunction[this.actualFunction.length-1].lexem) {
                     token = this.lexic.doLexic()
                     token = this.analyzeAssignment(token, variable)
                     if (isIf) {
-                        if (this.actualFunction.returned !== 0)
-                            this.actualFunction.returned = 1;
+                        if (this.actualFunction[this.actualFunction.length-1].returned !== 0)
+                        this.actualFunction[this.actualFunction.length-1].returned = 1;
                     }
                     else
-                        this.actualFunction.returned = 0;
+                    this.actualFunction[this.actualFunction.length-1].returned = 0;
 
                     let param2 = 0;
                     let param1 = 0;
@@ -256,7 +260,7 @@ class Analyze {
 
                         for (let i = this.alloc.length - 1; i >= 0; i--) {
 
-                            if (this.alloc[i][2] ===  this.actualFunction.lexem) {
+                            if (this.alloc[i][2] ===  this.actualFunction[this.actualFunction.length-1].lexem) {
                                 param2 += this.alloc[i][1];
                                 param1 = this.alloc[i][0];
                                 this.returnF.push(i)
@@ -281,17 +285,17 @@ class Analyze {
 
     analyzeFuncDeclaration(token) {
 
-        this.actualFunction = {
+        this.actualFunction.push({
             lexem: null,
             returned: -1
-        };
+        })
 
         token = this.lexic.doLexic()
 
         if (token.symbol === 'sidentificador') {
             
             if (!this.symbolTable.pesquisar(token.lexem, this.scope)) {
-                this.actualFunction.lexem = token.lexem;
+                this.actualFunction[this.actualFunction.length-1].lexem = token.lexem;
                 this.symbolTable.inserir('proc', token.lexem, this.scope, this.label) // add rotulo
                 this.scope = token.lexem; 
                 // console.log("gerou sidentificador: " + this.label)
@@ -328,33 +332,35 @@ class Analyze {
                 throw new Error.Error("Erro -> Nome de funcao existente", token.line).show()
             }
             console.log('--------------func---------------')
-            console.log(this.symbolTable)
-            let scope = this.symbolTable.desempilhar(this.actualFunction.lexem,this.memory);
+            //console.log(this.symbolTable)
+            let scope = this.symbolTable.desempilhar(this.actualFunction[this.actualFunction.length-1].lexem,this.memory);
             if (scope)
                 this.scope = scope;
 
-                console.log(this.symbolTable)
+                //console.log(this.symbolTable)
             //this.memory = this.symbolTable.desempilhar(this.memory);
         }
 
 
         
 
-        if (this.actualFunction.returned !== 0 && this.returnIfStack.length > 0) {
+        if (this.actualFunction[this.actualFunction.length-1].returned !== 0 && this.returnIfStack.length > 0) {
             throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
         }
         
-        if (this.actualFunction.returned === -1) {
+        if (this.actualFunction[this.actualFunction.length-1].returned === -1) {
             throw new Error.Error('Error -> Funcao sem retorno', token.line).show()
         }
 
 
-
+        this.actualFunction.pop()
+        /*
         this.actualFunction = {
             lexem: null,
             returned: -2
         };
 
+        */
 
         for (let a = 0; a < this.returnF.length; a++) {
             this.alloc.slice(a,1);
@@ -367,7 +373,10 @@ class Analyze {
     }
 
     analyzeIf(token) {
-        var analyzeReturn = this.actualFunction.returned;
+        if(this.actualFunction[this.actualFunction.length-1])
+        var analyzeReturn = this.actualFunction[this.actualFunction.length-1].returned;
+        else
+        analyzeReturn = -2;
         
         token = this.lexic.doLexic()
         this.expression = new Array();
@@ -400,15 +409,15 @@ class Analyze {
 
 
             if (analyzeReturn === -1) {
-                if (this.actualFunction.returned === 1) {
+                if (this.actualFunction[this.actualFunction.length-1].returned === 1) {
 
                     this.returnIfStack.push('returned')
                 }
                 else {
                     this.returnIfStack.push('notReturned')
                 }
-                if(this.actualFunction.returned!==0)
-                this.actualFunction.returned = 2;
+                if(this.actualFunction[this.actualFunction.length-1].returned!==0)
+                this.actualFunction[this.actualFunction.length-1].returned = 2;
             }
 
             
@@ -426,7 +435,7 @@ class Analyze {
                 token = this.analyzeSimpleCommand(token, true)
 
                 if (analyzeReturn === -1) {
-                    if (this.actualFunction.returned === 1) {
+                    if (this.actualFunction[this.actualFunction.length-1].returned === 1) {
                         var result = this.returnIfStack.pop()
                         if (result !== 'returned')
                             this.returnIfStack.push('erro')
@@ -436,8 +445,8 @@ class Analyze {
                         if (result !== 'notReturned')
                             this.returnIfStack.push('erro')
                     }
-                    if(this.actualFunction.returned!==0)
-                    this.actualFunction.returned = 2;
+                    if(this.actualFunction[this.actualFunction.length-1].returned!==0)
+                    this.actualFunction[this.actualFunction.length-1].returned = 2;
                 }
 
             }
@@ -501,13 +510,13 @@ class Analyze {
             else {
                 throw new Error.Error("Erro -> Nome de procedimento existente", token.line).show()
             }
-            console.log(this.symbolTable)
+            //console.log(this.symbolTable)
             let scope = this.symbolTable.desempilhar(this.scope,this.memory);
             if (scope)
                 this.scope = scope;
             //this.memory = this.symbolTable.desempilhar(this.memory);
             this.generator.gera('', 'RETURN', '', '');
-            console.log(this.symbolTable)
+            //console.log(this.symbolTable)
         }
 
         return token
