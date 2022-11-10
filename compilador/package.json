@@ -14,7 +14,7 @@
     "body-parser": "^1.18.3",
     "consign": "^0.1.6",
     "cors": "^2.8.5",
-    "electron": "^6.0.8",
+    "electron": "^18.3.7",
     "express": "^4.16.4",
     "firebase-admin": "^8.5.0",
     "fs": "0.0.1-security"
